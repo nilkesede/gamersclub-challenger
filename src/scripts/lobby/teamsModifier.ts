@@ -1,3 +1,4 @@
+import $ from 'jquery';
 
 const selectors = {
   list: '.list-avaliable-teams',
