@@ -31,9 +31,8 @@ module.exports = {
     //   entry: 'apps/popup.js',
     // },
 
-    contentScriptsMGC: {
+    contentScripts: {
       entry: 'src/apps/content/index.js',
-      filename: 'contentScripts.mgc',
       chunks: [],
     },
   },

@@ -22,7 +22,7 @@
       "matches": [
         "*://gamersclub.com.br/lobby"
       ],
-      "js": ["js/chunk-vendors.js", "js/contentScriptsMGC.js"]
+      "js": ["js/chunk-vendors.js", "js/contentScripts.js"]
     }
   ],
 

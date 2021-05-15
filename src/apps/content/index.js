@@ -1,3 +1,4 @@
+import '../../plugins/observer.jquery'
 import TeamsModifier from '../../scripts/lobby/teamsModifier'
 
 // ===
