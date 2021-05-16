@@ -1,19 +1,31 @@
   // @ts-check
+import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from './domEntityType'
 
 const selectors = {
   list: '.list-avaliable-teams',
   lobby: '.lobby-room-list-item',
+
   player: '.sala-lineup-player',
+  playerPlaceHolder: '.player-placeholder',
   playerAvatarLink: '.gc-avatar a',
 
   extension: {
-    kdr: '.cgc-kdr'
+    kdr: '.gcc-kdr'
   }
 }
 
 export default class TeamsModifier {
+
+  strategiesForNewNodes: Record<domEntityType, (node: any) => void > = {
+    PLAYER: this.reactToNewPlayer.bind(this),
+    LOBBY: this.reactToNewLobby.bind(this),
+    IGNORED: (node: any) => {},
+    UNKNOWN: (node: any) => {
+      console.warn('TeamsModifier UNKNOWN domEntityType', node)
+    }
+  }
 
   constructor(){
     // Initial lobbies
@@ -27,18 +39,12 @@ export default class TeamsModifier {
   }
 
   modifyAvailableTeams(changes: any): void {
-    const strategiesForNewNodes: Record<domEntityType, (node: any) => void > = {
-      PLAYER: this.reactToNewPlayer.bind(this),
-      LOBBY: this.reactToNewLobby.bind(this),
-      UNKNOWN: (node: any) => {}
-    }
-
     if(changes && changes.length){
       changes.map((change: any) => {
         if(change.addedNodes && change.addedNodes.length) {
           change.addedNodes.forEach((node: any) => {
             const addedNodeType: domEntityType  = this.identifyAddedNode(node)
-            const strategy = strategiesForNewNodes[addedNodeType]
+            const strategy = this.strategiesForNewNodes[addedNodeType]
             strategy && strategy(node)
           })
         }
@@ -49,11 +55,25 @@ export default class TeamsModifier {
   identifyAddedNode(node: any): domEntityType {
     let type = domEntityType.UNKNOWN
     const $node = $(node)
-    if($node.hasClass(selectors.player.replace(/\./g, ''))){
-      type = domEntityType.PLAYER
-    } else if($node.hasClass(selectors.lobby.replace(/\./g, ''))) {
-      type = domEntityType.LOBBY
+    const ignoredSelectors = [
+      cleanSelector(selectors.extension.kdr),
+      cleanSelector(selectors.playerPlaceHolder)
+    ]
+
+    const isIgnored = ignoredSelectors.some((selector) => $node.hasClass(selector))
+
+    if(isIgnored){
+      type = domEntityType.IGNORED
+    } else {
+      const isLobby = $node.hasClass(cleanSelector(selectors.lobby)) || $node.find('.sala-card').length > 0
+
+      if(isLobby){
+        type = domEntityType.LOBBY
+      } else if($node.hasClass(cleanSelector(selectors.player))) {
+        type = domEntityType.PLAYER
+      }
     }
+
     return type
   }
 
@@ -72,34 +92,41 @@ export default class TeamsModifier {
     const $kdrElement = $player.find(selectors.extension.kdr)
 
     if ( title ) {
-      const kdrIndex = title.indexOf('KDR:');
-      const playerName = title.substring(0, kdrIndex);
+      const kdrIndex = title.indexOf('KDR:')
+      const playerName = title.substring(0, kdrIndex)
 
       let kd: any = title.match(/KDR: [0-9]+.?[0-9]+/)  // Há alguns nicks que podem ter | neles. Posso usar a regex /KDR: [0-9]+.?[0-9]+/
       kd = kd || ['']
       const shortKd = kd[0].split( ':' )[1].trim()
 
-      console.log( '==>', playerName, shortKd )
-
       if($kdrElement.length === 0){
-        const $kdBooster = $( `<div class='cgc-kdr'>${shortKd}</div>` )
+        const $kdBooster = $( `<div class='gcc-kdr'>${shortKd}</div>` )
         $kdBooster.css( {
           backgroundColor: 'black',
           color: 'white',
-          padding: '5',
+          padding: '2px 5px',
           fontSize: '10px',
           width: '100%'
         } )
 
         $player.prepend( $kdBooster )
       }
-
+    } else {
+      console.warn('There is no TITLE', playerNode)
     }
   }
 
-  showKDForLobby(nodes: any): void {
-    console.log('showKDForAvailableTeams changes', nodes)
-    const players = $( nodes ).find( selectors.player )
-    players.get().map( this.reactToNewPlayer.bind(this) )
+  showKDForLobby(lobbyNode: any): void {
+    const $lobby = $( lobbyNode )
+    const lobbyId = $lobby.attr('id')
+    console.info(lobbyId, lobbyNode)
+
+    const players = $lobby.find( '.sala-lineup-player' )
+    console.info(lobbyId, 'players', players.length, players)
+
+    const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(selectors.playerPlaceHolder)))
+
+    console.info(lobbyId, 'real players', realPlayers.length, realPlayers)
+    realPlayers.map( this.reactToNewPlayer.bind(this) )
   }
 }
