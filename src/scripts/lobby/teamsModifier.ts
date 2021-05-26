@@ -2,6 +2,9 @@
 import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from './domEntityType'
+import Vue, { createApp } from 'vue'
+import App from '../../App.vue';
+import KDRComponent from '../../components/KDR.vue';
 
 const selectors = {
   list: '.list-avaliable-teams',
@@ -12,6 +15,7 @@ const selectors = {
   playerAvatarLink: '.gc-avatar a',
 
   extension: {
+    appContainer: '.gcc-app-container',
     kdr: '.gcc-kdr'
   }
 }
@@ -56,6 +60,7 @@ export default class TeamsModifier {
     let type = domEntityType.UNKNOWN
     const $node = $(node)
     const ignoredSelectors = [
+      cleanSelector(selectors.extension.appContainer),
       cleanSelector(selectors.extension.kdr),
       cleanSelector(selectors.playerPlaceHolder)
     ]
@@ -90,6 +95,8 @@ export default class TeamsModifier {
     const playerAvatarLink = $player.find( selectors.playerAvatarLink )
     const title = playerAvatarLink.attr( 'title' )
     const $kdrElement = $player.find(selectors.extension.kdr)
+    const playerId = playerAvatarLink.attr('href')?.split('/')[2]
+    const containerName = `gcc-${playerId}`
 
     if ( title ) {
       const kdrIndex = title.indexOf('KDR:')
@@ -100,16 +107,9 @@ export default class TeamsModifier {
       const shortKd = kd[0].split( ':' )[1].trim()
 
       if($kdrElement.length === 0){
-        const $kdBooster = $( `<div class='gcc-kdr'>${shortKd}</div>` )
-        $kdBooster.css( {
-          backgroundColor: 'black',
-          color: 'white',
-          padding: '2px 5px',
-          fontSize: '10px',
-          width: '100%'
-        } )
-
+        const $kdBooster = `<div id='${containerName}' class='${cleanSelector(selectors.extension.appContainer)}'></div>`
         $player.prepend( $kdBooster )
+        createApp(KDRComponent, { value: parseFloat(shortKd) }).mount(`#${containerName}`)
       }
     } else {
       console.warn('There is no TITLE', playerNode)

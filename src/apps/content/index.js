@@ -4,6 +4,5 @@ import TeamsModifier from '../../scripts/lobby/teamsModifier'
 // ===
 // Run
 // ===
-// aoooo
-console.log('== Matchmaking GC is activated ==')
+console.log('== GamersClub Challenger is activated ==')
 new TeamsModifier()

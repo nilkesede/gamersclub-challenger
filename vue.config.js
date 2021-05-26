@@ -26,10 +26,13 @@ module.exports = {
     ],
   },
 
+  filenameHashing: false,
+
   pages: {
-    // popup: {
-    //   entry: 'apps/popup.js',
-    // },
+    popup: {
+      entry: 'src/apps/popup/index.ts',
+      template: 'src/apps/popup/popup.html'
+    },
 
     contentScripts: {
       entry: 'src/apps/content/index.js',
