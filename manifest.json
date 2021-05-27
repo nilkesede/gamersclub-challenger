@@ -20,9 +20,11 @@
   "content_scripts": [
     {
       "matches": [
-        "*://gamersclub.com.br/lobby"
+        "*://gamersclub.com.br/lobby",
+        "*://csgo.gamersclub.gg/lobby"
       ],
-      "js": ["js/chunk-vendors.js", "js/contentScripts.js"]
+      "js": ["js/chunk-vendors.js", "js/contentScripts.js"],
+      "css": ["css/contentScripts.css"]
     }
   ],
 
@@ -31,7 +33,12 @@
   ],
 
   "permissions": [
-    "*://gamersclub.com.br/*"
+    "storage"
+  ],
+
+  "host_permissions": [
+    "*://gamersclub.com.br/*",
+    "*://csgo.gamersclub.gg/*"
   ]
 
 }
