@@ -3,8 +3,8 @@
   <div class="gcc-kdr-filter">
     <vue-slider v-model="modelValue"
       :interval="0.1"
-      :marks="[0.5, 1, 1.5, 2]"
-      :min="0.5"
+      :marks="[1, 1.2, 1.7, 2]"
+      :min="1"
       :max="2"
       tooltip="always"
       tooltipPlacement="right"
