@@ -1,0 +1,68 @@
+<template>
+  <p :class=[labelClass]>KDR</p>
+  <div class="gcc-kdr-filter">
+    <vue-slider v-model="modelValue"
+      :interval="0.1"
+      :marks="[0.5, 1, 1.5, 2]"
+      :min="0.5"
+      :max="2"
+      tooltip="always"
+      tooltipPlacement="right"
+      ></vue-slider>
+  </div>
+</template>
+
+<script lang="ts">
+import { Options, Vue, } from 'vue-class-component'
+import { ref, watch } from 'vue'
+import { gcSelectors } from '../scripts/lobby/gcSelectors'
+import { cleanSelector } from '@/utils/StringUtils'
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
+import lobbyFilter from '@/scripts/lobby/lobbyFilter'
+
+@Options({
+  components: {
+    VueSlider,
+  },
+
+  props: {
+    value: Number
+  }
+})
+export default class KDR extends Vue {
+  value!: number
+
+  data(): any{
+    const modelValue = ref(this.value)
+    watch(modelValue, this.onChangeFilter)
+
+    return {
+      modelValue,
+      gcSelectors
+    }
+  }
+
+  get labelClass(): string {
+    return cleanSelector(gcSelectors.filterLabel)
+  }
+
+  onChangeFilter(value: number, previousValue: number): void {
+    console.log('onChangeFilter', value)
+    lobbyFilter.filter.call(lobbyFilter, { kdr: value })
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+  @use "sass:color";
+
+  .gcc-kdr-filter {
+    color: white;
+  }
+
+  >>> .vue-slider-mark-label {
+    font-size: 10px;
+  }
+</style>

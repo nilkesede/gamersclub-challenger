@@ -1,24 +1,12 @@
   // @ts-check
 import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
-import { domEntityType } from './domEntityType'
-import Vue, { createApp } from 'vue'
-import App from '../../App.vue';
-import KDRComponent from '../../components/KDR.vue';
-
-const selectors = {
-  list: '.list-avaliable-teams',
-  lobby: '.lobby-room-list-item',
-
-  player: '.sala-lineup-player',
-  playerPlaceHolder: '.player-placeholder',
-  playerAvatarLink: '.gc-avatar a',
-
-  extension: {
-    appContainer: '.gcc-app-container',
-    kdr: '.gcc-kdr'
-  }
-}
+import { domEntityType } from './domain/domEntityType'
+import { createApp } from 'vue'
+import KDRComponent from '../../components/KDR.vue'
+import { gcSelectors } from './gcSelectors'
+import lobbySerializer from './lobbySerializer'
+import lobbyFilter from './lobbyFilter'
 
 export default class TeamsModifier {
 
@@ -33,10 +21,10 @@ export default class TeamsModifier {
 
   constructor(){
     // Initial lobbies
-    $(selectors.lobby).each((index, element) => this.reactToNewLobby(element))
+    $(gcSelectors.lobby).each((index, element) => this.reactToNewLobby(element))
 
     // @ts-ignore
-    $(selectors.list).observe(this.modifyAvailableTeams.bind(this))
+    $(gcSelectors.list).observe(this.modifyAvailableTeams.bind(this))
 
     //setTimeout(stopObserve, 5000)
     //stopObserve.disconnect()
@@ -60,9 +48,9 @@ export default class TeamsModifier {
     let type = domEntityType.UNKNOWN
     const $node = $(node)
     const ignoredSelectors = [
-      cleanSelector(selectors.extension.appContainer),
-      cleanSelector(selectors.extension.kdr),
-      cleanSelector(selectors.playerPlaceHolder)
+      cleanSelector(gcSelectors.extension.appContainer),
+      cleanSelector(gcSelectors.extension.kdr),
+      cleanSelector(gcSelectors.playerPlaceHolder)
     ]
 
     const isIgnored = ignoredSelectors.some((selector) => $node.hasClass(selector))
@@ -70,11 +58,11 @@ export default class TeamsModifier {
     if(isIgnored){
       type = domEntityType.IGNORED
     } else {
-      const isLobby = $node.hasClass(cleanSelector(selectors.lobby)) || $node.find('.sala-card').length > 0
+      const isLobby = $node.hasClass(cleanSelector(gcSelectors.lobby)) || $node.find('.sala-card').length > 0
 
       if(isLobby){
         type = domEntityType.LOBBY
-      } else if($node.hasClass(cleanSelector(selectors.player))) {
+      } else if($node.hasClass(cleanSelector(gcSelectors.player))) {
         type = domEntityType.PLAYER
       }
     }
@@ -82,51 +70,33 @@ export default class TeamsModifier {
     return type
   }
 
-  reactToNewLobby(nodes: any){
-    this.showKDForLobby(nodes)
+  reactToNewLobby(node: any){
+    this.showKDForLobby(node)
+    lobbyFilter.reactToFilter.call(lobbyFilter, node)
   }
 
   reactToNewPlayer(node: any){
     this.showPlayerKD(node)
+    const $lobby = $(node).closest(gcSelectors.lobby)
+    lobbyFilter.reactToFilter.call(lobbyFilter, $lobby[0])
   }
 
   showPlayerKD(playerNode: any) {
-    const $player = $( playerNode )
-    const playerAvatarLink = $player.find( selectors.playerAvatarLink )
-    const title = playerAvatarLink.attr( 'title' )
-    const $kdrElement = $player.find(selectors.extension.kdr)
-    const playerId = playerAvatarLink.attr('href')?.split('/')[2]
+    const { $el: $player, kdr, id: playerId } = lobbySerializer.serializePlayer(playerNode)
+    const $kdrElement = $player!.find(gcSelectors.extension.kdr)
     const containerName = `gcc-${playerId}`
 
-    if ( title ) {
-      const kdrIndex = title.indexOf('KDR:')
-      const playerName = title.substring(0, kdrIndex)
-
-      let kd: any = title.match(/KDR: [0-9]+.?[0-9]+/)  // Há alguns nicks que podem ter | neles. Posso usar a regex /KDR: [0-9]+.?[0-9]+/
-      kd = kd || ['']
-      const shortKd = kd[0].split( ':' )[1].trim()
-
+    if ( typeof kdr !== 'undefined') {
       if($kdrElement.length === 0){
-        const $kdBooster = `<div id='${containerName}' class='${cleanSelector(selectors.extension.appContainer)}'></div>`
-        $player.prepend( $kdBooster )
-        createApp(KDRComponent, { value: parseFloat(shortKd) }).mount(`#${containerName}`)
+        const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
+        $player!.prepend( $kdBooster )
+        createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
       }
-    } else {
-      console.warn('There is no TITLE', playerNode)
     }
   }
 
   showKDForLobby(lobbyNode: any): void {
-    const $lobby = $( lobbyNode )
-    const lobbyId = $lobby.attr('id')
-    console.info(lobbyId, lobbyNode)
-
-    const players = $lobby.find( '.sala-lineup-player' )
-    console.info(lobbyId, 'players', players.length, players)
-
-    const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(selectors.playerPlaceHolder)))
-
-    console.info(lobbyId, 'real players', realPlayers.length, realPlayers)
-    realPlayers.map( this.reactToNewPlayer.bind(this) )
+    const { players } = lobbySerializer.serialize(lobbyNode)
+    players?.map( (player) => this.reactToNewPlayer(player.$el?.[0]) )
   }
 }
