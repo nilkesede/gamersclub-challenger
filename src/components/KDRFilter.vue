@@ -46,7 +46,7 @@ export default class KDR extends Vue {
     return cleanSelector(gcSelectors.filterLabel)
   }
 
-  onChangeFilter(value: number, previousValue: number): void {
+  onChangeFilter(value: number): void {
     lobbyFilter.filter.call(lobbyFilter, { kdr: value })
   }
 }
