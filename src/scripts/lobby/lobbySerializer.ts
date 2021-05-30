@@ -11,7 +11,7 @@ class LobbySerializer {
     const lobbyId = $room.attr('id')
 
     if(!lobbyId) {
-      console.log('Cannot find lobby id', $room[0])
+      console.warn('Cannot find lobby id', $room[0])
     }
 
     const players = $room.find( gcSelectors.player )

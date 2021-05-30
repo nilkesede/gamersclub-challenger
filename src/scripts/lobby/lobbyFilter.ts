@@ -26,7 +26,6 @@ class LobbyFilter {
       $room?.removeClass('gcc-hide')
     } else {
       $room?.addClass('gcc-hide')
-      console.log('GCC Hide', id, players?.map((player) => player.kdr))
     }
   }
 

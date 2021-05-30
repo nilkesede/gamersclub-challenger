@@ -13,6 +13,7 @@ export const gcSelectors = {
 
   extension: {
     appContainer: '.gcc-app-container',
-    kdr: '.gcc-kdr'
+    kdr: '.gcc-kdr',
+    kdrFilterLabel: '.gcc-kdr-filter-label'
   }
 }

@@ -1,5 +1,5 @@
 import '../../plugins/observer.jquery'
-import '@/utils/visibility.scss'
+import '@/styles/main.scss'
 
 import TeamsModifier from '../../scripts/lobby/teamsModifier'
 import FiltersModifier from '../../scripts/lobby/filtersModifier'

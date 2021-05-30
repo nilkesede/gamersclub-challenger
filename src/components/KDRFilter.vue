@@ -18,7 +18,6 @@ import { ref, watch } from 'vue'
 import { gcSelectors } from '../scripts/lobby/gcSelectors'
 import { cleanSelector } from '@/utils/StringUtils'
 import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/default.css'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
 
 @Options({
@@ -39,7 +38,7 @@ export default class KDR extends Vue {
 
     return {
       modelValue,
-      gcSelectors
+      gcSelectors,
     }
   }
 
@@ -48,7 +47,6 @@ export default class KDR extends Vue {
   }
 
   onChangeFilter(value: number, previousValue: number): void {
-    console.log('onChangeFilter', value)
     lobbyFilter.filter.call(lobbyFilter, { kdr: value })
   }
 }
@@ -62,7 +60,5 @@ export default class KDR extends Vue {
     color: white;
   }
 
-  >>> .vue-slider-mark-label {
-    font-size: 10px;
-  }
+
 </style>
