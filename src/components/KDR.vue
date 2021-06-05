@@ -30,6 +30,7 @@ export default class KDR extends Vue {
     padding: 2px 5px;
     font-size: 10px;
     width: 100%;
+    text-align: center;
 
     &--god {
       background-color: rgba(#D4Af37, 1)

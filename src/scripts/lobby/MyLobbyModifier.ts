@@ -8,29 +8,23 @@ import { gcSelectors } from './gcSelectors'
 import lobbySerializer from './lobbySerializer'
 import lobbyFilter from './lobbyFilter'
 
-export default class TeamsModifier {
+export default class MyLobbyModifier {
 
   strategiesForNewNodes: Record<domEntityType, (node: any) => void > = {
     PLAYER: this.reactToNewPlayer.bind(this),
-    LOBBY: this.reactToNewLobby.bind(this),
+    LOBBY: this.reactToLobbyCreation.bind(this),
     IGNORED: (node: any) => {},
     UNKNOWN: (node: any) => {
-      console.warn('TeamsModifier UNKNOWN domEntityType', node)
+      console.warn('MyLobbyModifier UNKNOWN domEntityType', node)
     }
   }
 
   constructor(){
-    // Initial lobbies
-    $(gcSelectors.lobby).each((index, element) => this.reactToNewLobby(element))
-
     // @ts-ignore
-    $(gcSelectors.list).observe(this.modifyAvailableTeams.bind(this))
-
-    //setTimeout(stopObserve, 5000)
-    //stopObserve.disconnect()
+    $(gcSelectors.myLobby.root).observe(this.modify.bind(this))
   }
 
-  modifyAvailableTeams(changes: any): void {
+  modify(changes: any): void {
     if(changes && changes.length){
       changes.map((change: any) => {
         if(change.addedNodes && change.addedNodes.length) {
@@ -50,7 +44,10 @@ export default class TeamsModifier {
     const ignoredSelectors = [
       cleanSelector(gcSelectors.extension.appContainer),
       cleanSelector(gcSelectors.extension.kdr),
-      cleanSelector(gcSelectors.lobbies.player.avatarLink)
+    ]
+    const playersClasses = [
+      cleanSelector(gcSelectors.myLobby.adminPlayer.self),
+      cleanSelector(gcSelectors.myLobby.player.self)
     ]
 
     const isIgnored = ignoredSelectors.some((selector) => $node.hasClass(selector))
@@ -58,11 +55,11 @@ export default class TeamsModifier {
     if(isIgnored){
       type = domEntityType.IGNORED
     } else {
-      const isLobby = $node.hasClass(cleanSelector(gcSelectors.lobby)) || $node.find('.sala-card').length > 0
+      const isPlayer = playersClasses.some((selector) => $node.hasClass(selector))
 
-      if(isLobby){
+      if($node.hasClass('sidebar-sala-players')){
         type = domEntityType.LOBBY
-      } else if($node.hasClass(cleanSelector(gcSelectors.lobbies.player.self))) {
+      } else if(isPlayer) {
         type = domEntityType.PLAYER
       }
     }
@@ -70,33 +67,25 @@ export default class TeamsModifier {
     return type
   }
 
-  reactToNewLobby(node: any){
-    this.showKDForLobby(node)
-    lobbyFilter.reactToFilter.call(lobbyFilter, node)
+  reactToLobbyCreation(node: any) {
+    const { players } = lobbySerializer.serializeMyLobby(node)
+    players?.map( (player) => this.reactToNewPlayer(player.$el?.[0]) )
   }
 
-  reactToNewPlayer(node: any){
+  reactToNewPlayer(node: any) {
     this.showPlayerKD(node)
-    const $lobby = $(node).closest(gcSelectors.lobby)
-    lobbyFilter.reactToFilter.call(lobbyFilter, $lobby[0])
   }
 
   showPlayerKD(playerNode: any) {
-    const { $el: $player, kdr, id: playerId } = lobbySerializer.serializePlayer(playerNode)
+    const { $el: $player, kdr, id: playerId } = lobbySerializer.serializePlayer(playerNode, gcSelectors.myLobby.player)
     const $kdrElement = $player!.find(gcSelectors.extension.kdr)
-    const containerName = `gcc-${playerId}`
+    const containerName = `gcc-my-lobby-player-${playerId}`
 
-    if ( typeof kdr !== 'undefined') {
-      if($kdrElement.length === 0){
-        const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
-        $player!.prepend( $kdBooster )
-        createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
-      }
+    if ( typeof kdr !== 'undefined' && $kdrElement.length === 0) {
+      const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top'></div>`
+      $player!.append( $kdBooster )
+      createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
     }
   }
 
-  showKDForLobby(lobbyNode: any): void {
-    const { players } = lobbySerializer.serialize(lobbyNode)
-    players?.map( (player) => this.reactToNewPlayer(player.$el?.[0]) )
-  }
 }

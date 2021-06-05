@@ -3,6 +3,7 @@ import Lobby from "./domain/Lobby"
 import LobbyPlayer from "./domain/LobbyPlayer"
 import { gcSelectors } from "./gcSelectors"
 import $ from 'jquery'
+import { playerSelectors } from "./domain/playerSelectors"
 
 class LobbySerializer {
   serialize(lobbyNode: any): Partial<Lobby> {
@@ -14,8 +15,8 @@ class LobbySerializer {
       console.warn('Cannot find lobby id', $room[0])
     }
 
-    const players = $room.find( gcSelectors.player )
-    const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.playerPlaceHolder)))
+    const players = $room.find( gcSelectors.lobbies.player.self )
+    const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder)))
     const serializedPlayers = this.serializePlayers(realPlayers)
 
     return {
@@ -25,20 +26,33 @@ class LobbySerializer {
     }
   }
 
+  serializeMyLobby(lobbyNode: any): Partial<Lobby> {
+    const $lobby = $( lobbyNode )
+    const $room = $lobby?.hasClass(cleanSelector(gcSelectors.myLobby.root)) ? $lobby : $lobby?.closest(gcSelectors.myLobby.root)
+
+    const players = $room.find( gcSelectors.myLobby.player.self )
+    const serializedPlayers = players.get().map((node) => this.serializePlayer(node, gcSelectors.myLobby.player))
+
+    return {
+      $el: $room,
+      players: serializedPlayers
+    }
+  }
+
   serializePlayers(nodes: any) : Partial<LobbyPlayer>[] {
-    const players: Partial<LobbyPlayer>[] = nodes.map(this.serializePlayer)
+    const players: Partial<LobbyPlayer>[] = nodes.map((node: any) => this.serializePlayer(node))
 
     const realPlayers = players?.filter((player) => {
-      return !player.$el?.hasClass(cleanSelector(gcSelectors.playerPlaceHolder))
+      return !player.$el?.hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder))
     })
 
     return realPlayers
   }
 
-  serializePlayer(playerNode: any): Partial<LobbyPlayer> {
+  serializePlayer(playerNode: any, selectors: playerSelectors = gcSelectors.lobbies.player): Partial<LobbyPlayer> {
     const $player = $( playerNode )
 
-    const playerAvatarLink = $player.find( gcSelectors.playerAvatarLink )
+    const playerAvatarLink = $player.find( selectors.avatarLink )
     const title = playerAvatarLink.attr( 'title' )
     const playerId = playerAvatarLink.attr('href')?.split('/')[2]
     let playerName = undefined
@@ -53,7 +67,9 @@ class LobbySerializer {
       kdr = parseFloat( kd[0].split( ':' )[1].trim() )
 
     } else {
-      console.warn('[serializePlayer] There is no TITLE', playerNode)
+      if(!$player.hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder))){
+        console.warn('[serializePlayer] There is no TITLE', playerNode)
+      }
     }
 
     return {

@@ -24,7 +24,8 @@
         "*://csgo.gamersclub.gg/lobby*"
       ],
       "js": ["js/chunk-vendors.js", "js/contentScripts.js"],
-      "css": ["css/chunk-vendors.css", "css/contentScripts.css"]
+      "css": ["css/chunk-vendors.css", "css/contentScripts.css"],
+      "run_at": "document_end"
     }
   ],
 
