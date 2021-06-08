@@ -5,6 +5,7 @@ export const gcSelectors = {
 
   myLobby: {
     root: '#suaLobby',
+    inviteButton: '#lobby-invite-friends',
     title: '.sidebar-sala-titulo',
     adminPlayer: {
       self: '.sidebar-admin-player',

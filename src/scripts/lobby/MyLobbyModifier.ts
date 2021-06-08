@@ -22,6 +22,8 @@ export default class MyLobbyModifier {
   constructor(){
     // @ts-ignore
     $(gcSelectors.myLobby.root).observe(this.modify.bind(this))
+
+    // this.insertChallengerComponent()
   }
 
   modify(changes: any): void {
@@ -86,6 +88,19 @@ export default class MyLobbyModifier {
       $player!.append( $kdBooster )
       createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
     }
+  }
+
+  insertChallengerComponent(){
+    const $inviteButton = $( gcSelectors.myLobby.inviteButton )
+    const isLobbyAdmin = $inviteButton.length > 0
+    const containerName = `gcc-my-lobby`
+
+    if(isLobbyAdmin) {
+      const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top'></div>`
+      $player!.append( $kdBooster )
+      createApp(KDRComponent).mount(`#${containerName}`)
+    }
+
   }
 
 }
