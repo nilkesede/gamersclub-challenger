@@ -33,7 +33,8 @@ export default class KDR extends Vue {
     text-align: center;
 
     &--god {
-      background-color: rgba(#D4Af37, 1)
+      background: rgb(164, 170, 4);
+      background: linear-gradient(90deg, rgb(164, 170, 4) 0%, rgba(121,14,9,1) 35%, rgba(0,74,255,1) 100%);
     }
 
     &--above {
