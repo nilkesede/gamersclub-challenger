@@ -4,6 +4,7 @@ import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
+import LobbyNameFilterComponent from '../../components/LobbyNameFilter.vue'
 import { gcSelectors } from './gcSelectors'
 import lobbySerializer from './lobbySerializer'
 import lobbyFilter from './lobbyFilter'
@@ -26,8 +27,19 @@ export default class TeamsModifier {
     // @ts-ignore
     $(gcSelectors.list).observe(this.modifyAvailableTeams.bind(this))
 
-    //setTimeout(stopObserve, 5000)
-    //stopObserve.disconnect()
+    this.insertLobbyNameFilter()
+  }
+
+  insertLobbyNameFilter() {
+    const $roomsContent = $( gcSelectors.lobbies.content )
+    const containerName = `gcc-lobby-player-filter-container`
+    const $container = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
+    const $lobbyFilter = $roomsContent.find(containerName)
+
+    if($lobbyFilter.length === 0){
+      $roomsContent.prepend($container)
+      createApp(LobbyNameFilterComponent).mount(`#${containerName}`)
+    }
   }
 
   modifyAvailableTeams(changes: any): void {

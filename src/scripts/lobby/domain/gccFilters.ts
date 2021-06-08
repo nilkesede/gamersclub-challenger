@@ -1,4 +1,5 @@
 
 export interface GCCFilters {
-  kdr: number
+  kdr?: number
+  playerName?: string
 }

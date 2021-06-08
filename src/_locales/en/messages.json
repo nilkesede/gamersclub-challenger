@@ -1,5 +1,8 @@
 {
   "appDescription": {
     "message": "Improvements to challenge lobbies on Gamersclub"
+  },
+  "filterByPlayerName": {
+    "message": "Filter by player name"
   }
 }
