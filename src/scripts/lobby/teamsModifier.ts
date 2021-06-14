@@ -8,6 +8,7 @@ import LobbyNameFilterComponent from '../../components/LobbyNameFilter.vue'
 import { gcSelectors } from './gcSelectors'
 import lobbySerializer from './lobbySerializer'
 import lobbyFilter from './lobbyFilter'
+import Logger from 'js-logger'
 
 export default class TeamsModifier {
 
@@ -16,7 +17,7 @@ export default class TeamsModifier {
     LOBBY: this.reactToNewLobby.bind(this),
     IGNORED: (node: any) => {},
     UNKNOWN: (node: any) => {
-      console.warn('TeamsModifier UNKNOWN domEntityType', node)
+      Logger.warn('TeamsModifier UNKNOWN domEntityType', node)
     }
   }
 

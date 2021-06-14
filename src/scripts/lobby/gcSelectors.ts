@@ -6,6 +6,7 @@ export const gcSelectors = {
   myLobby: {
     root: '#suaLobby',
     inviteButton: '#lobby-invite-friends',
+    contentContainer: '.sidebar-content',
     title: '.sidebar-sala-titulo',
     adminPlayer: {
       self: '.sidebar-admin-player',
@@ -23,16 +24,25 @@ export const gcSelectors = {
 
   lobbies: {
     content: '.lobby-rooms-content',
+    bigChallengeButton: '.lobby-btn-big.lobby-btn-play-big',
     player: {
       self: '.sala-lineup-player',
       placeHolder: '.player-placeholder',
       avatarLink: '.gc-avatar a',
-    }
+    },
+    title: '.sala-card-title'
   },
 
   extension: {
     appContainer: '.gcc-app-container',
     kdr: '.gcc-kdr',
-    kdrFilterLabel: '.gcc-kdr-filter-label'
+    kdrFilterLabel: '.gcc-kdr-filter-label',
+    hidden: '.gcc-hide',
+    lobbies: {
+      challenged: '.gcc-lobby-challenged'
+    },
+    challenger: {
+      self: '.gcc-challenger'
+    }
   }
 }

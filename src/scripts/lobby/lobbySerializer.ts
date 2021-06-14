@@ -4,6 +4,7 @@ import LobbyPlayer from "./domain/LobbyPlayer"
 import { gcSelectors } from "./gcSelectors"
 import $ from 'jquery'
 import { playerSelectors } from "./domain/playerSelectors"
+import Logger from 'js-logger'
 
 class LobbySerializer {
   serialize(lobbyNode: any): Partial<Lobby> {
@@ -12,7 +13,7 @@ class LobbySerializer {
     const lobbyId = $room.attr('id')
 
     if(!lobbyId) {
-      console.warn('Cannot find lobby id', $room[0])
+      Logger.warn('Cannot find lobby id', $room[0])
     }
 
     const players = $room.find( gcSelectors.lobbies.player.self )
@@ -22,7 +23,8 @@ class LobbySerializer {
     return {
       $el: $room,
       id: lobbyId,
-      players: serializedPlayers
+      players: serializedPlayers,
+      name: $lobby.find(gcSelectors.lobbies.title)?.text()
     }
   }
 
@@ -62,13 +64,13 @@ class LobbySerializer {
       const kdrIndex = title.indexOf('KDR:')
       playerName = title.substring(0, kdrIndex)
 
-      let kd: any = title.match(/KDR: [0-9]+.?[0-9]+/)
+      let kd: any = title.match(/KDR: [0-9]+(.?[0-9]+)?/)
       kd = kd || ['']
       kdr = parseFloat( kd[0].split( ':' )[1].trim() )
 
     } else {
       if(!$player.hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder))){
-        console.warn('[serializePlayer] There is no TITLE', playerNode)
+        Logger.warn('[serializePlayer] There is no TITLE', playerNode)
       }
     }
 

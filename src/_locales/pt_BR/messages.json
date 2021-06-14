@@ -4,5 +4,17 @@
   },
   "filterByPlayerName": {
     "message": "Filtrar pelo nome do jogador"
+  },
+  "challenge": {
+    "message": "Desafiar"
+  },
+  "challeging": {
+    "message": "Desafiando"
+  },
+  "needMorePlayerToStartChallenging": {
+    "message": "É necessário que a sua lobby esteja completa para desafiar outras lobbies"
+  },
+  "automaticChallengeDescription": {
+    "message": "Desafie automaticamente as lobbies filtradas"
   }
 }

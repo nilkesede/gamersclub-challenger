@@ -39,11 +39,8 @@ export default class KDR extends Vue {
     return {
       modelValue,
       gcSelectors,
+      labelClass: cleanSelector(gcSelectors.filterLabel)
     }
-  }
-
-  get labelClass(): string {
-    return cleanSelector(gcSelectors.filterLabel)
   }
 
   onChangeFilter(value: number): void {

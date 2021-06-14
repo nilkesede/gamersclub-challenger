@@ -22,6 +22,7 @@ class LobbyFilter {
     const { players, $el, id } = LobbySerializer.serialize(lobbyNode)
     const $room = $el?.hasClass(cleanSelector(gcSelectors.lobby)) ? $el : $el?.closest(gcSelectors.lobby)
     let validLobby: boolean | undefined = true
+    const cleanHiddenSelector = cleanSelector(gcSelectors.extension.hidden)
 
     if(typeof this.filters.kdr !== 'undefined' && players){
       validLobby = players.every((player) => {
@@ -36,9 +37,9 @@ class LobbyFilter {
     }
 
     if(validLobby) {
-      $room?.removeClass('gcc-hide')
+      $room?.removeClass(cleanHiddenSelector)
     } else {
-      $room?.addClass('gcc-hide')
+      $room?.addClass(cleanHiddenSelector)
     }
   }
 

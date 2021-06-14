@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "ansi-styles": "^6.1.0",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
+    "js-logger": "^1.6.1",
     "vue": "^3.0.0",
-    "vue-button-spinner": "^2.2.1",
     "vue-class-component": "^8.0.0-0",
+    "vue-promise-btn": "^2.1.0",
     "vue-slider-component": "^4.0.0-beta.3",
     "vuex": "^4.0.0-0"
   },

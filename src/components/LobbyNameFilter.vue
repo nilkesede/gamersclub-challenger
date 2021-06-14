@@ -15,6 +15,7 @@ import { gcSelectors } from '../scripts/lobby/gcSelectors'
 import { cleanSelector } from '@/utils/StringUtils'
 import VueSlider from 'vue-slider-component'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
+import Logger from 'js-logger'
 
 declare global {
   interface Window {
@@ -50,7 +51,7 @@ export default class LobbyNameFilter extends Vue {
   }
 
   onChangeFilter(value: string): void {
-    console.log('LobbyNameFilter', value)
+    Logger.log('LobbyNameFilter', value)
     lobbyFilter.filter.call(lobbyFilter, { playerName: value })
   }
 }

@@ -4,26 +4,27 @@ import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
+import GCChallengerComponent from '../../components/Challenger.vue'
 import { gcSelectors } from './gcSelectors'
 import lobbySerializer from './lobbySerializer'
 import lobbyFilter from './lobbyFilter'
+import Logger from 'js-logger'
 
 export default class MyLobbyModifier {
 
-  strategiesForNewNodes: Record<domEntityType, (node: any) => void > = {
+  strategiesForNewNodes: Record<domEntityType | string, (node: any) => void > = {
     PLAYER: this.reactToNewPlayer.bind(this),
     LOBBY: this.reactToLobbyCreation.bind(this),
+    MY_LOBBY_CONTENT: this.insertChallengerComponent.bind(this),
     IGNORED: (node: any) => {},
     UNKNOWN: (node: any) => {
-      console.warn('MyLobbyModifier UNKNOWN domEntityType', node)
-    }
+      Logger.warn('MyLobbyModifier UNKNOWN domEntityType', node)
+    },
   }
 
   constructor(){
     // @ts-ignore
     $(gcSelectors.myLobby.root).observe(this.modify.bind(this))
-
-    // this.insertChallengerComponent()
   }
 
   modify(changes: any): void {
@@ -31,7 +32,7 @@ export default class MyLobbyModifier {
       changes.map((change: any) => {
         if(change.addedNodes && change.addedNodes.length) {
           change.addedNodes.forEach((node: any) => {
-            const addedNodeType: domEntityType  = this.identifyAddedNode(node)
+            const addedNodeType: domEntityType | string  = this.identifyAddedNode(node)
             const strategy = this.strategiesForNewNodes[addedNodeType]
             strategy && strategy(node)
           })
@@ -40,8 +41,8 @@ export default class MyLobbyModifier {
     }
   }
 
-  identifyAddedNode(node: any): domEntityType {
-    let type = domEntityType.UNKNOWN
+  identifyAddedNode(node: any): domEntityType | string {
+    let type: domEntityType | string = domEntityType.UNKNOWN
     const $node = $(node)
     const ignoredSelectors = [
       cleanSelector(gcSelectors.extension.appContainer),
@@ -63,6 +64,8 @@ export default class MyLobbyModifier {
         type = domEntityType.LOBBY
       } else if(isPlayer) {
         type = domEntityType.PLAYER
+      } else if($node.hasClass(cleanSelector(gcSelectors.myLobby.contentContainer))) {
+        type = 'MY_LOBBY_CONTENT'
       }
     }
 
@@ -90,15 +93,16 @@ export default class MyLobbyModifier {
     }
   }
 
-  insertChallengerComponent(){
+  insertChallengerComponent(node: any){
     const $inviteButton = $( gcSelectors.myLobby.inviteButton )
+    const $sideBarTitleContainer = $( node ).find( gcSelectors.myLobby.title )
     const isLobbyAdmin = $inviteButton.length > 0
-    const containerName = `gcc-my-lobby`
+    const containerName = `gcc-my-lobby-challenger-container`
 
     if(isLobbyAdmin) {
-      const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top'></div>`
-      $player!.append( $kdBooster )
-      createApp(KDRComponent).mount(`#${containerName}`)
+      const appContainer = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top'></div>`
+      $sideBarTitleContainer.append( appContainer )
+      createApp(GCChallengerComponent).mount(`#${containerName}`)
     }
 
   }
