@@ -4,7 +4,6 @@ import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
-import LobbyNameFilterComponent from '../../components/LobbyNameFilter.vue'
 import { gcSelectors } from './gcSelectors'
 import lobbySerializer from './lobbySerializer'
 import lobbyFilter from './lobbyFilter'
@@ -21,26 +20,16 @@ export default class TeamsModifier {
     }
   }
 
+  strategiesForRemovedNodes: Record<domEntityType | string, (node: any) => void > = {
+    PLAYER: this.reactToRemovedPlayer.bind(this),
+  }
+
   constructor(){
     // Initial lobbies
     $(gcSelectors.lobby).each((index, element) => this.reactToNewLobby(element))
 
     // @ts-ignore
     $(gcSelectors.list).observe(this.modifyAvailableTeams.bind(this))
-
-    this.insertLobbyNameFilter()
-  }
-
-  insertLobbyNameFilter() {
-    const $roomsContent = $( gcSelectors.lobbies.content )
-    const containerName = `gcc-lobby-player-filter-container`
-    const $container = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
-    const $lobbyFilter = $roomsContent.find(containerName)
-
-    if($lobbyFilter.length === 0){
-      $roomsContent.prepend($container)
-      createApp(LobbyNameFilterComponent).mount(`#${containerName}`)
-    }
   }
 
   modifyAvailableTeams(changes: any): void {
@@ -81,6 +70,34 @@ export default class TeamsModifier {
     }
 
     return type
+  }
+
+  identifyRemovedNode(node: any):  domEntityType | string {
+    const $node = $(node)
+    let type: domEntityType | string
+
+    const playersClasses = [
+      cleanSelector(gcSelectors.lobbies.player.self),
+    ]
+
+    const isPlayer = playersClasses.some((selector) => $node.hasClass(selector))
+
+    if(isPlayer) {
+      type = domEntityType.PLAYER
+    } else {
+      type = domEntityType.IGNORED
+    }
+
+    return type
+  }
+
+  reactToRemovedPlayer(node: any) {
+    const $node = $( node )
+    const $lobby = $node.closest( gcSelectors.lobby )
+
+    if($lobby && $lobby.length) {
+      $lobby.removeClass(cleanSelector( gcSelectors.extension.lobbies.challenged ))
+    }
   }
 
   reactToNewLobby(node: any){

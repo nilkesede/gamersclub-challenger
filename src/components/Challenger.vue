@@ -2,8 +2,8 @@
   <div class="gcc-challenger">
     <button class="gcc-challenger__button"
       @click="handleButtonClick"
-      :disabled="false"
-      :title="i18n.getMessage('needMorePlayerToStartChallenging')">
+      :disabled="!enabled"
+      :title="enabled ?  i18n.getMessage('automaticChallengeDescription') : i18n.getMessage('needMorePlayerToStartChallenging')">
       <span v-if="isChalleging">
         <span class="blink">
           <i class="fas fa-pause"></i>
@@ -23,9 +23,11 @@
 import { Options, Vue, } from 'vue-class-component'
 import { gcSelectors } from '../scripts/lobby/gcSelectors'
 import { cleanSelector } from '@/utils/StringUtils'
+import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/magicNumbers'
 import lobbySerializer from '@/scripts/lobby/lobbySerializer'
 import $ from 'jquery'
 import Logger from 'js-logger'
+import Lobby from "../scripts/lobby/domain/Lobby"
 
 declare global {
   interface Window {
@@ -38,23 +40,28 @@ declare global {
   },
 
   props: {
+    enabled: Boolean
   }
 })
 export default class Challenger extends Vue {
   private _isChalleging = false
   challengesIntervalId: number | undefined = undefined
+  enabled: boolean | undefined = false
 
-  static CHALLENGES_INTERVAL_TIME = 300
+  static CHALLENGES_INTERVAL_TIME = 500
 
   data(): any {
     return {
-      enabled: false,
       i18n: window.chrome.i18n
     }
   }
 
+  unmounted(): void {
+    clearInterval(this.challengesIntervalId)
+  }
+
   get isChalleging(): boolean {
-    return this._isChalleging
+    return this._isChalleging && !!this.enabled
   }
 
   set isChalleging(value: boolean) {
@@ -63,15 +70,25 @@ export default class Challenger extends Vue {
 
   handleButtonClick(): void {
     this.isChalleging = !this.isChalleging
+    clearInterval(this.challengesIntervalId)
+
     if(this.isChalleging) {
       this.startChallengesInterval()
+    }
+  }
+
+  reactToChallegingState(): void {
+    if(this.isChalleging) {
+      clearInterval(this.challengesIntervalId)
+      this.makeChallenges()
     } else {
+      this.isChalleging = false
       clearInterval(this.challengesIntervalId)
     }
   }
 
   startChallengesInterval(): void {
-    this.challengesIntervalId = setInterval(this.makeChallenges.bind(this), Challenger.CHALLENGES_INTERVAL_TIME)
+    this.challengesIntervalId = setInterval(this.reactToChallegingState.bind(this), Challenger.CHALLENGES_INTERVAL_TIME)
   }
 
   makeChallenges(): void {
@@ -83,7 +100,7 @@ export default class Challenger extends Vue {
       const $challengeButton = $lobby?.find(gcSelectors.lobbies.bigChallengeButton)
       const isValidLobbyByFilters = !$lobby?.hasClass(cleanSelector(gcSelectors.extension.hidden)) && !$lobby?.hasClass(cleanSelector(gcSelectors.extension.lobbies.challenged))
 
-      if(isValidLobbyByFilters && this.isChalleging && $challengeButton?.length && players?.length === 5) {
+      if(isValidLobbyByFilters && this.isChalleging && $challengeButton?.length && players?.length === FULL_LOBBY_PLAYERS_NUMBER) {
         Logger.debug(`Challeging ${lobbyName}`)
         $challengeButton.trigger('click')
         $lobby?.addClass(cleanSelector(gcSelectors.extension.lobbies.challenged))
