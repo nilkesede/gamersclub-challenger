@@ -16,7 +16,7 @@ export default class TeamsModifier {
     LOBBY: this.reactToNewLobby.bind(this),
     IGNORED: (node: any) => {},
     UNKNOWN: (node: any) => {
-      Logger.warn('TeamsModifier UNKNOWN domEntityType', node)
+      // Logger.warn('TeamsModifier UNKNOWN domEntityType', node)
     }
   }
 

@@ -2,8 +2,8 @@
   <div class="gcc-challenger">
     <button class="gcc-challenger__button"
       @click="handleButtonClick"
-      :disabled="!enabled"
-      :title="enabled ?  i18n.getMessage('automaticChallengeDescription') : i18n.getMessage('needMorePlayerToStartChallenging')">
+      :disabled="!isEnabled"
+      :title="isEnabled ?  i18n.getMessage('automaticChallengeDescription') : i18n.getMessage('needMorePlayerToStartChallenging')">
       <span v-if="isChalleging">
         <span class="blink">
           <i class="fas fa-pause"></i>
@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { Options, Vue, } from 'vue-class-component'
+import { Ref, ref, watch } from 'vue'
 import { gcSelectors } from '../scripts/lobby/gcSelectors'
 import { cleanSelector } from '@/utils/StringUtils'
 import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/magicNumbers'
@@ -35,6 +36,8 @@ declare global {
   }
 }
 
+let isEnabled: Ref<boolean>
+
 @Options({
   components: {
   },
@@ -46,12 +49,18 @@ declare global {
 export default class Challenger extends Vue {
   private _isChalleging = false
   challengesIntervalId: number | undefined = undefined
-  enabled: boolean | undefined = false
+
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+  enabled: boolean = false
 
   static CHALLENGES_INTERVAL_TIME = 500
 
   data(): any {
+    isEnabled = ref(this.enabled)
+    watch(isEnabled, this.onEnableChange.bind(this))
+
     return {
+      isEnabled,
       i18n: window.chrome.i18n
     }
   }
@@ -60,8 +69,13 @@ export default class Challenger extends Vue {
     clearInterval(this.challengesIntervalId)
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  onEnableChange(newVal: any, oldVal: any): void {
+    Logger.debug('Challenger onEnableChange', newVal, oldVal)
+  }
+
   get isChalleging(): boolean {
-    return this._isChalleging && !!this.enabled
+    return this._isChalleging && isEnabled.value
   }
 
   set isChalleging(value: boolean) {
@@ -79,7 +93,6 @@ export default class Challenger extends Vue {
 
   reactToChallegingState(): void {
     if(this.isChalleging) {
-      clearInterval(this.challengesIntervalId)
       this.makeChallenges()
     } else {
       this.isChalleging = false

@@ -2,7 +2,7 @@
 import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
-import { createApp, reactive } from 'vue'
+import { createApp, reactive, ref } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
 import GCChallengerComponent from '../../components/Challenger.vue'
 import { gcSelectors } from './gcSelectors'
@@ -15,7 +15,6 @@ import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/magicNumbers'
 export default class MyLobbyModifier {
 
   challenger: any
-  challengerProps: any
   lobby: any
 
   strategiesForNewNodes: Record<domEntityType | string, (node: any) => void > = {
@@ -24,7 +23,7 @@ export default class MyLobbyModifier {
     MY_LOBBY_CONTENT: this.insertChallengerComponent.bind(this),
     IGNORED: (node: any) => {},
     UNKNOWN: (node: any) => {
-      Logger.warn('MyLobbyModifier strategiesForNewNodes UNKNOWN domEntityType', node)
+      // Logger.warn('MyLobbyModifier strategiesForNewNodes UNKNOWN domEntityType', node)
     },
   }
 
@@ -32,7 +31,7 @@ export default class MyLobbyModifier {
     PLAYER: this.reactToRemovedPlayer.bind(this),
     MY_LOBBY_CONTENT: this.reactToRemovedMyLobbyContent.bind(this),
     UNKNOWN: (node: any) => {
-      Logger.warn('MyLobbyModifier strategiesForRemovedNodes UNKNOWN domEntityType', node)
+      // Logger.warn('MyLobbyModifier strategiesForRemovedNodes UNKNOWN domEntityType', node)
     },
   }
 
@@ -131,16 +130,15 @@ export default class MyLobbyModifier {
   }
 
   reactToRemovedMyLobbyContent() {
+    clearInterval(this.challenger?.challengesIntervalId)
     this.challenger = undefined
-    this.challengerProps = undefined
     this.lobby = undefined
   }
 
   updateChallengerProps(){
     if(this.challenger) {
       this.refreshLobbyInfos()
-      this.challengerProps.enabled = this.lobby?.players?.length === FULL_LOBBY_PLAYERS_NUMBER
-      Logger.debug('updateChallengerProps', this.challengerProps, this.challenger)
+      this.challenger.isEnabled = this.lobby?.players?.length === FULL_LOBBY_PLAYERS_NUMBER
     }
   }
 
@@ -162,12 +160,13 @@ export default class MyLobbyModifier {
     const $sideBarTitleContainer = $( node ).find( gcSelectors.myLobby.title )
     const isLobbyAdmin = $inviteButton.length > 0
     const containerName = `gcc-my-lobby-challenger-container`
-    this.challengerProps = reactive({ enabled: this.lobby.players?.length === FULL_LOBBY_PLAYERS_NUMBER })
 
     if(isLobbyAdmin && !this.challenger) {
       const appContainer = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top'></div>`
       $sideBarTitleContainer.append( appContainer )
-      this.challenger = createApp(GCChallengerComponent, this.challengerProps).mount(`#${containerName}`)
+      this.challenger = createApp(GCChallengerComponent,  {
+        enabled: this.lobby.players?.length === FULL_LOBBY_PLAYERS_NUMBER
+      }).mount(`#${containerName}`)
     }
 
   }

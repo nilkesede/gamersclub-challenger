@@ -1,2 +1,2 @@
 
-export const FULL_LOBBY_PLAYERS_NUMBER = 2
+export const FULL_LOBBY_PLAYERS_NUMBER = 5
