@@ -3,9 +3,10 @@
     <button class="gcc-challenger__button"
       @click="handleButtonClick"
       :disabled="!isEnabled"
-      :title="isEnabled ?  i18n.getMessage('automaticChallengeDescription') : i18n.getMessage('needMorePlayerToStartChallenging')">
+      :title="tooltipMessage"
+      :class="{ 'blink': isChalleging }">
       <span v-if="isChalleging">
-        <span class="blink">
+        <span>
           <i class="fas fa-pause"></i>
           {{ i18n.getMessage('challeging') }}
         </span>
@@ -92,7 +93,8 @@ export default class Challenger extends Vue {
   }
 
   reactToChallegingState(): void {
-    if(this.isChalleging) {
+    const $matchModal = $( gcSelectors.matchModal.self )
+    if(this.isChalleging && !$matchModal?.length) {
       this.makeChallenges()
     } else {
       this.isChalleging = false
@@ -121,7 +123,16 @@ export default class Challenger extends Vue {
     })
   }
 
+  get tooltipMessage(): string {
+    const { i18n } =  window.chrome
+    let message = i18n.getMessage('needMorePlayerToStartChallenging')
 
+    if(isEnabled.value) {
+      message = this.isChalleging ?  i18n.getMessage('stopChalleging') : i18n.getMessage('automaticChallengeDescription')
+    }
+
+    return message
+  }
 }
 </script>
 

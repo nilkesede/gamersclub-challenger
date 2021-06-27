@@ -4,5 +4,14 @@
   },
   "filterByPlayerName": {
     "message": "Filter by player name"
+  },
+  "needMorePlayerToStartChallenging": {
+    "message": "Your lobby must be full to challenge other lobbies"
+  },
+  "automaticChallengeDescription": {
+    "message": "Automatically challenge filtered lobbies"
+  },
+  "stopChalleging": {
+    "message": "Stop challenging automatically"
   }
 }

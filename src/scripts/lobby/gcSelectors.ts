@@ -15,8 +15,11 @@ export const gcSelectors = {
       self: '.sidebar-item',
       avatarLink: '.sidebar-item-imagem a',
     }
-  }
-  ,
+  },
+
+  matchModal: {
+    self: '#GamersClubCSApp-modals-matchModal'
+  },
 
   filtersContainer: '.FilterLobby_main__23Z64',
   filterLabel: '.FilterLobby_sectionLabel__1zPew',

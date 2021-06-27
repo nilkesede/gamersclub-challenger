@@ -42,6 +42,14 @@ export default class TeamsModifier {
             strategy && strategy(node)
           })
         }
+
+        if(change.removedNodes && change.removedNodes.length){
+          change.removedNodes.forEach((node: any) => {
+            const removedNodeType: domEntityType | string  = this.identifyAddedNode(node)
+            const strategy = this.strategiesForRemovedNodes[removedNodeType]
+            strategy && strategy(node)
+          })
+        }
       })
     }
   }

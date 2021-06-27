@@ -16,5 +16,8 @@
   },
   "automaticChallengeDescription": {
     "message": "Desafie automaticamente as lobbies filtradas"
+  },
+  "stopChalleging": {
+    "message": "Parar de desafiar automaticamente"
   }
 }

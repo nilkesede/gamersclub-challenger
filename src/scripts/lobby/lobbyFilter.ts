@@ -43,11 +43,6 @@ class LobbyFilter {
     }
   }
 
-
-
-
-
-
 }
 
 export default new LobbyFilter()
