@@ -26,7 +26,7 @@ class LobbyFilter {
 
     if(typeof this.filters.kdr !== 'undefined' && players){
       validLobby = players.every((player) => {
-        return this.filters.kdr! >= KDR_MAX_LIMIT || player.kdr as number < this.filters.kdr!
+        return this.filters.kdr! >= KDR_MAX_LIMIT || player.kdr as number <= this.filters.kdr!
       })
     }
 
