@@ -1,6 +1,9 @@
-# matchmaking-gc
+# GamersClub Challenger
 
-## Project setup
+
+## 💻 Running Project
+
+### Install dependencies
 ```
 npm install
 ```
@@ -24,6 +27,3 @@ npm run test:unit
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
