@@ -1,0 +1,27 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+     {
+      "login": "carloshpds",
+      "name": "Carlos Henrique (C8)",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2482989",
+      "profile": "https://github.com/carloshpds",
+      "contributions": [
+        "bug",
+        "code",
+        "maintenance",
+        "mentoring"
+      ]
+    },
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "gamersclub-challenger",
+  "projectOwner": "carloshpds",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}

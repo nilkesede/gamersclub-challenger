@@ -1,4 +1,7 @@
 <div style="display: flex; align-items: center;
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
   justify-content: center;">
 <img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/src/assets/logo_500.png?raw=true" align="left" height="200" width="200" style="padding-right: 5px;  float: none;" >
 </div>
@@ -83,16 +86,14 @@ npm run lint
 
 # Créditos
 
-<table>
-  <tr>
-    <td style="text-align: center">
-      <img src="https://avatars0.githubusercontent.com/u/2482989?v=3&s=96" style="border-radius: 100px;">
-      <p>Carlos Henrique (<strong>C8</strong>)</p>
-    </td>
-  </tr>
-</table>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 
-<br />
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ---
 
