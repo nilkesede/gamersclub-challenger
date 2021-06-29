@@ -1,8 +1,4 @@
-<div style="display: flex; align-items: center;
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-  justify-content: center;">
+<div style="display: flex; align-items: center; justify-content: center;">
 <img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/src/assets/logo_500.png?raw=true" align="left" height="200" width="200" style="padding-right: 5px;  float: none;" >
 </div>
 <br />
