@@ -5,17 +5,18 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
-    {
-      "login": "jakebolam",
-      "name": "Jake Bolam",
-      "avatar_url": "https://avatars.githubusercontent.com/u/3534236?v=4",
-      "profile": "https://jakebolam.com",
+     {
+      "login": "carloshpds",
+      "name": "Carlos Henrique (C8)",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2482989",
+      "profile": "https://github.com/carloshpds",
       "contributions": [
-        "infra",
-        "test",
-        "code"
+        "bug",
+        "code",
+        "maintenance",
+        "mentoring"
       ]
-    }
+    },
   ],
   "contributorsPerLine": 7,
   "projectName": "gamersclub-challenger",
