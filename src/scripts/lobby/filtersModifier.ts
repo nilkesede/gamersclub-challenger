@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { gcSelectors } from './gcSelectors'
+import { gcSelectors } from '../../utils/gcSelectors'
 import KDRFilterComponent from '../../components/KDRFilter.vue'
 import LobbyNameFilterComponent from '../../components/LobbyNameFilter.vue'
 import Vue, { createApp } from 'vue'

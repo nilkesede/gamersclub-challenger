@@ -36,6 +36,16 @@ export const gcSelectors = {
     title: '.sala-card-title'
   },
 
+  challengeList: {
+    self: '#challengeList',
+    currentLobbyContent: '.sidebar-desafios-team-content',
+    player: {
+      self: '.sala-lineup-player',
+      placeHolder: '.player-placeholder',
+      avatarLink: '.sala-lineup-imagem a',
+    },
+  },
+
   extension: {
     appContainer: '.gcc-app-container',
     kdr: '.gcc-kdr',

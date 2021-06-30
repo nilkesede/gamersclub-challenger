@@ -1,7 +1,7 @@
 import { cleanSelector } from "@/utils/StringUtils"
 import Lobby from "./domain/Lobby"
 import LobbyPlayer from "./domain/LobbyPlayer"
-import { gcSelectors } from "./gcSelectors"
+import { gcSelectors } from "../../utils/gcSelectors"
 import $ from 'jquery'
 import { playerSelectors } from "./domain/playerSelectors"
 import Logger from 'js-logger'
@@ -28,6 +28,26 @@ class LobbySerializer {
     }
   }
 
+  serializeChallengedLobby(lobbyNode: any): Partial<Lobby> {
+    const $room = $( lobbyNode )
+    const lobbyId = $room.attr('id')
+
+    if(!lobbyId) {
+      Logger.warn('Cannot find challengedLobby id', $room[0])
+    }
+
+    const players = $room.find( gcSelectors.lobbies.player.self )
+    const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder)))
+    const serializedPlayers = this.serializePlayers(realPlayers, gcSelectors.challengeList.player)
+
+    return {
+      $el: $room,
+      id: lobbyId,
+      players: serializedPlayers,
+      name: $room.find(gcSelectors.lobbies.title)?.text()
+    }
+  }
+
   serializeMyLobby(lobbyNode: any): Partial<Lobby> {
     const $lobby = $( lobbyNode )
     const $room = $lobby?.hasClass(cleanSelector(gcSelectors.myLobby.root)) ? $lobby : $lobby?.closest(gcSelectors.myLobby.root)
@@ -41,8 +61,8 @@ class LobbySerializer {
     }
   }
 
-  serializePlayers(nodes: any) : Partial<LobbyPlayer>[] {
-    const players: Partial<LobbyPlayer>[] = nodes.map((node: any) => this.serializePlayer(node))
+  serializePlayers(nodes: any, selectors?: playerSelectors) : Partial<LobbyPlayer>[] {
+    const players: Partial<LobbyPlayer>[] = nodes.map((node: any) => this.serializePlayer(node, selectors))
 
     const realPlayers = players?.filter((player) => {
       return !player.$el?.hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder))
