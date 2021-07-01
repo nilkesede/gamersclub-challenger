@@ -34,6 +34,7 @@ import Lobby from "../scripts/lobby/domain/Lobby"
 declare global {
   interface Window {
     chrome: any;
+    gtag: any;
   }
 }
 
@@ -88,6 +89,7 @@ export default class Challenger extends Vue {
     clearInterval(this.challengesIntervalId)
 
     if(this.isChalleging) {
+      window.gtag('event', 'startMakeAutomaticChallenges');
       this.startChallengesInterval()
     }
   }

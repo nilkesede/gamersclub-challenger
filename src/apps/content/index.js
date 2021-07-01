@@ -1,3 +1,4 @@
+import '../../utils/ga'
 import '../../plugins/observer.jquery'
 import '../../plugins/logger.setup'
 import Logger from 'js-logger'
@@ -17,3 +18,4 @@ new LobbiesModifier()
 new FiltersModifier()
 new MyLobbyModifier()
 new ChallengeListModifier()
+
