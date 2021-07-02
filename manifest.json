@@ -1,11 +1,17 @@
 {
   "manifest_version": 3,
+  "minimum_chrome_version": "90",
   "name": "GamersClub Challenger",
   "version": "1.0.0",
   "description": "__MSG_appDescription__",
   "author": "Carlos Henrique (C8) <carloshpds@gmail.com>",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+
+  "background": {
+    "service_worker": "js/serviceWorker.js",
+    "type": "module"
   },
 
   "default_locale": "pt_BR",

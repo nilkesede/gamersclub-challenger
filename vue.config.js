@@ -29,6 +29,10 @@ module.exports = {
   filenameHashing: false,
 
   pages: {
+    serviceWorker: {
+      entry: 'src/apps/serviceWorker/index.js'
+    },
+
     popup: {
       entry: 'src/apps/popup/index.ts',
       template: 'src/apps/popup/popup.html'
