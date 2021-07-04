@@ -46,6 +46,10 @@ export const gcSelectors = {
     },
   },
 
+  booster: {
+    forcedLobbyCreationButton: '#forcarCriacaoLobbyBtn',
+  },
+
   extension: {
     appContainer: '.gcc-app-container',
     kdr: '.gcc-kdr',
