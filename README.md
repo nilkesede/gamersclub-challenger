@@ -85,6 +85,12 @@ npm run lint
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/carloshpds"><img src="https://avatars0.githubusercontent.com/u/2482989?s=100" width="100px;" alt=""/><br /><sub><b>Carlos Henrique (C8)</b></sub></a><br /><a href="https://github.com/carloshpds/gamersclub-challenger/issues?q=author%3Acarloshpds" title="Bug reports">🐛</a> <a href="https://github.com/carloshpds/gamersclub-challenger/commits?author=carloshpds" title="Code">💻</a> <a href="#maintenance-carloshpds" title="Maintenance">🚧</a> <a href="#mentoring-carloshpds" title="Mentoring">🧑‍🏫</a></td>
+    <td align="center"><a href="https://jakebolam.com"><img src="https://avatars.githubusercontent.com/u/3534236?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jake Bolam</b></sub></a><br /><a href="#infra-jakebolam" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/carloshpds/gamersclub-challenger/commits?author=jakebolam" title="Tests">⚠️</a> <a href="https://github.com/carloshpds/gamersclub-challenger/commits?author=jakebolam" title="Code">💻</a></td>
+  </tr>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
