@@ -42,6 +42,17 @@
 
 <br />
 
+## Apoie este projeto
+
+<form action="https://www.paypal.com/donate" method="post" target="_top">
+<input type="hidden" name="hosted_button_id" value="4MFUYEEFXNV5C" />
+<input type="image" src="https://kontaazul.com.br/wp-content/uploads/2020/10/paypal.jpg" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" style="width: 100px" />
+<img alt="" border="0" src="https://www.paypal.com/pt_BR/i/scr/pixel.gif" width="1" height="1" />
+</form>
+
+
+<br />
+
 ## 🔥 Funcionalidades
 
 `Filtro pelo KDR dos jogadores para desafiar lobbies`
