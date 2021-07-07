@@ -48,7 +48,7 @@
 </a>
 
 <a href="https://ko-fi.com/carloshpds">
-  <img src="https://storage.ko-fi.com/cdn/useruploads/png_KoFi_7c31823b-f2c4-4b2f-8f22-1f5a06ce4d00BlueDonateButton_post.jpg" height="100" width="150" style="padding-right: 5px;" />
+  <img src="https://eat.nyo.me/img/ko-fi.png" height="100" width="180" style="padding-right: 5px;" />
 </a>
 <br />
 
