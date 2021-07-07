@@ -47,6 +47,9 @@
   <img src="https://kontaazul.com.br/wp-content/uploads/2020/10/paypal.jpg" height="100" width="150" style="padding-right: 5px;" />
 </a>
 
+<a href="https://ko-fi.com/carloshpds">
+  <img src="https://storage.ko-fi.com/cdn/useruploads/png_KoFi_7c31823b-f2c4-4b2f-8f22-1f5a06ce4d00BlueDonateButton_post.jpg" height="100" width="150" style="padding-right: 5px;" />
+</a>
 <br />
 
 ## 🔥 Funcionalidades
