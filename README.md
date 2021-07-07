@@ -43,13 +43,13 @@
 <br />
 
 ## Apoie este projeto
-
-<form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="hosted_button_id" value="4MFUYEEFXNV5C" />
-<input type="image" src="https://kontaazul.com.br/wp-content/uploads/2020/10/paypal.jpg" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" style="width: 100px" />
-<img alt="" border="0" src="https://www.paypal.com/pt_BR/i/scr/pixel.gif" width="1" height="1" />
-</form>
-
+<ul style="list-style: none; margin: 0px; padding-left: 0px">
+  <li>
+    <a href="https://www.paypal.com/donate?hosted_button_id=4MFUYEEFXNV5C" target="_blank">
+      <img src="https://kontaazul.com.br/wp-content/uploads/2020/10/paypal.jpg" height="100" width="150" style="padding-right: 5px;" />
+    </a>
+  </li>
+</ul>
 
 <br />
 
