@@ -43,13 +43,9 @@
 <br />
 
 ## Apoie este projeto
-<ul style="list-style: none; margin: 0px; padding-left: 0px">
-  <li>
-    <a href="https://www.paypal.com/donate?hosted_button_id=4MFUYEEFXNV5C" target="_blank">
-      <img src="https://kontaazul.com.br/wp-content/uploads/2020/10/paypal.jpg" height="100" width="150" style="padding-right: 5px;" />
-    </a>
-  </li>
-</ul>
+<a href="https://www.paypal.com/donate?hosted_button_id=4MFUYEEFXNV5C" target="_blank">
+  <img src="https://kontaazul.com.br/wp-content/uploads/2020/10/paypal.jpg" height="100" width="150" style="padding-right: 5px;" />
+</a>
 
 <br />
 
