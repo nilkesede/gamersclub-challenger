@@ -42,6 +42,16 @@
 
 <br />
 
+## Apoie este projeto
+<a href="https://www.paypal.com/donate?hosted_button_id=4MFUYEEFXNV5C" target="_blank">
+  <img src="https://kontaazul.com.br/wp-content/uploads/2020/10/paypal.jpg" height="100" width="150" style="padding-right: 5px;" />
+</a>
+
+<a href="https://ko-fi.com/carloshpds">
+  <img src="https://eat.nyo.me/img/ko-fi.png" height="100" width="180" style="padding-right: 5px;" />
+</a>
+<br />
+
 ## 🔥 Funcionalidades
 
 `Filtro pelo KDR dos jogadores para desafiar lobbies`
