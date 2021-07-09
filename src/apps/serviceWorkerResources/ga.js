@@ -711,7 +711,8 @@
   })()
 
 window.dataLayer = window.dataLayer || [];
-window.gtag = () => { dataLayer.push(arguments); }
+window.gtag = (...arguments) => { dataLayer.push(arguments); }
 gtag('js', new Date());
 
+console.log('ga gtag ===>', window.gtag)
 gtag('config', 'G-N88PH3KTB9');
