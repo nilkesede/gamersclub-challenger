@@ -15,9 +15,6 @@ Logger.log('== GamersClub Challenger is activated ==')
 
 window.chrome.runtime.sendMessage({type: 'INIT_GOOGLE_ANALYTICS'}, (response) => {
   Logger.debug('GA RESPONSE', response)
-  window.chrome.runtime.getBackgroundPage((backgroundPage) => {
-    Logger.debug('gtag', backgroundPage.gtag)
-  })
 
   new LobbiesModifier()
   new FiltersModifier()
