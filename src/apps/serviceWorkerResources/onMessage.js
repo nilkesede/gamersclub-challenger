@@ -3,12 +3,11 @@ try {
 
   const strategies = {}
   strategies[self.backgroundMessages.INIT_GOOGLE_ANALYTICS] = initAnalytics
-  strategies[self.backgroundMessages.SEND_ANALYTICS_EVENT] = sendAnalyticsEvent
 
-  console.log('self.chrome.runtime.getBackgroundPage', JSON.stringify(self.chrome.runtime))
   self.chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const strategy = strategies[message.type]
     strategy && strategy(message, sender, sendResponse)
+    return true
   })
 
   function initAnalytics(message, sender, sendResponse) {
@@ -26,11 +25,6 @@ try {
       })
   }
 
-  function sendAnalyticsEvent(message, sender, sendResponse){
-    self.chrome.runtime.getBackgroundPage((backgroundWindow) => {
-      console.log('sendAnalyticsEvent', backgroundWindow.gtag)
-    })
-  }
 } catch (e) {
   console.error('[onMessage Resource] ERROR', e)
 }
