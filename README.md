@@ -53,17 +53,7 @@
 <br />
 
 ## 🔥 Funcionalidades
-
-`Filtro pelo KDR dos jogadores para desafiar lobbies`
-<img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/docs/gifs/kdr-filter-to-challenge.gif?raw=true">
-
-
-`Filtro pelo nome dos jogadores para encontrar lobbies`
-<img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/docs/gifs/nickname-filter.gif?raw=true">
-
-`Desafio Automático de lobbies (considerando filtros)`
-<img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/docs/gifs/automatic-challenge.gif?raw=true">
-<br />
+[Visite o site com a nossa documentação](https://gamersclub-challenger.readme.io/docs/exibe-o-kdr-dos-jogadores)
 
 
 # 💻 Dev
