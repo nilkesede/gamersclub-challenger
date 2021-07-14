@@ -4,5 +4,23 @@ export const analyticsEvents = {
     category: 'lobbySearch',
     action: 'keyup',
     label: 'Filter by player name'
-  }
+  },
+
+  FILTER_BY_KDR: {
+    category: 'lobbySearch',
+    action: 'change',
+    label: 'Filter by KDR'
+  },
+
+  START_AUTOMATIC_CHALLENGER: {
+    category: 'lobbyChallenge',
+    action: 'click',
+    label: 'Start automatic challenger'
+  },
+
+  STOP_AUTOMATIC_CHALLENGER: {
+    category: 'lobbyChallenge',
+    action: 'click',
+    label: 'Stop automatic challenger'
+  },
 }

@@ -30,6 +30,8 @@ import lobbySerializer from '@/scripts/lobby/lobbySerializer'
 import $ from 'jquery'
 import Logger from 'js-logger'
 import Lobby from "../scripts/lobby/domain/Lobby"
+import AnalyticsManager from '@/utils/AnalyticsManager'
+import { analyticsEvents } from '@/utils/analyticsEvents'
 
 declare global {
   interface Window {
@@ -90,6 +92,9 @@ export default class Challenger extends Vue {
 
     if(this.isChalleging) {
       this.startChallengesInterval()
+      AnalyticsManager.sendEvent(analyticsEvents.START_AUTOMATIC_CHALLENGER)
+    } else {
+      AnalyticsManager.sendEvent(analyticsEvents.STOP_AUTOMATIC_CHALLENGER)
     }
   }
 
@@ -109,7 +114,7 @@ export default class Challenger extends Vue {
 
   makeChallenges(): void {
     const lobbies = $( gcSelectors.lobby ).get()
-    Logger.debug(`Checking challenges for ${lobbies.length} lobbies`)
+    Logger.debug(`👁️ Checking challenges for ${lobbies.length} lobbies`)
 
     lobbies.map((node) => {
       const { players, $el: $lobby, name: lobbyName } = lobbySerializer.serialize(node)
@@ -117,7 +122,7 @@ export default class Challenger extends Vue {
       const isValidLobbyByFilters = !$lobby?.hasClass(cleanSelector(gcSelectors.extension.hidden)) && !$lobby?.hasClass(cleanSelector(gcSelectors.extension.lobbies.challenged))
 
       if(isValidLobbyByFilters && this.isChalleging && $challengeButton?.length && players?.length === FULL_LOBBY_PLAYERS_NUMBER) {
-        Logger.debug(`Challeging ${lobbyName}`)
+        Logger.debug(`⚔️ Challeging ${lobbyName}`)
         $challengeButton.trigger('click')
         $lobby?.addClass(cleanSelector(gcSelectors.extension.lobbies.challenged))
       }

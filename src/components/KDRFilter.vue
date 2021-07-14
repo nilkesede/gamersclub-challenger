@@ -19,6 +19,8 @@ import { gcSelectors } from '../utils/gcSelectors'
 import { cleanSelector } from '@/utils/StringUtils'
 import VueSlider from 'vue-slider-component'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
+import AnalyticsManager from '@/utils/AnalyticsManager'
+import { analyticsEvents } from '@/utils/analyticsEvents'
 
 @Options({
   components: {
@@ -45,6 +47,7 @@ export default class KDR extends Vue {
 
   onChangeFilter(value: number): void {
     lobbyFilter.filter.call(lobbyFilter, { kdr: value })
+    AnalyticsManager.sendEvent({ ...analyticsEvents.FILTER_BY_KDR, value })
   }
 }
 </script>

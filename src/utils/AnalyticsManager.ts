@@ -1,3 +1,5 @@
+import Logger from "js-logger"
+
 export interface AnalyticsEvent {
   category: string
   label: string
@@ -38,15 +40,17 @@ class AnalyticsManager {
   }
 
   sendEvent(event: AnalyticsEvent, callback?: any): void {
+    Logger.log(`🔥 ${event.label}`, event.value)
     this.send('event', {
       eventCategory: event.category,
       eventAction: event.action,
       eventLabel: event.label,
-      eventValue: event.value
+      eventValue: Number.isInteger && Number.isInteger(event.value) ? event.value : undefined
     })
   }
 
   sendError(errorDescription: string, isFatalError = false) {
+    Logger.error(errorDescription)
     this.send('exception', {
       'exDescription': errorDescription,
       'exFatal': isFatalError
