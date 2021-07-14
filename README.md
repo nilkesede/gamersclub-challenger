@@ -43,13 +43,23 @@
 <br />
 
 ## Apoie este projeto
-<a href="https://www.paypal.com/donate?hosted_button_id=4MFUYEEFXNV5C" target="_blank">
-  <img src="https://kontaazul.com.br/wp-content/uploads/2020/10/paypal.jpg" height="100" width="150" style="padding-right: 5px;" />
-</a>
+<div style="background: white;">
+  <a href="https://nubank.com.br/pagar/2umiz/ZVbnZJFucY" style="display: inline-block; vertical-align: top;  text-align: center">
+    <img src="https://user-images.githubusercontent.com/2482989/125602525-9ab6c60a-1938-4008-92a8-390dfd26504a.png" height="100" width="200" style="padding-right: 5px;" />
+    <p>carloshpds@gmail.com</p>
+  </a>
 
-<a href="https://ko-fi.com/carloshpds">
-  <img src="https://eat.nyo.me/img/ko-fi.png" height="100" width="180" style="padding-right: 5px;" />
-</a>
+  <a href="https://www.paypal.com/donate?hosted_button_id=4MFUYEEFXNV5C" target="_blank" style="display: inline-block; vertical-align: middle;text-align: center;">
+    <img src="https://user-images.githubusercontent.com/2482989/125606613-ed7a312f-ad8e-4154-845d-67d3be5f4232.png" height="100" width="100" style="padding-right: 5px;" />
+    <p>Paypal</p>
+  </a>
+
+  <a href="https://ko-fi.com/carloshpds" style="display: inline-block; vertical-align: middle; text-align: center">
+    <img src="https://user-images.githubusercontent.com/2482989/125605889-2ecb2cce-38c8-4855-9397-fd13259e727d.png" height="100" width="100" style="padding-right: 5px;" />
+    <p>Ko-fi</p>
+  </a>
+</div>
+
 <br />
 
 ## 🔥 Funcionalidades
