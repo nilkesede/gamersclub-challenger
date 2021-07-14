@@ -1,4 +1,8 @@
-self.backgroundMessages = {
+const bgMessages = {
   INIT_GOOGLE_ANALYTICS: 'INIT_GOOGLE_ANALYTICS',
-  SEND_ANALYTICS_EVENT: 'SEND_ANALYTICS_EVENT'
+
+  GA_INITIALIZED: 'GA_INITIALIZED',
+  GA_FAILED: 'GA_FAILED'
 }
+
+self.backgroundMessages = bgMessages

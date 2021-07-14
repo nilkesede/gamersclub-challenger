@@ -3,6 +3,10 @@ export const gcSelectors = {
   list: '.list-avaliable-teams',
   lobby: '.lobby-room-list-item',
 
+  loggedUser: {
+    avatar: '.MainAvatar img',
+  },
+
   myLobby: {
     root: '#suaLobby',
     inviteButton: '#lobby-invite-friends',
