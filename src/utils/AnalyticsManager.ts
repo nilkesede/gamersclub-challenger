@@ -1,4 +1,7 @@
 import Logger from "js-logger"
+import { getIdByAvatarUrl } from "./StringUtils"
+import $ from 'jquery'
+import { gcSelectors } from "./gcSelectors"
 
 export interface AnalyticsEvent {
   category: string
@@ -10,7 +13,8 @@ export interface AnalyticsEvent {
 declare global {
   interface Window {
     ga: any
-    chrome: any
+    chrome: any,
+    userId: number | string
   }
 }
 
@@ -19,12 +23,13 @@ class AnalyticsManager {
 
   setup(){
     const manifest = window.chrome.runtime.getManifest()
+    const userAvatarUrl = $(gcSelectors.loggedUser.avatar).attr('src')
 
     window.ga && window.ga('create', {
       trackingId: 'UA-198107210-2',
       cookieDomain: 'auto',
       name: this.trackerName,
-      // userId: '12345'
+      userId: userAvatarUrl ? getIdByAvatarUrl(userAvatarUrl) : undefined
     })
 
     this.set('appName', 'GamersClub Challenger')
