@@ -1,4 +1,4 @@
-import Logger, { ILogger, ILogLevel } from 'js-logger'
+import Logger from 'js-logger'
 
 const emojis: Record<string, string> = {}
 emojis[`${Logger.ERROR.value}`] = '🔴'

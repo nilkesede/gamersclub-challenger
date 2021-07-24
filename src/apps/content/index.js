@@ -3,7 +3,6 @@ import '../../plugins/logger.setup'
 import Logger from 'js-logger'
 import '@/styles/main.scss'
 import Analytics from '../../utils/AnalyticsManager'
-import { backgroundMessages } from '../serviceWorkerResources/messages'
 
 import LobbiesModifier from '../../scripts/lobby/LobbiesModifier'
 import FiltersModifier from '../../scripts/lobby/filtersModifier'

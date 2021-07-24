@@ -20,7 +20,7 @@ import { cleanSelector } from '@/utils/StringUtils'
 import VueSlider from 'vue-slider-component'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
 import AnalyticsManager from '@/utils/AnalyticsManager'
-import { analyticsEvents } from '@/utils/analyticsEvents'
+import { dynamicEvents } from '@/utils/analyticsEvents'
 
 @Options({
   components: {
@@ -33,6 +33,7 @@ import { analyticsEvents } from '@/utils/analyticsEvents'
 })
 export default class KDR extends Vue {
   value!: number
+  metricsTimeoutHolder: any
 
   data(): any{
     const modelValue = ref(this.value)
@@ -45,9 +46,14 @@ export default class KDR extends Vue {
     }
   }
 
+  sendMetrics(value: number): void{
+    AnalyticsManager.sendEvent(dynamicEvents({ value }).FILTER_BY_KDR)
+  }
+
   onChangeFilter(value: number): void {
     lobbyFilter.filter.call(lobbyFilter, { kdr: value })
-    AnalyticsManager.sendEvent({ ...analyticsEvents.FILTER_BY_KDR, value })
+    clearTimeout(this.metricsTimeoutHolder)
+    this.metricsTimeoutHolder = setTimeout(() => this.sendMetrics(value), 500)
   }
 }
 </script>
