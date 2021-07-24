@@ -16,7 +16,7 @@ import { cleanSelector } from '@/utils/StringUtils'
 import VueSlider from 'vue-slider-component'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
 import AnalyticsManager from '@/utils/AnalyticsManager'
-import { analyticsEvents } from '@/utils/analyticsEvents'
+import { staticEvents } from '@/utils/analyticsEvents'
 
 declare global {
   interface Window {
@@ -35,6 +35,7 @@ declare global {
 })
 export default class LobbyNameFilter extends Vue {
   value!: string
+  filterTimeoutHolder: any
 
   data(): any{
     const modelValue = ref(this.value)
@@ -51,12 +52,16 @@ export default class LobbyNameFilter extends Vue {
     return cleanSelector(gcSelectors.filterLabel)
   }
 
-  onChangeFilter(value: string): void {
-    AnalyticsManager.sendEvent({
-      ...analyticsEvents.FILTER_BY_LOBBY_PLAYER_NAME,
-      value
-    })
+  filter(value: string): void{
+    AnalyticsManager.sendEvent(
+      staticEvents.FILTER_BY_LOBBY_PLAYER_NAME,
+    )
     lobbyFilter.filter.call(lobbyFilter, { playerName: value })
+  }
+
+  onChangeFilter(value: string): void {
+    clearTimeout(this.filterTimeoutHolder)
+    this.filterTimeoutHolder = setTimeout(() => this.filter(value), 300)
   }
 }
 </script>

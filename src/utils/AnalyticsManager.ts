@@ -45,7 +45,7 @@ class AnalyticsManager {
   }
 
   sendEvent(event: AnalyticsEvent, callback?: any): void {
-    Logger.log(`🔥 ${event.label}`, event.value)
+    Logger.log(`🔥 ${event.label}`, `Value: ${event.value}`)
     this.send('event', {
       eventCategory: event.category,
       eventAction: event.action,
