@@ -29,15 +29,8 @@ import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/magicNumbers'
 import lobbySerializer from '@/scripts/lobby/lobbySerializer'
 import $ from 'jquery'
 import Logger from 'js-logger'
-import AnalyticsManager from '@/utils/AnalyticsManager'
+import Analytics from '@/utils/analytics'
 import { staticEvents } from '@/utils/analyticsEvents'
-
-declare global {
-  interface Window {
-    chrome: any;
-    gtag: any;
-  }
-}
 
 let isEnabled: Ref<boolean>
 
@@ -91,9 +84,9 @@ export default class Challenger extends Vue {
 
     if(this.isChalleging) {
       this.startChallengesInterval()
-      AnalyticsManager.sendEvent(staticEvents.START_AUTOMATIC_CHALLENGER)
+      Analytics.sendEvent(staticEvents.START_AUTOMATIC_CHALLENGER)
     } else {
-      AnalyticsManager.sendEvent(staticEvents.STOP_AUTOMATIC_CHALLENGER)
+      Analytics.sendEvent(staticEvents.STOP_AUTOMATIC_CHALLENGER)
     }
   }
 

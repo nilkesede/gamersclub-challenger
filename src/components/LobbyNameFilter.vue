@@ -15,7 +15,7 @@ import { gcSelectors } from '../utils/gcSelectors'
 import { cleanSelector } from '@/utils/StringUtils'
 import VueSlider from 'vue-slider-component'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
-import AnalyticsManager from '@/utils/AnalyticsManager'
+import AnalyticsManager from '@/utils/analytics'
 import { staticEvents } from '@/utils/analyticsEvents'
 
 declare global {
