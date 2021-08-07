@@ -5,6 +5,7 @@ import LobbyNameFilterComponent from '../../components/LobbyNameFilter.vue'
 import Vue, { createApp } from 'vue'
 import { cleanSelector } from '@/utils/StringUtils'
 import gcBooster from '@/utils/gcBooster'
+import lobbyFilter from './lobbyFilter'
 
 export default class FiltersModifier {
 
@@ -24,11 +25,11 @@ export default class FiltersModifier {
       .then(() => {
         $gccFilterSection.addClass(cleanContainerClass)
         $filtersContainer.append($gccFilterSection)
-        createApp(KDRFilterComponent, { value: 1.2 }).mount($gccFilterSection.get(0))
+        createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || 1.2 }).mount($gccFilterSection.get(0))
       })
       .catch(() => {
         const currentSection = sections.last().addClass(cleanContainerClass).get(0)
-        createApp(KDRFilterComponent, { value: 1.2 }).mount(currentSection)
+        createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || 1.2 }).mount(currentSection)
       })
 
   }

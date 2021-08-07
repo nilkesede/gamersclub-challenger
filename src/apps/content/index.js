@@ -11,6 +11,7 @@ import LobbiesModifier from '../../scripts/lobby/LobbiesModifier'
 import FiltersModifier from '../../scripts/lobby/filtersModifier'
 import MyLobbyModifier from '../../scripts/lobby/MyLobbyModifier'
 import ChallengeListModifier from '../../scripts/lobby/ChallengeListModifier'
+import lobbyFilter from '../../scripts/lobby/lobbyFilter'
 
 // ===
 // Run
@@ -30,7 +31,9 @@ try {
     Analytics.set('title', 'Lobby')
     Analytics.send('pageview')
 
+    // window.browser.storage.sync.clear()
     await BrowserStorage.setup()
+    lobbyFilter.setup()
 
     new LobbiesModifier()
     new FiltersModifier()

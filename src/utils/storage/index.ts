@@ -5,18 +5,24 @@ import { GCCStorageSettings } from "./types";
 class BrowserStorage {
 
   settingsKey = 'gccSettings'
-  settings: GCCStorageSettings | undefined;
+  settings: Partial<GCCStorageSettings> = {};
 
   async setup() {
     try {
-      this.settings = await this.get()
-      Logger.debug('Loaded settings', JSON.stringify(this.settings))
+      const settings = await this.get()
+      if(settings && Object.keys(settings).length) {
+        Object.assign(this.settings, settings)
+        Logger.debug('⚙️ Loaded settings', JSON.stringify(settings))
+      } else {
+        Object.assign(this.settings, { filters: {}, options: {} })
+        Logger.debug('⚙️ Setup settings as defaults', JSON.stringify(this.settings))
+      }
     } catch(err) {
       analytics.sendError(err)
     }
   }
 
-  get(key: string = this.settingsKey): Promise<GCCStorageSettings> {
+  get(key?: string | string[]): Promise<GCCStorageSettings> {
     return new Promise((resolve, reject) => {
       try{
         if(window.browser.storage){
@@ -32,15 +38,14 @@ class BrowserStorage {
     })
   }
 
-  set(key: string, data: any){
+  set(data: any){
     return new Promise((resolve, reject) => {
       try{
-        if(window.browser.storage){
-          window.browser.storage.sync.set({[key]: data}, function(response: any){
+        if(window.browser.storage) {
+          window.browser.storage.sync.set(data, function(response: any) {
+            window.browser.runtime.lastError ? reject(window.browser.runtime.lastError) : void 0
             resolve(response)
           });
-        } else {
-          resolve(  JSON.stringify(window.localStorage.setItem(key, data)) );
         }
       } catch(err){
         reject(err);
@@ -49,8 +54,8 @@ class BrowserStorage {
   }
 
   updateSettings() {
-    this.set(this.settingsKey, { ...this.settings })
-    Logger.debug('Update settings', JSON.stringify(this.settings))
+    this.set(this.settings)
+    Logger.debug('⚙️ Update settings', JSON.stringify(this.settings))
   }
 
   remove(key: string){
