@@ -16,13 +16,8 @@ import { cleanSelector } from '@/utils/StringUtils'
 import VueSlider from 'vue-slider-component'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
 import AnalyticsManager from '@/utils/analytics'
-import { staticEvents } from '@/utils/analyticsEvents'
+import { staticEvents } from '@/utils/analytics/events'
 
-declare global {
-  interface Window {
-    chrome: any;
-  }
-}
 
 @Options({
   components: {
@@ -44,7 +39,7 @@ export default class LobbyNameFilter extends Vue {
     return {
       modelValue,
       gcSelectors,
-      i18n: window.chrome.i18n
+      i18n: window.browser.i18n
     }
   }
 

@@ -19,7 +19,7 @@ import lobbyFilter from '../../scripts/lobby/lobbyFilter'
 try {
   Logger.log('== 🚀 GamersClub Challenger is activated ==')
 
-  window.browser.runtime.sendMessage({ type: 'INIT_GOOGLE_ANALYTICS' }, async (response) => {
+  const run = async (response) => {
 
     if(response === 'GA_FAILED') {
       Logger.error('GA HAS NOT STARTED')
@@ -31,7 +31,6 @@ try {
     Analytics.set('title', 'Lobby')
     Analytics.send('pageview')
 
-    // window.browser.storage.sync.clear()
     await BrowserStorage.setup()
     lobbyFilter.setup()
 
@@ -39,7 +38,9 @@ try {
     new FiltersModifier()
     new MyLobbyModifier()
     new ChallengeListModifier()
-  })
+  }
+
+  window.browser.runtime.sendMessage({ type: 'INIT_GOOGLE_ANALYTICS' }, run)
 
 } catch (e) {
   Analytics.sendError(`[Content Script Lobby] ${e}`)
