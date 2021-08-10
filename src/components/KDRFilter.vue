@@ -19,8 +19,8 @@ import { gcSelectors } from '../utils/gcSelectors'
 import { cleanSelector } from '@/utils/StringUtils'
 import VueSlider from 'vue-slider-component'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
-import AnalyticsManager from '@/utils/AnalyticsManager'
-import { dynamicEvents } from '@/utils/analyticsEvents'
+import AnalyticsManager from '@/utils/analytics'
+import { dynamicEvents } from '@/utils/analytics/events'
 
 @Options({
   components: {

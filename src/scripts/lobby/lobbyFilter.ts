@@ -4,18 +4,29 @@ import { gcSelectors } from '../../utils/gcSelectors'
 import LobbySerializer from './lobbySerializer'
 import $ from 'jquery'
 import { cleanSelector } from '@/utils/StringUtils'
+import BrowserStorage from '@/utils/storage'
+import { GCCStorageSettings } from '@/utils/storage/types'
+import Logger from 'js-logger'
 
 const KDR_MAX_LIMIT = 2
 
 class LobbyFilter {
-  filters: GCCFilters = { kdr: 1.2 }
+  filters: Partial<GCCFilters> = { kdr: 1.2 }
 
-  cosntructor(){}
+  setup() {
+    this.filters = BrowserStorage.settings.filters!
+    this.filters.playerName = ''
+    Logger.debug('🧪 Recovered saved filters', this.filters)
+  }
 
-  filter(gccFilters: GCCFilters) {
-    this.filters = { ...this.filters, ...gccFilters }
+  async filter(gccFilters: GCCFilters) {
+    Logger.debug('🧪 Filtered lobbies', gccFilters)
+    Object.assign(this.filters, gccFilters)
+
     const lobbiesElements = $(gcSelectors.lobby).get()
     lobbiesElements.map(this.reactToFilter.bind(this))
+
+    await BrowserStorage.updateSettings()
   }
 
   reactToFilter(lobbyNode: any){

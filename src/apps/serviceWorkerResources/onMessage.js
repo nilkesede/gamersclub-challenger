@@ -4,14 +4,14 @@ try {
   const strategies = {}
   strategies[self.backgroundMessages.INIT_GOOGLE_ANALYTICS] = initAnalytics
 
-  self.chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  self.browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const strategy = strategies[message.type]
     strategy && strategy(message, sender, sendResponse)
     return true
   })
 
   function initAnalytics(message, sender, sendResponse) {
-    self.chrome.scripting.executeScript({
+    self.browser.scripting.executeScript({
       files: ['serviceWorkerResources/ga.js'],
       target: { tabId: sender.tab.id, allFrames: true }
     })

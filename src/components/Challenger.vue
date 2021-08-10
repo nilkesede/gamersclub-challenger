@@ -29,15 +29,8 @@ import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/magicNumbers'
 import lobbySerializer from '@/scripts/lobby/lobbySerializer'
 import $ from 'jquery'
 import Logger from 'js-logger'
-import AnalyticsManager from '@/utils/AnalyticsManager'
-import { staticEvents } from '@/utils/analyticsEvents'
-
-declare global {
-  interface Window {
-    chrome: any;
-    gtag: any;
-  }
-}
+import Analytics from '@/utils/analytics'
+import { staticEvents } from '@/utils/analytics/events'
 
 let isEnabled: Ref<boolean>
 
@@ -64,7 +57,7 @@ export default class Challenger extends Vue {
 
     return {
       isEnabled,
-      i18n: window.chrome.i18n
+      i18n: window.browser.i18n
     }
   }
 
@@ -91,9 +84,9 @@ export default class Challenger extends Vue {
 
     if(this.isChalleging) {
       this.startChallengesInterval()
-      AnalyticsManager.sendEvent(staticEvents.START_AUTOMATIC_CHALLENGER)
+      Analytics.sendEvent(staticEvents.START_AUTOMATIC_CHALLENGER)
     } else {
-      AnalyticsManager.sendEvent(staticEvents.STOP_AUTOMATIC_CHALLENGER)
+      Analytics.sendEvent(staticEvents.STOP_AUTOMATIC_CHALLENGER)
     }
   }
 
@@ -129,7 +122,7 @@ export default class Challenger extends Vue {
   }
 
   get tooltipMessage(): string {
-    const { i18n } =  window.chrome
+    const { i18n } =  window.browser
     let message = i18n.getMessage('needMorePlayerToStartChallenging')
 
     if(isEnabled.value) {

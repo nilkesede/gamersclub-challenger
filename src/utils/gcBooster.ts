@@ -1,13 +1,6 @@
 import $ from 'jquery'
 import { gcSelectors } from "./gcSelectors"
 
-declare global {
-  interface Window {
-    chrome: any;
-    gtag: any;
-  }
-}
-
 class GamersClubBooster {
   static EXTENSION_ID = 'dahnmmlhchpmmlgebpkpaofbefjdlpin'
 

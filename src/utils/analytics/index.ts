@@ -1,28 +1,15 @@
 import Logger from "js-logger"
-import { getIdByAvatarUrl } from "./StringUtils"
+import { getIdByAvatarUrl } from "../StringUtils"
 import $ from 'jquery'
-import { gcSelectors } from "./gcSelectors"
+import { gcSelectors } from "../gcSelectors"
+import { AnalyticsEvent } from "./types"
 
-export interface AnalyticsEvent {
-  category: string
-  label: string
-  action: string
-  value?: string | number
-}
-
-declare global {
-  interface Window {
-    ga: any
-    chrome: any,
-    userId: number | string
-  }
-}
 
 class AnalyticsManager {
   trackerName = 'gccAnalytics'
 
   setup(){
-    const manifest = window.chrome.runtime.getManifest()
+    const manifest = window.browser.runtime.getManifest()
     const userAvatarUrl = $(gcSelectors.loggedUser.avatar).attr('src')
 
     window.ga && window.ga('create', {

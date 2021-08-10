@@ -1,7 +1,7 @@
 <template>
   <div class="gcc-kdr" :class="{
-    'gcc-kdr--god': value > 1.5,
-    'gcc-kdr--above': value > 1.2 && value < 1.5,
+    'gcc-kdr--god': 1.5 <= value,
+    'gcc-kdr--above': 1.2 <= value && value < 1.5,
     'gcc-kdr--below': value < 1
   }">{{value}}</div>
 </template>

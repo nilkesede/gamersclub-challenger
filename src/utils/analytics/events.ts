@@ -1,4 +1,4 @@
-import { AnalyticsEvent } from "./AnalyticsManager"
+import { AnalyticsEvent } from "./types"
 
 export const staticEvents = {
   START_AUTOMATIC_CHALLENGER: {
