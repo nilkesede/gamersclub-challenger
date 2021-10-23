@@ -1,7 +1,7 @@
 
 import { GCCFilters } from './domain/gccFilters'
 import { gcSelectors } from '../../utils/gcSelectors'
-import LobbySerializer from './lobbySerializer'
+import Serializer from './serializer'
 import $ from 'jquery'
 import { cleanSelector } from '@/utils/StringUtils'
 import BrowserStorage from '@/utils/storage'
@@ -30,7 +30,7 @@ class LobbyFilter {
   }
 
   reactToFilter(lobbyNode: any){
-    const { players, $el, id } = LobbySerializer.serialize(lobbyNode)
+    const { players, $el } = Serializer.serialize(lobbyNode)
     const $room = $el?.hasClass(cleanSelector(gcSelectors.lobby)) ? $el : $el?.closest(gcSelectors.lobby)
     let validLobby: boolean | undefined = true
     const cleanHiddenSelector = cleanSelector(gcSelectors.extension.hidden)

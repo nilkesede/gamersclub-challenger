@@ -5,6 +5,8 @@ export const gcSelectors = {
 
   loggedUser: {
     avatar: '.MainAvatar img',
+    level: '.MainHeader__playerLevel .gcf-badge-level-value',
+    name: '.MainHeader__playerNickname'
   },
 
   myLobby: {

@@ -5,9 +5,10 @@ import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
 import { gcSelectors } from '../../utils/gcSelectors'
-import lobbySerializer from './lobbySerializer'
+import serializer from './serializer'
 import lobbyFilter from './lobbyFilter'
 import Logger from 'js-logger'
+import BrowserStorage from '../../utils/storage'
 
 export default class ChallengeListModifier {
 
@@ -96,21 +97,23 @@ export default class ChallengeListModifier {
   }
 
   showPlayerKD(playerNode: any) {
-    const { $el: $player, kdr, id: playerId } = playerNode.$el ? playerNode : lobbySerializer.serializePlayer(playerNode)
-    const $kdrElement = $player!.find(gcSelectors.extension.kdr)
-    const containerName = `gcc-challenged-player-${playerId}`
+    if( BrowserStorage.settings.options?.showChallengeListKDR ){
+      const { $el: $player, kdr, id: playerId } = playerNode.$el ? playerNode : serializer.serializePlayer(playerNode)
+      const $kdrElement = $player!.find(gcSelectors.extension.kdr)
+      const containerName = `gcc-challenged-player-${playerId}`
 
-    if ( typeof kdr !== 'undefined') {
-      if($kdrElement.length === 0){
-        const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}' style="padding-bottom: 5px;"></div>`
-        $player!.prepend( $kdBooster )
-        createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
+      if ( typeof kdr !== 'undefined') {
+        if($kdrElement.length === 0){
+          const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}' style="padding-bottom: 5px;"></div>`
+          $player!.prepend( $kdBooster )
+          createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
+        }
       }
     }
   }
 
   showKDForLobby(lobbyNode: any): void {
-    const { players } = lobbySerializer.serializeChallengedLobby(lobbyNode)
+    const { players } = serializer.serializeChallengedLobby(lobbyNode)
     players?.map( (player) => this.showPlayerKD(player))
   }
 }

@@ -1,12 +1,13 @@
-import { cleanSelector } from "@/utils/StringUtils"
+import { cleanSelector, getIdByAvatarUrl } from "@/utils/StringUtils"
 import Lobby from "./domain/Lobby"
 import LobbyPlayer from "./domain/LobbyPlayer"
 import { gcSelectors } from "../../utils/gcSelectors"
 import $ from 'jquery'
 import { playerSelectors } from "./domain/playerSelectors"
 import Logger from 'js-logger'
+import LoggedUser from "./domain/LoggedUser"
 
-class LobbySerializer {
+class Serializer {
   serialize(lobbyNode: any): Partial<Lobby> {
     const $lobby = $( lobbyNode )
     const $room = $lobby?.hasClass(cleanSelector(gcSelectors.lobby)) ? $lobby : $lobby?.closest(gcSelectors.lobby)
@@ -101,6 +102,20 @@ class LobbySerializer {
       kdr,
     }
   }
+
+  serializeLoggedPlayer(): Partial<LoggedUser> {
+    const userAvatarUrl = $(gcSelectors.loggedUser.avatar).attr('src')
+    const userId = userAvatarUrl ? getIdByAvatarUrl(userAvatarUrl) : undefined
+    const name = $(gcSelectors.loggedUser.name).text()
+    const level = $(gcSelectors.loggedUser.level).text()
+
+    return {
+      id: userId,
+      name,
+      level,
+      avatarUrl: userAvatarUrl
+    }
+  }
 }
 
-export default new LobbySerializer()
+export default new Serializer()

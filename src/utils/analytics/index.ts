@@ -11,12 +11,13 @@ class AnalyticsManager {
   setup(){
     const manifest = window.browser.runtime.getManifest()
     const userAvatarUrl = $(gcSelectors.loggedUser.avatar).attr('src')
+    const userId = userAvatarUrl ? getIdByAvatarUrl(userAvatarUrl) : undefined
 
     window.ga && window.ga('create', {
       trackingId: 'UA-198107210-2',
       cookieDomain: 'auto',
       name: this.trackerName,
-      userId: userAvatarUrl ? getIdByAvatarUrl(userAvatarUrl) : undefined
+      userId,
     })
 
     this.set('appName', 'GamersClub Challenger')

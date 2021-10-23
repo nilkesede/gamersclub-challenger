@@ -6,19 +6,33 @@ class BrowserStorage {
 
   settingsKey = 'gccSettings'
   settings: Partial<GCCStorageSettings> = {};
+  static defaultSettings: Partial<GCCStorageSettings> = {
+    filters: {
+      kdr: 1.2
+    },
+    options: {
+      showLobbiesKDR: true,
+      showMyLobbyKDR: true,
+      showChallengeListKDR: true,
+      enableNameFilter: false,
+      enableKDRFilter: true,
+      enableAutomaticChallengeButton: true
+    }
+  }
 
   async setup() {
     try {
       const settings = await this.get()
       if(settings && Object.keys(settings).length) {
-        Object.assign(this.settings, settings)
+        Object.assign(this.settings, BrowserStorage.defaultSettings, settings)
         Logger.debug('⚙️ Loaded settings', JSON.stringify(settings))
       } else {
-        Object.assign(this.settings, { filters: {}, options: {} })
+        Object.assign(this.settings, BrowserStorage.defaultSettings)
         Logger.debug('⚙️ Setup settings as defaults', JSON.stringify(this.settings))
       }
     } catch(err) {
-      analytics.sendError(err)
+      analytics.sendError(err as string)
+      Logger.error(err)
     }
   }
 

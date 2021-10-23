@@ -5,9 +5,10 @@ import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
 import { gcSelectors } from '../../utils/gcSelectors'
-import lobbySerializer from './lobbySerializer'
+import serializer from './serializer'
 import lobbyFilter from './lobbyFilter'
 import Logger from 'js-logger'
+import BrowserStorage from '../../utils/storage'
 
 export default class LobbiesModifier {
 
@@ -120,21 +121,23 @@ export default class LobbiesModifier {
   }
 
   showPlayerKD(playerNode: any) {
-    const { $el: $player, kdr, id: playerId } = lobbySerializer.serializePlayer(playerNode)
-    const $kdrElement = $player!.find(gcSelectors.extension.kdr)
-    const containerName = `gcc-${playerId}`
+    if( BrowserStorage.settings.options?.showLobbiesKDR ){
+      const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode)
+      const $kdrElement = $player!.find(gcSelectors.extension.kdr)
+      const containerName = `gcc-${playerId}`
 
-    if ( typeof kdr !== 'undefined') {
-      if($kdrElement.length === 0){
-        const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
-        $player!.prepend( $kdBooster )
-        createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
+      if ( typeof kdr !== 'undefined') {
+        if($kdrElement.length === 0){
+          const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
+          $player!.prepend( $kdBooster )
+          createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
+        }
       }
     }
   }
 
   showKDForLobby(lobbyNode: any): void {
-    const { players } = lobbySerializer.serialize(lobbyNode)
+    const { players } = serializer.serialize(lobbyNode)
     players?.map( (player) => this.reactToNewPlayer(player.$el?.[0]) )
   }
 }

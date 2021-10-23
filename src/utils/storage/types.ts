@@ -6,7 +6,10 @@ export interface GCCOptions {
   showChallengeListKDR: boolean,
   enableKDRFilter: boolean,
   enableNameFilter: boolean
+  enableAutomaticChallengeButton: boolean
 }
+
+export type GCCOptionsKey = keyof GCCOptions;
 
 export interface GCCStorageSettings {
   filters: Partial<GCCFilters>
