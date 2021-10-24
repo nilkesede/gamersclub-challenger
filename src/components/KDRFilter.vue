@@ -21,6 +21,7 @@ import VueSlider from 'vue-slider-component'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
 import AnalyticsManager from '@/utils/analytics'
 import { dynamicEvents } from '@/utils/analytics/events'
+import { customDimentions } from '@/utils/analytics/dimentions'
 
 @Options({
   components: {
@@ -48,6 +49,7 @@ export default class KDR extends Vue {
 
   sendMetrics(value: number): void{
     AnalyticsManager.sendEvent(dynamicEvents({ value }).FILTER_BY_KDR)
+    AnalyticsManager.set(customDimentions.kdrFilterNumber, value.toString())
   }
 
   onChangeFilter(value: number): void {

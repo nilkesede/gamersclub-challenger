@@ -6,7 +6,7 @@ class BrowserStorage {
 
   settingsKey = 'gccSettings'
   settings: Partial<GCCStorageSettings> = {};
-  static defaultSettings: Partial<GCCStorageSettings> = {
+  defaultSettings: Partial<GCCStorageSettings> = {
     filters: {
       kdr: 1.2
     },
@@ -24,10 +24,10 @@ class BrowserStorage {
     try {
       const settings = await this.get()
       if(settings && Object.keys(settings).length) {
-        Object.assign(this.settings, BrowserStorage.defaultSettings, settings)
+        Object.assign(this.settings, this.defaultSettings, settings)
         Logger.debug('⚙️ Loaded settings', JSON.stringify(settings))
       } else {
-        Object.assign(this.settings, BrowserStorage.defaultSettings)
+        Object.assign(this.settings, this.defaultSettings)
         Logger.debug('⚙️ Setup settings as defaults', JSON.stringify(this.settings))
       }
     } catch(err) {

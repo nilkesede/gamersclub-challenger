@@ -5,3 +5,5 @@ export interface AnalyticsEvent {
   action: string
   value?: string | number
 }
+
+export type AnalyticsCustomDimention = 'gcId' | 'gcNickname' | 'gcLevel' | 'kdrFilterNumber'

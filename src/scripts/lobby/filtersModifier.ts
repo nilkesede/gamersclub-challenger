@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { gcSelectors } from '../../utils/gcSelectors'
 import KDRFilterComponent from '../../components/KDRFilter.vue'
 import LobbyNameFilterComponent from '../../components/LobbyNameFilter.vue'
-import Vue, { createApp } from 'vue'
+import { createApp } from 'vue'
 import { cleanSelector } from '@/utils/StringUtils'
 import gcBooster from '@/utils/gcBooster'
 import lobbyFilter from './lobbyFilter'
@@ -39,18 +39,17 @@ export default class FiltersModifier {
       const sections = $filtersContainer.find(gcSelectors.filterSection)
       const sectionModel = sections.get(0)
       const $gccFilterSection = $(sectionModel).clone()
-      const cleanContainerClass = cleanSelector(gcSelectors.extension.kdrFilterLabel)
+      const cleanContainerClass = cleanSelector(gcSelectors.extension.kdrFilterContainer)
 
       gcBooster.isInstalled()
         .then(() => {
           $gccFilterSection.addClass(cleanContainerClass)
           $filtersContainer.append($gccFilterSection)
-          this.insertKDRFilter()
-          createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || 1.2 }).mount($gccFilterSection.get(0))
+          createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || BrowserStorage.defaultSettings.filters?.kdr }).mount($gccFilterSection.get(0))
         })
         .catch(() => {
           const currentSection = sections.last().addClass(cleanContainerClass).get(0)
-          createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || 1.2 }).mount(currentSection)
+          createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || BrowserStorage.defaultSettings.filters?.kdr }).mount(currentSection)
         })
     }
   }

@@ -12,6 +12,7 @@ import FiltersModifier from '../../scripts/lobby/filtersModifier'
 import MyLobbyModifier from '../../scripts/lobby/MyLobbyModifier'
 import ChallengeListModifier from '../../scripts/lobby/ChallengeListModifier'
 import lobbyFilter from '../../scripts/lobby/lobbyFilter'
+import serializer from '../../scripts/lobby/serializer'
 
 // ===
 // Run
@@ -27,7 +28,8 @@ try {
       Logger.debug('🟢 GA INITIALIZED')
     }
 
-    Analytics.setup()
+    const loggedPlayer = serializer.serializeLoggedPlayer()
+    Analytics.setup(loggedPlayer)
     Analytics.set('title', 'Lobby')
     Analytics.send('pageview')
 
