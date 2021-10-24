@@ -6,11 +6,12 @@ import { createApp, reactive, ref } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
 import GCChallengerComponent from '../../components/Challenger.vue'
 import { gcSelectors } from '../../utils/gcSelectors'
-import lobbySerializer from './lobbySerializer'
+import serializer from './serializer'
 import lobbyFilter from './lobbyFilter'
 import Logger from 'js-logger'
 import LobbyPlayer from './domain/LobbyPlayer'
 import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/magicNumbers'
+import BrowserStorage from '../../utils/storage'
 
 export default class MyLobbyModifier {
 
@@ -116,7 +117,7 @@ export default class MyLobbyModifier {
   }
 
   reactToLobbyCreation(node: any) {
-    this.lobby = lobbySerializer.serializeMyLobby(node)
+    this.lobby = serializer.serializeMyLobby(node)
     this.lobby.players?.map( (player: Partial<LobbyPlayer>) => this.reactToNewPlayer(player.$el?.[0]) )
   }
 
@@ -143,14 +144,16 @@ export default class MyLobbyModifier {
   }
 
   showPlayerKD(playerNode: any) {
-    const { $el: $player, kdr, id: playerId } = lobbySerializer.serializePlayer(playerNode, gcSelectors.myLobby.player)
-    const $kdrElement = $player!.find(gcSelectors.extension.kdr)
-    const containerName = `gcc-my-lobby-player-${playerId}`
+    if( BrowserStorage.settings.options?.showMyLobbyKDR ){
+      const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode, gcSelectors.myLobby.player)
+      const $kdrElement = $player!.find(gcSelectors.extension.kdr)
+      const containerName = `gcc-my-lobby-player-${playerId}`
 
-    if ( typeof kdr !== 'undefined' && $kdrElement.length === 0) {
-      const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top'></div>`
-      $player!.append( $kdBooster )
-      createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
+      if ( typeof kdr !== 'undefined' && $kdrElement.length === 0) {
+        const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top'></div>`
+        $player!.append( $kdBooster )
+        createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
+      }
     }
   }
 
@@ -173,7 +176,7 @@ export default class MyLobbyModifier {
 
   refreshLobbyInfos() {
     const $lobby = $( gcSelectors.myLobby.root )
-    this.lobby = lobbySerializer.serializeMyLobby($lobby[0])
+    this.lobby = serializer.serializeMyLobby($lobby[0])
   }
 
 }

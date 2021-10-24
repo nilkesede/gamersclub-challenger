@@ -4,7 +4,9 @@ export const gcSelectors = {
   lobby: '.lobby-room-list-item',
 
   loggedUser: {
-    avatar: '.MainAvatar img',
+    avatar: '.MainHeader__navbar .MainAvatar img',
+    level: '.MainHeader__navbar .MainHeader__playerLevel .gcf-badge-level-value',
+    name: '.MainHeader__navbar .MainHeader__playerNickname'
   },
 
   myLobby: {
@@ -51,13 +53,13 @@ export const gcSelectors = {
   },
 
   booster: {
-    forcedLobbyCreationButton: '#forcarCriacaoLobbyBtn',
+    buttonsContainer: '#gcbooster_botoes',
   },
 
   extension: {
     appContainer: '.gcc-app-container',
     kdr: '.gcc-kdr',
-    kdrFilterLabel: '.gcc-kdr-filter-label',
+    kdrFilterContainer: '.gcc-kdr-filter-container',
     hidden: '.gcc-hide',
     lobbies: {
       challenged: '.gcc-lobby-challenged'

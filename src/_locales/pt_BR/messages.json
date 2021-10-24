@@ -19,5 +19,25 @@
   },
   "stopChalleging": {
     "message": "Parar de desafiar automaticamente"
+  },
+
+  "settingsOption__showLobbiesKDR": {
+    "message": "Mostrar KDR dos jogadores das lobbies"
+  },
+
+  "settingsOption__showMyLobbyKDR": {
+    "message": "Mostrar KDR dos jogadores da minha lobby"
+  },
+
+  "settingsOption__showChallengeListKDR": {
+    "message": "Mostrar KDR dos jogadores que desafiam minha lobby"
+  },
+
+  "settingsOption__enableKDRFilter": {
+    "message": "Habilitar filtro por KDR nas lobbies"
+  },
+
+  "settingsOption__enableNameFilter": {
+    "message": "Habilitar filtro pelo nome dos jogadores"
   }
 }

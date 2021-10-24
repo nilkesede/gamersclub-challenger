@@ -1,20 +1,19 @@
 
 import { GCCFilters } from './domain/gccFilters'
 import { gcSelectors } from '../../utils/gcSelectors'
-import LobbySerializer from './lobbySerializer'
+import Serializer from './serializer'
 import $ from 'jquery'
 import { cleanSelector } from '@/utils/StringUtils'
-import BrowserStorage from '@/utils/storage'
-import { GCCStorageSettings } from '@/utils/storage/types'
+import browserStorage from '@/utils/storage'
 import Logger from 'js-logger'
 
 const KDR_MAX_LIMIT = 2
 
 class LobbyFilter {
-  filters: Partial<GCCFilters> = { kdr: 1.2 }
+  filters: Partial<GCCFilters> = { kdr: browserStorage.defaultSettings.filters!.kdr }
 
   setup() {
-    this.filters = BrowserStorage.settings.filters!
+    this.filters = browserStorage.settings.filters!
     this.filters.playerName = ''
     Logger.debug('🧪 Recovered saved filters', this.filters)
   }
@@ -26,22 +25,22 @@ class LobbyFilter {
     const lobbiesElements = $(gcSelectors.lobby).get()
     lobbiesElements.map(this.reactToFilter.bind(this))
 
-    await BrowserStorage.updateSettings()
+    await browserStorage.updateSettings()
   }
 
   reactToFilter(lobbyNode: any){
-    const { players, $el, id } = LobbySerializer.serialize(lobbyNode)
+    const { players, $el } = Serializer.serialize(lobbyNode)
     const $room = $el?.hasClass(cleanSelector(gcSelectors.lobby)) ? $el : $el?.closest(gcSelectors.lobby)
     let validLobby: boolean | undefined = true
     const cleanHiddenSelector = cleanSelector(gcSelectors.extension.hidden)
 
-    if(typeof this.filters.kdr !== 'undefined' && players){
+    if(typeof this.filters.kdr !== 'undefined' && players && browserStorage.settings.options?.enableKDRFilter){
       validLobby = players.every((player) => {
         return this.filters.kdr! >= KDR_MAX_LIMIT || player.kdr as number <= this.filters.kdr!
       })
     }
 
-    if(validLobby && players && this.filters.playerName){
+    if(validLobby && players && this.filters.playerName && browserStorage.settings.options?.enableNameFilter){
       validLobby = players.some( player => {
         return player.name && player.name.toLowerCase().indexOf(this.filters.playerName!.toLowerCase().trim()) > -1;
       });

@@ -26,7 +26,7 @@ import { Ref, ref, watch } from 'vue'
 import { gcSelectors } from '../utils/gcSelectors'
 import { cleanSelector } from '@/utils/StringUtils'
 import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/magicNumbers'
-import lobbySerializer from '@/scripts/lobby/lobbySerializer'
+import serializer from '@/scripts/lobby/serializer'
 import $ from 'jquery'
 import Logger from 'js-logger'
 import Analytics from '@/utils/analytics'
@@ -109,7 +109,7 @@ export default class Challenger extends Vue {
     Logger.debug(`👁️ Checking challenges for ${lobbies.length} lobbies`)
 
     lobbies.map((node) => {
-      const { players, $el: $lobby, name: lobbyName } = lobbySerializer.serialize(node)
+      const { players, $el: $lobby, name: lobbyName } = serializer.serialize(node)
       const $challengeButton = $lobby?.find(gcSelectors.lobbies.bigChallengeButton)
       const isValidLobbyByFilters = !$lobby?.hasClass(cleanSelector(gcSelectors.extension.hidden)) && !$lobby?.hasClass(cleanSelector(gcSelectors.extension.lobbies.challenged))
 

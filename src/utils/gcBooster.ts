@@ -5,7 +5,7 @@ class GamersClubBooster {
   static EXTENSION_ID = 'dahnmmlhchpmmlgebpkpaofbefjdlpin'
 
   private isBoosterIntalled(): boolean {
-    return $( gcSelectors.booster.forcedLobbyCreationButton ).length > 0
+    return $( gcSelectors.booster.buttonsContainer ).length > 0
   }
 
   isInstalled(): Promise<boolean> {
