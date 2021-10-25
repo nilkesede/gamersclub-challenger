@@ -44,7 +44,7 @@ export default class FiltersModifier {
       gcBooster.isInstalled()
         .then(() => {
           $gccFilterSection.addClass(cleanContainerClass)
-          $filtersContainer.append($gccFilterSection)
+          $filtersContainer.get(0).append($gccFilterSection[0])
           createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || BrowserStorage.defaultSettings.filters?.kdr }).mount($gccFilterSection.get(0))
         })
         .catch(() => {
