@@ -1,30 +1,39 @@
 <template>
-  <Popper placement="top">
+  <div class="gcc-kdr-wrapper">
+    <div class="gcc-stats-trigger">Ver mais</div>
     <div class="gcc-kdr" :class="{
       'gcc-kdr--god': 1.5 <= value,
       'gcc-kdr--above': 1.2 <= value && value < 1.5,
       'gcc-kdr--below': value < 1
     }">{{value}}</div>
-    <template #content>
-      <div>This is the Popper content</div>
-    </template>
-  </Popper>
+  </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import Popper from "vue3-popper";
 
 @Options({
-  components: {
-    Popper,
-  },
   props: {
-    value: Number
+    value: Number,
   }
 })
 export default class KDR extends Vue {
   value!: number
+
+  data(): any {
+    return {
+
+    }
+  }
+
+  onOpenPopper(){
+    fetch('https://gamersclub.com.br/api/box/history/340558')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      })
+      .catch((err) => { console.log('errooou', err) })
+  }
 }
 </script>
 
@@ -34,22 +43,25 @@ export default class KDR extends Vue {
   $backgroundOpacity: 0.5;
   $popperBg: #23394d;
 
-  :deep(.popper) {
-    background: $popperBg;
-    padding: 20px;
-    border-radius: 20px;
-    color: #fff;
-    font-weight: bold;
-    text-transform: uppercase;
+  .gcc-kdr-wrapper {
+    position: relative;
+
+    &:hover {
+      .gcc-stats-trigger {
+        display: block;
+      }
+    }
   }
 
-  :deep(.popper #arrow::before) {
-    background: $popperBg;
-  }
-
-  :deep(.popper:hover),
-  :deep(.popper:hover > #arrow::before) {
-    background: $popperBg;
+  .gcc-stats-trigger {
+    text-align: center;
+    // display: none;
+    display: block;
+    height: 10px;
+    color: white;
+    width: 100%;
+    position: absolute;
+    top: -10px;
   }
 
   .gcc-kdr {
