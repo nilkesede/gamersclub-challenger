@@ -1,5 +1,5 @@
 <template>
-  <div class="gcc-kdr-wrapper">
+  <div class="gcc-kdr-wrapper" @click="onClickToSeeMore">
     <div class="gcc-stats-trigger">Ver mais</div>
     <div class="gcc-kdr" :class="{
       'gcc-kdr--god': 1.5 <= value,
@@ -10,15 +10,22 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import { Options, Vue } from 'vue-class-component'
+import tippy, {} from 'tippy.js'
+import { createApp } from '@vue/runtime-dom'
+import GCCStats from './GCCStats.vue'
 
 @Options({
   props: {
     value: Number,
+    playerId: String,
   }
 })
 export default class KDR extends Vue {
   value!: number
+  playerId!: string
+  tippyInstance: any = null
+
 
   data(): any {
     return {
@@ -26,13 +33,31 @@ export default class KDR extends Vue {
     }
   }
 
-  onOpenPopper(){
-    fetch('https://gamersclub.com.br/api/box/history/340558')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
+  unmounted(){
+    this.tippyInstance?.destroy()
+  }
+
+  onClickToSeeMore(){
+    if(this.tippyInstance){
+      this.tippyInstance.show()
+    } else {
+      const playerId = this.playerId
+      this.tippyInstance = tippy(this.$el, {
+        allowHTML: true,
+        // sticky: true,
+        interactive: true,
+        appendTo: document.body,
+        content: `<div id="gcc-tippy-content-${playerId}">Loading...</div>`,
+        trigger: 'mouseenter',
+        showOnCreate: true,
+        onShow(instance: any) {
+          const container = document.createElement('div')
+          createApp(GCCStats, { playerId }).mount(container)
+          instance.setContent(container)
+        }
       })
-      .catch((err) => { console.log('errooou', err) })
+    }
+
   }
 }
 </script>
