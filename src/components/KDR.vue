@@ -48,7 +48,7 @@ export default class KDR extends Vue {
         interactive: true,
         appendTo: document.body,
         content: `<div id="gcc-tippy-content-${playerId}">Loading...</div>`,
-        trigger: 'mouseenter',
+        trigger: 'click',
         showOnCreate: true,
         onShow(instance: any) {
           const container = document.createElement('div')
