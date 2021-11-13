@@ -42,6 +42,15 @@ export const gcSelectors = {
     title: '.sala-card-title'
   },
 
+  playerPage: {
+    socialButtons: {
+      instagram: '.Button--instagram',
+      twitch: '.Button--twitch',
+      steam: '.Button--steam',
+      twitter: '.Button--twitter',
+    }
+  },
+
   challengeList: {
     self: '#challengeList',
     currentLobbyContent: '.sidebar-desafios-team-content',
