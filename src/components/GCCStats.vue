@@ -1,21 +1,26 @@
 <template>
   <div class="gcc-stats-wrapper" >
-    <div class="gcc-stats-bg" :style="{
-    'background-image': backgroundImage
-      }"></div>
+    <div class="gcc-stats-bg" :style="userBackground"></div>
     <i v-if="isLoading" class="fas fa-spinner rotating gcc-stats__loading-icon"></i>
     <article v-if="!isLoading && stats">
-      <section v-if="stats.initial && stats.initial.playerInfo" class="gcc-stats__profile">
-        <h4 class="gcc-stats__profile-name">
-          {{ stats.initial.playerInfo.nick }}
-        </h4>
-        <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small>
-        <div class="gcc-stats__profile-social-medias">
-          <a v-for="social in socialButtons" :key="social.icon" :href="social.url" class="gcc-stats__profile-social-media-buttom">
-            <i :class="['fa', social.icon]"></i>
-            {{ social.name }}
+      <section class="gcc-stats__profile">
+        <div v-if="stats.initial && stats.initial.playerInfo" class="gcc-stats__profile-content">
+          <a :href="gcUrls.player(playerId)" target="blank">
+            <h4 class="gcc-stats__profile-name">
+              {{ stats.initial.playerInfo.nick }}
+            </h4>
           </a>
+
+          <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small>
+          <div class="gcc-stats__profile-social-medias">
+            <a v-for="social in socialButtons" :key="social.icon" :href="social.url" class="gcc-stats__profile-social-media-buttom">
+              <i :class="['fa', social.icon]"></i>
+              {{ social.name }}
+            </a>
+          </div>
         </div>
+      </section>
+      <section class="">
       </section>
       <section v-if="historyMatchesNumbers"
         class="gcc-stats__matches-section">
@@ -98,11 +103,12 @@ export default class GCCStats extends Vue {
         twitch: { name: 'Twitch', icon: 'fa-twitch'},
         twitter: { name: 'Twitter', icon: 'fa-twitter'},
         steam: { name: 'Steam', icon: 'fa-steam'},
-        instagram: { name: 'Instagram', icon: 'fa-instagram'}
+        instagram: { name: 'Insta', icon: 'fa-instagram'}
       }
     }
     return {
-      i18n
+      i18n,
+      gcUrls,
     }
   }
 
@@ -118,9 +124,14 @@ export default class GCCStats extends Vue {
     return this.stats?.history?.matches || {}
   }
 
-  get backgroundImage() {
+  get userBackground() {
     const image = this.stats?.initial?.playerInfo?.statsBackground?.image
-    return image ? `url(${image})` : `url('../../assets/awesome-ct-bg.jpg')`
+    return image ? {
+      'background-image': `url(${image})`
+    } : {
+      'background-image': `url(${window.browser.runtime.getURL('../../assets/awesome-ct-bg.JPG')})`,
+      'background-position': 'left center'
+    }
   }
 
   get socialButtons() {
@@ -196,6 +207,7 @@ export default class GCCStats extends Vue {
     right: 0;
     bottom: 0;
     z-index: -1;
+    box-shadow: 0 0 0.1px 1px black;
   }
 
   .gcc-stats__loading-icon {
