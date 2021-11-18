@@ -2,6 +2,7 @@
   <div class="gcc-stats-wrapper" >
     <div class="gcc-stats-bg" :style="userBackground"></div>
     <i v-if="isLoading" class="fas fa-spinner rotating gcc-stats__loading-icon"></i>
+    <span class="gcc-stats-player-id">GC ID: {{ playerId }}</span>
     <article v-if="!isLoading && stats">
       <section class="gcc-stats__profile">
         <div v-if="stats.initial && stats.initial.playerInfo" class="gcc-stats__profile-content">
@@ -59,8 +60,7 @@
 </template>
 
 <script lang="ts">
-import Component, { Options, Vue } from 'vue-class-component'
-import { ref, Ref } from 'vue'
+import { Options, Vue } from 'vue-class-component'
 import { GCInitialPlayerStats } from '../scripts/lobby/domain/GCInitialPlayerStats'
 import { gcUrls } from '../utils/gcUrls'
 import { GCPlayerStatsHistory } from '@/scripts/lobby/domain/GCPlayerStatsHistory'
@@ -217,6 +217,16 @@ export default class GCCStats extends Vue {
     padding: math.div($wrapperHeight, 3) 0;
   }
 
+  .gcc-stats-player-id {
+    font-family: sans-serif;
+    font-size: 10px;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    opacity: 0.4;
+    font-style: italic;
+  }
+
   .gcc-stats__profile {
     text-align: center;
     padding: 10px;
@@ -225,6 +235,7 @@ export default class GCCStats extends Vue {
     &-name {
       font-size: 18px;
       font-weight: 700;
+      font-family: 'Poppins';
     }
 
     &-rating {
