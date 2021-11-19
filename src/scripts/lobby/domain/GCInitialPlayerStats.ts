@@ -34,5 +34,5 @@ export interface GCInitialPlayerStats {
       image: string,
     }
   }
-  stats: { stat: string, diff: string, value: string }[]
+  stats: { stat: string, diff?: string, value: string }[]
 }

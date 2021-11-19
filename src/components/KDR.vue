@@ -11,9 +11,9 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import tippy, {} from 'tippy.js'
+import tippy, { sticky } from 'tippy.js'
 import { createApp } from '@vue/runtime-dom'
-import GCCStats from './GCCStats.vue'
+import GCCPlayerStatsComparator from './GCCPlayerStatsComparator.vue'
 
 @Options({
   props: {
@@ -43,8 +43,11 @@ export default class KDR extends Vue {
     } else {
       const playerId = this.playerId
       this.tippyInstance = tippy(this.$el, {
+        plugins: [ sticky ],
         allowHTML: true,
-        // sticky: true,
+        sticky: true,
+        animation: false,
+        maxWidth: 'none',
         interactive: true,
         appendTo: document.body,
         content: `<div id="gcc-tippy-content-${playerId}">Loading...</div>`,
@@ -52,7 +55,7 @@ export default class KDR extends Vue {
         showOnCreate: true,
         onShow(instance: any) {
           const container = document.createElement('div')
-          createApp(GCCStats, { playerId }).mount(container)
+          createApp(GCCPlayerStatsComparator, { playersIds: [ playerId ] }).mount(container)
           instance.setContent(container)
         }
       })

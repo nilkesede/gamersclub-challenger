@@ -1,27 +1,46 @@
 <template>
   <div class="gcc-stats-wrapper" >
     <div class="gcc-stats-bg" :style="userBackground"></div>
+
     <i v-if="isLoading" class="fas fa-spinner rotating gcc-stats__loading-icon"></i>
     <span class="gcc-stats-player-id">GC ID: {{ playerId }}</span>
     <article v-if="!isLoading && stats">
       <section class="gcc-stats__profile">
         <div v-if="stats.initial && stats.initial.playerInfo" class="gcc-stats__profile-content">
-          <a :href="gcUrls.player(playerId)" target="blank">
-            <h4 class="gcc-stats__profile-name">
-              {{ stats.initial.playerInfo.nick }}
-            </h4>
-          </a>
+          <div class="gcc-stats__core-info">
+            <div class="gcc-stats__avatar-wrapper">
+              <div class="gcc-stats__avatar" :style="{
+                'background-image': `url(https://static.gamersclub.com.br/players/avatar/${playerId}/${playerId}_full.jpg)`,
+              }"></div>
+            </div>
+            <div class="gcc-stats__core-general-info">
+              <a :href="gcUrls.player(playerId)" target="blank">
+                <h4 class="gcc-stats__profile-name">
+                  {{ stats.initial.playerInfo.nick }}
+                </h4>
+              </a>
+              <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small>
+            </div>
 
-          <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small>
+          </div>
+
           <div class="gcc-stats__profile-social-medias">
-            <a v-for="social in socialButtons" :key="social.icon" :href="social.url" class="gcc-stats__profile-social-media-buttom">
+            <a v-for="social in socialButtons" :key="social.icon" :href="social.url" class="gcc-stats__profile-social-media-buttom" target="blank">
               <i :class="['fa', social.icon]"></i>
               {{ social.name }}
             </a>
           </div>
         </div>
       </section>
-      <section class="">
+      <section class="gcc-stats__profile-stats">
+        <transition-group class="gcc-stats__profile-stats-list" tag="ul">
+          <li v-for="stat in availableUserStats" :key="stat.name" class="gcc-stats__profile-stat">
+            <span class="gcc-stats__profile-stat-name">
+              <i :class="[stat.icon]"></i> {{ stat.name }}
+            </span>
+            <p>{{ stat.value }}</p>
+          </li>
+        </transition-group>
       </section>
       <section v-if="historyMatchesNumbers"
         class="gcc-stats__matches-section">
@@ -29,6 +48,7 @@
           <span class="gcc-stats__match-number gcc-stats__match-number--win">
             {{ i18n.getMessage('playerStats__wonMatches') }}: <strong>{{historyMatchesNumbers.wins }}</strong>
           </span>
+          <span class="gcc-stats__match-number gcc-stats__match-number--total"> {{ i18n.getMessage('playerStats__totalMatches') }}: {{ historyMatchesNumbers.matches }}</span>
           <span class="gcc-stats__match-number gcc-stats__match-number--loss">
             {{ i18n.getMessage('playerStats__lostMatches') }}: <strong>{{historyMatchesNumbers.loss }}</strong>
           </span>
@@ -89,12 +109,14 @@ export default class GCCStats extends Vue {
   isLoadingInitialData = true
   isLoadingHistory = true
   stats: Partial<{
-    core: {
+    core: Partial<{
       social: Record<socialMedia, Partial<{ url?: string, name: string, icon: string }>>
-    },
+      statistics: Partial<{ name: string, icon: string, value?: string }>[]
+    }>,
     initial: GCInitialPlayerStats,
     history: GCPlayerStatsHistory
   }> = {}
+
 
   data() {
     const { i18n } = window.browser;
@@ -104,7 +126,15 @@ export default class GCCStats extends Vue {
         twitter: { name: 'Twitter', icon: 'fa-twitter'},
         steam: { name: 'Steam', icon: 'fa-steam'},
         instagram: { name: 'Insta', icon: 'fa-instagram'}
-      }
+      },
+      statistics: [
+        { name: "KDR", icon: 'fas fa-skull-crossbones' },
+        { name: "Clutches", icon: 'fas fa-brain' },
+        { name: "HS%", icon: 'fas fa-skull' },
+        { name: "First kills", icon: 'fa fa-stopwatch' },
+        { name: "ADR", icon: 'fas fa-burn' },
+        { name: "Multi Kills", icon: 'fas fa-crosshairs' }
+      ]
     }
     return {
       i18n,
@@ -136,6 +166,17 @@ export default class GCCStats extends Vue {
 
   get socialButtons() {
     return Object.values(this.stats.core?.social as any).filter((social: any) => social.url)
+  }
+
+  get availableUserStats() {
+    const stats =  this.stats.core?.statistics || []
+    stats.map((stat) => {
+      const historyStat = this.stats.history?.stat.find((currentHistoryStat) => currentHistoryStat.stat.toLowerCase() === stat.name?.toLowerCase())
+      if(historyStat) {
+        stat.value = historyStat.value
+      }
+    })
+    return stats.filter((stat) => stat.value)
   }
 
   fetchPlayerStats() {
@@ -188,9 +229,9 @@ export default class GCCStats extends Vue {
   $green: #95b300;
   $red: #eb2f2f;
   $wrapperHeight: 400px;
-
+  $wrapperWidth: 320px;
   .gcc-stats-wrapper {
-    width: 320px;
+    width: $wrapperWidth;
     height: $wrapperHeight;
     position: relative;
     background-size: cover;
@@ -208,6 +249,28 @@ export default class GCCStats extends Vue {
     bottom: 0;
     z-index: -1;
     box-shadow: 0 0 0.1px 1px black;
+  }
+
+  .gcc-stats__core-info {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+  }
+
+  .gcc-stats__core-general-info {
+    width: 200px;
+    text-align: left;
+  }
+
+  .gcc-stats__avatar-wrapper {
+    padding-left: 10px;
+  }
+
+  .gcc-stats__avatar {
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    border-radius: 5px;
   }
 
   .gcc-stats__loading-icon {
@@ -236,6 +299,9 @@ export default class GCCStats extends Vue {
       font-size: 18px;
       font-weight: 700;
       font-family: 'Poppins';
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     &-rating {
@@ -253,9 +319,49 @@ export default class GCCStats extends Vue {
         flex: 1;
         font-size: 12px;
         padding: 5px;
+
+        i {
+          margin-right: 5px;
+        }
       }
     }
+
+    &-stats-list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      flex-wrap: wrap;
+      width: $wrapperWidth;
+    }
+
+    &-stat {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      width: math.div($wrapperWidth, 3);
+      height: 60px;
+      border-right: 1px solid black;
+      padding-top: 10px;
+
+      &:nth-child(n + 4) {
+        border-top: 1px solid black;
+      }
+
+    }
+
+    &-stat-name {
+      font-size: 10px;
+      font-weight: 700;
+
+      i {
+        font-size: 10px;
+        margin-right: 5px;
+      }
+
+    }
   }
+
 
   .gcc-stats__matches-section {
     display: flex;
@@ -284,6 +390,10 @@ export default class GCCStats extends Vue {
 
     &--loss {
       color: $red;
+    }
+
+    &--total {
+      color: gray;
     }
   }
 

@@ -24,6 +24,8 @@ export interface GCPlayerStatsHistory {
   monthRating: {
     max: number,
     min: number,
-  }
+  },
+
+  stat: { stat: string, diff?: string, value: string }[]
 }
 
