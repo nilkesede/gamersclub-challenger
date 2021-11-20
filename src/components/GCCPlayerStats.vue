@@ -255,6 +255,10 @@ export default class GCCStats extends Vue {
     display: flex;
     justify-content: space-between;
     padding-top: 5px;
+
+    &:nth-child(even) {
+      flex-direction: row-reverse;
+    }
   }
 
   .gcc-stats__core-general-info {

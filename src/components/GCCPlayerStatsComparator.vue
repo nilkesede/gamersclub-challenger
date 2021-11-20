@@ -1,7 +1,12 @@
 <template>
-  <div class="gcc-stats-comparator-wrapper">
-    <div v-for="playerId in playersIds" :key="playerId" class="gcc-stats-comparator-content">
-      <GCPlayerStats :playerId="playerId" />
+  <div class="gcc-stats-comparator">
+    <button type="button" class="gcc-stats-comparator__comparate-button" v-if="compare.playersIds.length === 1" @click="comparateUser">
+      <i class="fas fa-project-diagram"></i>
+    </button>
+    <div class="gcc-stats-comparator__content">
+      <div v-for="playerId in compare.playersIds" :key="playerId" class="gcc-stats-comparator__comparable-wrapper">
+        <GCPlayerStats :playerId="playerId" />
+      </div>
     </div>
   </div>
 </template>
@@ -29,16 +34,22 @@ import serializer from '@/scripts/lobby/serializer'
 })
 export default class GCCStatsPlayerComparator extends Vue {
   playersIds!: string[]
+  compare: { playersIds: string[] } = { playersIds: [] }
 
   data() {
     const { i18n } = window.browser;
-
-    this.playersIds ||= []
-    // this.playersIds.push(serializer.serializeLoggedPlayer().id!)
+    this.compare.playersIds = this.compare.playersIds.concat(this.playersIds)
 
     return {
       i18n,
       gcUrls,
+    }
+  }
+
+  comparateUser() {
+    const { id } = serializer.serializeLoggedPlayer()
+    if(id) {
+      this.compare.playersIds.push(id)
     }
   }
 }
@@ -46,10 +57,49 @@ export default class GCCStatsPlayerComparator extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.gcc-stats-comparator {
-  &-content {
-    position: relative;
-    display: inline-block;
+  $blue: #247eb9;
+  $darkenBlue: #1e6a9b;
+  $gray: #484848;
+
+  :deep .gcc-stats-comparator {
+    &__comparable-wrapper:nth-child(even) {
+      .gcc-stats__core-info {
+        flex-direction: row-reverse;
+      }
+
+      .gcc-stats__core-general-info {
+        text-align: right;
+      }
+    }
   }
-}
+
+  .gcc-stats-comparator {
+    position: relative;
+
+    &__content {
+      display: flex;
+    }
+
+    &__comparate-button {
+      position: absolute;
+      right: -10px;
+      top: 40px;
+      background: $blue;
+      color: white;
+      transition: background-color 0.2s ease-in-out;
+      z-index: 10;
+
+      &:hover {
+        background: $darkenBlue;
+      }
+
+      &:disabled {
+        background: $gray;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+    }
+
+
+  }
 </style>
