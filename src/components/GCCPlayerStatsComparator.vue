@@ -1,10 +1,15 @@
 <template>
   <div class="gcc-stats-comparator">
     <button type="button" class="gcc-stats-comparator__comparate-button" v-if="compare.playersIds.length === 1" @click="comparateUser">
-      <i class="fas fa-project-diagram"></i>
+      <span>VS</span>
     </button>
     <div class="gcc-stats-comparator__content">
-      <div v-for="playerId in compare.playersIds" :key="playerId" class="gcc-stats-comparator__comparable-wrapper">
+      <div v-for="(playerId, $index) in compare.playersIds" :key="playerId" class="gcc-stats-comparator__comparable-wrapper">
+        <div class="gcc-stats-comparator__comparable-separator" v-if="$index != 0">
+          <div class="gcc-stats-comparator__comparable-separator-content">
+            <span>VS</span>
+          </div>
+        </div>
         <GCPlayerStats :playerId="playerId" />
       </div>
     </div>
@@ -57,12 +62,13 @@ export default class GCCStatsPlayerComparator extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  @use "sass:math";
   $blue: #247eb9;
   $darkenBlue: #1e6a9b;
   $gray: #484848;
 
   :deep .gcc-stats-comparator {
-    &__comparable-wrapper:nth-child(even) {
+    &__comparable-wrapper:last-child {
       .gcc-stats__core-info {
         flex-direction: row-reverse;
       }
@@ -76,18 +82,27 @@ export default class GCCStatsPlayerComparator extends Vue {
   .gcc-stats-comparator {
     position: relative;
 
+    &:hover {
+      .gcc-stats-comparator__comparate-button {
+        opacity: 1;
+      }
+    }
+
     &__content {
       display: flex;
     }
 
     &__comparate-button {
       position: absolute;
-      right: -10px;
-      top: 40px;
-      background: $blue;
+      right: -60px;
+      top: 0;
+      bottom: 0;
+      border: 1px dashed $blue;
       color: white;
-      transition: background-color 0.2s ease-in-out;
+      transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
       z-index: 10;
+      opacity: 0;
+      background-color: rgba($color: $blue, $alpha: 0.5);
 
       &:hover {
         background: $darkenBlue;
@@ -100,6 +115,37 @@ export default class GCCStatsPlayerComparator extends Vue {
       }
     }
 
+    &__comparable-wrapper {
+      position: relative;
+    }
+
+    &__comparable-separator {
+      width: 15px;
+      height: 100%;
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: -10px;
+      bottom: 0;
+      z-index: 10;
+    }
+
+    &__comparable-separator-content {
+        $size: 40px;
+        z-index: 11;
+        text-align: center;
+        border-radius: 20px;
+        width: $size;
+        height: $size;
+        background-color: black;
+        border: 2px solid black;
+        color: white;
+        vertical-align: middle;
+        position: absolute;
+        left: -10px;
+        top: calc(50% - #{math.div($size, 2) + 3px});
+        padding: 10px 0;
+    }
 
   }
 </style>

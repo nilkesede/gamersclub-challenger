@@ -1,6 +1,7 @@
 import '../../plugins/window.setup'
 import '../../plugins/logger.setup'
 import '../../plugins/observer.jquery'
+import 'tilt.js'
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 import '@/styles/main.scss'

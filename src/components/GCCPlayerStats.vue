@@ -142,8 +142,19 @@ export default class GCCStats extends Vue {
     }
   }
 
-  mounted() {
+  beforeMount() {
     this.fetchPlayerStats()
+  }
+
+  mounted() {
+    // @ts-ignore
+    $(this.$el).tilt({
+      glare: true,
+      axis: 'x',
+      maxTilt: 10,
+      maxGlare: 0.1,
+      scale: 1.1
+    })
   }
 
   get isLoading() {
@@ -235,9 +246,12 @@ export default class GCCStats extends Vue {
     height: $wrapperHeight;
     position: relative;
     background-size: cover;
+    transform-style: preserve-3d;
 
-    article > section {
-      border-bottom: 1px solid rgba(0,0,0,0.5);
+    article {
+      > section {
+        border-bottom: 1px solid rgba(0,0,0,0.5);
+      }
     }
   }
 
@@ -249,6 +263,7 @@ export default class GCCStats extends Vue {
     bottom: 0;
     z-index: -1;
     box-shadow: 0 0 0.1px 1px black;
+    opacity: 0.7;
   }
 
   .gcc-stats__core-info {
@@ -264,6 +279,7 @@ export default class GCCStats extends Vue {
   .gcc-stats__core-general-info {
     width: 200px;
     text-align: left;
+    transform: translateZ(20px);
   }
 
   .gcc-stats__avatar-wrapper {
