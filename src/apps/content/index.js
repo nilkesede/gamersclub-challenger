@@ -25,7 +25,7 @@ try {
 
   const run = async (response) => {
 
-    if(response === 'GA_FAILED') {
+    if(!response || response === 'GA_FAILED') {
       Logger.error('GA HAS NOT STARTED')
     } else {
       Logger.debug('🟢 GA INITIALIZED')
