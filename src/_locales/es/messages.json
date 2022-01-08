@@ -33,5 +33,17 @@
 
   "settingsOption__enableNameFilter": {
     "message": "Habilitar el filtro por nombre de jugador"
+  },
+
+  "playerStats__lostMatches": {
+    "message": "Derrotas"
+  },
+
+  "playerStats__wonMatches": {
+    "message": "Victorias"
+  },
+
+  "playerStats__totalMatches": {
+    "message": "Partidos"
   }
 }
