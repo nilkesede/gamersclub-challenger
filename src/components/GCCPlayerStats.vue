@@ -2,8 +2,12 @@
   <div class="gcc-stats-wrapper" >
     <div class="gcc-stats-bg" :style="userBackground"></div>
 
-    <i v-if="isLoading" class="fas fa-spinner rotating gcc-stats__loading-icon"></i>
+    <i v-if="isLoading" class="fas fa-spinner rotating gcc-stats__loading-icon" :class="{
+      'gcc-stats__loading-icon--big-loading': isLoading,
+      'gcc-stats__loading-icon--small-loading': isStillLoading
+    }"></i>
     <span class="gcc-stats-player-id">GC ID: {{ playerId }}</span>
+
     <article v-if="!isLoading && stats">
       <section class="gcc-stats__profile">
         <div v-if="stats.initial && stats.initial.playerInfo" class="gcc-stats__profile-content">
@@ -19,7 +23,7 @@
                   {{ stats.initial.playerInfo.nick }}
                 </h4>
               </a>
-              <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small>
+              <!-- <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small> -->
             </div>
 
           </div>
@@ -42,7 +46,7 @@
           </li>
         </transition-group>
       </section>
-      <section v-if="historyMatchesNumbers"
+      <section v-if="historyMatchesNumbers.matches"
         class="gcc-stats__matches-section">
         <div class="gcc-stats__matches-numbers">
           <span class="gcc-stats__match-number gcc-stats__match-number--win">
@@ -89,8 +93,8 @@ import analytics from '@/utils/analytics'
 import Logger from 'js-logger'
 import $ from 'jquery'
 import { gcSelectors } from '@/utils/gcSelectors'
+import { socialMedia } from '../scripts/lobby/domain/socialMedia'
 
-type socialMedia = 'steam' | 'twitter' | 'twitch' | 'instagram'
 
 @Options({
   components: {
@@ -108,6 +112,7 @@ export default class GCCStats extends Vue {
   tippyInstance!: any
   isLoadingInitialData = true
   isLoadingHistory = true
+  isLoadingPlayer = true
   stats: Partial<{
     core: Partial<{
       social: Record<socialMedia, Partial<{ url?: string, name: string, icon: string }>>
@@ -158,7 +163,11 @@ export default class GCCStats extends Vue {
   }
 
   get isLoading() {
-    return this.isLoadingInitialData && this.isLoadingHistory
+    return this.isLoadingInitialData && this.isLoadingHistory && this.isLoadingPlayer
+  }
+
+  get isStillLoading() {
+    return this.isLoadingInitialData || this.isLoadingHistory || this.isLoadingPlayer
   }
 
   get historyMatchesNumbers() {
@@ -206,6 +215,7 @@ export default class GCCStats extends Vue {
             social.url =  $page.find(selector).attr('href') || ''
           }
         })
+        this.isLoadingPlayer = false
       })
       .catch(analytics.sendError)
 
@@ -247,6 +257,10 @@ export default class GCCStats extends Vue {
     position: relative;
     background-size: cover;
     transform-style: preserve-3d;
+
+    &:hover {
+      z-index: 12;
+    }
 
     article {
       > section {
@@ -294,10 +308,19 @@ export default class GCCStats extends Vue {
   }
 
   .gcc-stats__loading-icon {
-    text-align: center;
-    display: block;
-    font-size: 50px;
-    padding: math.div($wrapperHeight, 3) 0;
+    &--big-loading {
+      text-align: center;
+      display: block;
+      font-size: 50px;
+      padding: math.div($wrapperHeight, 3) 0;
+    }
+
+    &--small-loading {
+      font-size: 20px;
+      position: absolute;
+      top: 40px;
+      left: calc(50% - 10px);
+    }
   }
 
   .gcc-stats-player-id {

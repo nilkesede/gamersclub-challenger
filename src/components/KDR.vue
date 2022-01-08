@@ -1,6 +1,5 @@
 <template>
   <div class="gcc-kdr-wrapper" @click="onClickToSeeMore">
-    <div class="gcc-stats-trigger">Ver mais</div>
     <div class="gcc-kdr" :class="{
       'gcc-kdr--god': 1.5 <= value,
       'gcc-kdr--above': 1.2 <= value && value < 1.5,
@@ -43,6 +42,7 @@ export default class KDR extends Vue {
     } else {
       const playerId = this.playerId
       this.tippyInstance = tippy(this.$el, {
+        placement: process.env.NODE_ENV === 'development' ? 'right' : 'auto',
         plugins: [ sticky ],
         allowHTML: true,
         sticky: true,
@@ -84,7 +84,7 @@ export default class KDR extends Vue {
   .gcc-stats-trigger {
     text-align: center;
     // display: none;
-    display: block;
+    display: none;
     height: 10px;
     color: white;
     width: 100%;
@@ -99,6 +99,16 @@ export default class KDR extends Vue {
     font-size: 10px;
     width: 100%;
     text-align: center;
+    border: 1px solid black;
+
+    &:hover {
+      box-shadow: 1px 1px 10px 1px white;
+      cursor: pointer;
+    }
+
+    &:active {
+      box-shadow: 1px 1px 10px 1px black inset;
+    }
 
     &--god {
       background: rgb(164, 170, 4);

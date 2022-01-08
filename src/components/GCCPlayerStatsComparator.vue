@@ -94,7 +94,7 @@ export default class GCCStatsPlayerComparator extends Vue {
 
     &__comparate-button {
       position: absolute;
-      right: -60px;
+      right: -80px;
       top: 0;
       bottom: 0;
       border: 1px dashed $blue;
