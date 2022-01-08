@@ -1,0 +1,1 @@
+export type socialMedia = 'steam' | 'twitter' | 'twitch' | 'instagram'
