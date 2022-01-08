@@ -42,14 +42,10 @@ export default class FiltersModifier {
       const cleanContainerClass = cleanSelector(gcSelectors.extension.kdrFilterContainer)
 
       gcBooster.isInstalled()
-        .then(() => {
+        .finally(() => {
           $gccFilterSection.addClass(cleanContainerClass)
           $filtersContainer.get(0)!.append($gccFilterSection[0])
           createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || BrowserStorage.defaultSettings.filters?.kdr }).mount($gccFilterSection.get(0)!)
-        })
-        .catch(() => {
-          const currentSection = sections.last().addClass(cleanContainerClass).get(0)
-          createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || BrowserStorage.defaultSettings.filters?.kdr }).mount(currentSection!)
         })
     }
   }

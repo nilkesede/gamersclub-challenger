@@ -2,7 +2,6 @@
 
 const WriteFilePlugin = require('write-file-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader')
 
 module.exports = {
   configureWebpack: {
