@@ -70,6 +70,7 @@ export default class KDR extends Vue {
   @use "sass:color";
   $backgroundOpacity: 0.5;
   $popperBg: #23394d;
+  $darkenBlue: #1e6a9b;
 
   .gcc-kdr-wrapper {
     position: relative;
@@ -102,7 +103,7 @@ export default class KDR extends Vue {
     border: 1px solid black;
 
     &:hover {
-      box-shadow: 1px 1px 10px 1px white;
+      box-shadow: 1px 1px 10px 1px $darkenBlue;
       cursor: pointer;
     }
 

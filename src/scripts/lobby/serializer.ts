@@ -82,8 +82,8 @@ class Serializer {
     let kdr = undefined
 
     if ( title ) {
-      const kdrIndex = title.indexOf('KDR:')
-      playerName = title.substring(0, kdrIndex)
+      const kdrIndex = title.indexOf('| KDR:')
+      playerName = title.substring(0, kdrIndex).trim()
 
       let kd: any = title.match(/KDR: [0-9]+(.?[0-9]+)?/)
       kd = kd || ['']

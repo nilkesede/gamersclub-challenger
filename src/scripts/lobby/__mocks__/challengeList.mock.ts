@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <sidebar class="sidebar-desafios sidebar-content" style="position: fixed; top: 10%; right: 72px; bottom: auto;">
+export const defaultChallengeList = `
+<sidebar class="sidebar-desafios sidebar-content" style="position: fixed; top: 10%; right: 72px; bottom: auto;">
         <h2 class="sidebar-titulo sidebar-desafios-titulo">
             Desafios </h2>
         <div id="sidebar-desafios-content" class="sidebar-desafios-content">
@@ -597,6 +589,38 @@
             </div>
         </div>
     </sidebar>
-    <script src="file://C:/Users/carlo/Documents/workspace/personal/matchmaking-gc/dist/js/devAuxScripts.js"></script>
-</body>
-</html>
+`
+
+export const onlyOnePlayer = `
+<div class="sala-lineup-player sala-lineup-player-premium ">
+    <div class="sala-lineup-imagem">
+        <a href="/jogador/581289" target="_blank" data-jsaction="gcCommonTooltip"
+            title="P3DRO | KDR: 1.40 | Prime ✓">
+            <div class="is-prime true"></div>
+            <img src="https://static.gamersclub.com.br/players/avatar/581289/581289_medium.jpg"
+                class="b-lazy">
+            <div class="prime-badge" title="Prime ✓">
+                <img src="https://static.gamersclub.com.br/assets/prime-small-1582143613.png"
+                    alt="prime">
+            </div>
+        </a>
+    </div>
+    <div class="sala-lineup-level">
+
+
+
+        <span class="new-badge-level new-badge-level-20">
+            <span class="badge-level-value">20</span>
+        </span>
+
+    </div>
+    <div class="sala-lineup-patente" data-jsaction="gcCommonTooltip" title="Ouro 2">
+        <img src="/assets/images/patentes/ouro_2.png" alt="Ouro 2" class="b-lazy">
+    </div>
+
+    <div class="sala-lineup-medalha">
+        <img src="/images/medalhas/496.png" alt="" class="medal-small"
+            title="Yadinho #euajudeinacausadoautismo">
+    </div>
+</div>
+`
