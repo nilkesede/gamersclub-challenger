@@ -1,0 +1,5 @@
+{
+  "experimentalSessionSupport": true,
+  "chromeWebSecurity": false,
+  "blockHosts": ["*.google-analytics.com", "ssl.google-analytics.com"]
+}

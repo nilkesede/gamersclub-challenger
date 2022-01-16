@@ -61,6 +61,17 @@ export const gcSelectors = {
     },
   },
 
+  login: {
+    steamButton: '.AuthForm__button--loginSteam'
+  },
+
+  steamLoginPage: {
+    loginForm: '#loginForm',
+    usernameInput: '#steamAccountName',
+    passInput: '#steamPassword',
+    loginButton: '#imageLogin'
+  },
+
   booster: {
     buttonsContainer: '#gcbooster_botoes',
   },
