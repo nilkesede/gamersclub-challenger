@@ -1,6 +1,9 @@
 import '../../plugins/window.setup'
 import '../../plugins/logger.setup'
 import '../../plugins/observer.jquery'
+import 'tilt.js'
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
 import '@/styles/main.scss'
 
 import Logger from 'js-logger'
@@ -22,7 +25,7 @@ try {
 
   const run = async (response) => {
 
-    if(response === 'GA_FAILED') {
+    if(!response || response === 'GA_FAILED') {
       Logger.error('GA HAS NOT STARTED')
     } else {
       Logger.debug('🟢 GA INITIALIZED')

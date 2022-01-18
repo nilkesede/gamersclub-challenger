@@ -15,11 +15,13 @@
     "types": [
       "webpack-env",
       "jest",
-      "jquery"
+      "jquery",
+      "cypress"
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "src/*",
+        "src/typings/*"
       ]
     },
     "lib": [

@@ -106,7 +106,7 @@ export default class ChallengeListModifier {
         if($kdrElement.length === 0){
           const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}' style="padding-bottom: 5px;"></div>`
           $player!.prepend( $kdBooster )
-          createApp(KDRComponent, { value: kdr }).mount(`#${containerName}`)
+          createApp(KDRComponent, { value: kdr, playerId }).mount(`#${containerName}`)
         }
       }
     }

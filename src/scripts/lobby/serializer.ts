@@ -82,8 +82,8 @@ class Serializer {
     let kdr = undefined
 
     if ( title ) {
-      const kdrIndex = title.indexOf('KDR:')
-      playerName = title.substring(0, kdrIndex)
+      const kdrIndex = title.indexOf('| KDR:')
+      playerName = title.substring(0, kdrIndex).trim()
 
       let kd: any = title.match(/KDR: [0-9]+(.?[0-9]+)?/)
       kd = kd || ['']
@@ -106,8 +106,8 @@ class Serializer {
   serializeLoggedPlayer(): Partial<LoggedUser> {
     const userAvatarUrl = $(gcSelectors.loggedUser.avatar).attr('src')
     const userId = userAvatarUrl ? getIdByAvatarUrl(userAvatarUrl) : undefined
-    const name = $(gcSelectors.loggedUser.name).text()
-    const level = $(gcSelectors.loggedUser.level).text()
+    const name = $(gcSelectors.loggedUser.name).text().trim()
+    const level = $(gcSelectors.loggedUser.level).text().trim()
 
     return {
       id: userId,

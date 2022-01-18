@@ -42,6 +42,15 @@ export const gcSelectors = {
     title: '.sala-card-title'
   },
 
+  playerPage: {
+    socialButtons: {
+      instagram: '.Button--instagram',
+      twitch: '.Button--twitch',
+      steam: '.Button--steam',
+      twitter: '.Button--twitter',
+    }
+  },
+
   challengeList: {
     self: '#challengeList',
     currentLobbyContent: '.sidebar-desafios-team-content',
@@ -50,6 +59,17 @@ export const gcSelectors = {
       placeHolder: '.player-placeholder',
       avatarLink: '.sala-lineup-imagem a',
     },
+  },
+
+  login: {
+    steamButton: '.AuthForm__button--loginSteam'
+  },
+
+  steamLoginPage: {
+    loginForm: '#loginForm',
+    usernameInput: '#steamAccountName',
+    passInput: '#steamPassword',
+    loginButton: '#imageLogin'
   },
 
   booster: {

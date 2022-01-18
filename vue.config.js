@@ -2,9 +2,8 @@
 
 const WriteFilePlugin = require('write-file-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader')
 
-module.exports = {
+const config = {
   configureWebpack: {
     devtool: 'cheap-module-source-map',
     plugins: [
@@ -43,7 +42,7 @@ module.exports = {
 
     contentScripts: {
       entry: 'src/apps/content/index.js',
-      chunks: [],
+      chunks: ['chunck-common', 'chunk-vendors', 'contentScripts'],
     },
   },
   chainWebpack: (config) => {
@@ -54,3 +53,5 @@ module.exports = {
     //   .use(ChromeExtensionReloader)
   },
 };
+
+module.exports = config;
