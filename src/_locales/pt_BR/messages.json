@@ -51,5 +51,14 @@
 
   "playerStats__totalMatches": {
     "message": "Partidas"
+  },
+
+  "playerStats__averagePerMatch": {
+    "message": "$average$/partida",
+    "placeholders": {
+      "average": {
+        "content": "$1"
+      }
+    }
   }
 }

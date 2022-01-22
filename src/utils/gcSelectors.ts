@@ -74,6 +74,7 @@ export const gcSelectors = {
 
   booster: {
     buttonsContainer: '#gcbooster_botoes',
+    kdr: '#gcbooster_kdr'
   },
 
   extension: {

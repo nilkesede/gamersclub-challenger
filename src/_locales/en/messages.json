@@ -45,5 +45,14 @@
 
   "playerStats__totalMatches": {
     "message": "Matches"
+  },
+
+  "playerStats__averagePerMatch": {
+    "message": "$average$/match",
+    "placeholders": {
+      "average": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -15,6 +15,13 @@ class GamersClubBooster {
       }, 400)
     })
   }
+
+  removeKdrElement(playerNode: any) {
+    const $boosterKDR = playerNode.find(gcSelectors.booster.kdr)
+    if($boosterKDR?.length) {
+      $boosterKDR.remove()
+    }
+  }
 }
 
 export default new GamersClubBooster()

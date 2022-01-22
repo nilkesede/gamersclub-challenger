@@ -42,7 +42,8 @@
             <span class="gcc-stats__profile-stat-name">
               <i :class="[stat.icon]"></i> {{ stat.name }}
             </span>
-            <p>{{ stat.value }}</p>
+            <p class="gcc-stats__profile-stat-value">{{ stat.value }}</p>
+            <span v-if="stat.average" class="gcc-stats__profile-stat-average">{{i18n.getMessage('playerStats__averagePerMatch', stat.average.toFixed(1))  }}</span>
           </li>
         </transition-group>
       </section>
@@ -95,6 +96,11 @@ import $ from 'jquery'
 import { gcSelectors } from '@/utils/gcSelectors'
 import { socialMedia } from '../scripts/lobby/domain/socialMedia'
 
+const totalStatsMap = {
+  firstKills: { name: "First kills", icon: 'fa fa-stopwatch' },
+  clutches: { name: "Clutches", icon: 'fas fa-brain' },
+  multiKills: { name: "Multi Kills", icon: 'fas fa-crosshairs' }
+};
 
 @Options({
   components: {
@@ -116,7 +122,7 @@ export default class GCCStats extends Vue {
   stats: Partial<{
     core: Partial<{
       social: Record<socialMedia, Partial<{ url?: string, name: string, icon: string }>>
-      statistics: Partial<{ name: string, icon: string, value?: string }>[]
+      statistics: Partial<{ name: string, icon: string, value?: string, average?: number }>[]
     }>,
     initial: GCInitialPlayerStats,
     history: GCPlayerStatsHistory
@@ -134,11 +140,11 @@ export default class GCCStats extends Vue {
       },
       statistics: [
         { name: "KDR", icon: 'fas fa-skull-crossbones' },
-        { name: "Clutches", icon: 'fas fa-brain' },
-        { name: "HS%", icon: 'fas fa-skull' },
-        { name: "First kills", icon: 'fa fa-stopwatch' },
         { name: "ADR", icon: 'fas fa-burn' },
-        { name: "Multi Kills", icon: 'fas fa-crosshairs' }
+        { name: "HS%", icon: 'fas fa-skull' },
+        totalStatsMap.firstKills,
+        totalStatsMap.clutches,
+        totalStatsMap.multiKills
       ]
     }
     return {
@@ -171,7 +177,7 @@ export default class GCCStats extends Vue {
   }
 
   get historyMatchesNumbers() {
-    return this.stats?.history?.matches || {}
+    return this.stats?.history?.matches || { matches: 0, loss: 0, wins: 0}
   }
 
   get userBackground() {
@@ -190,10 +196,16 @@ export default class GCCStats extends Vue {
 
   get availableUserStats() {
     const stats =  this.stats.core?.statistics || []
+    const totalStatsNames = Object.values(totalStatsMap).map((item) => item.name)
+
     stats.map((stat) => {
       const historyStat = this.stats.history?.stat.find((currentHistoryStat) => currentHistoryStat.stat.toLowerCase() === stat.name?.toLowerCase())
       if(historyStat) {
         stat.value = historyStat.value
+        const numberValue = parseInt(stat.value, 10)
+        if(totalStatsNames.includes(stat.name as string) && numberValue && this.historyMatchesNumbers?.matches){
+          stat.average = numberValue / this.historyMatchesNumbers.matches
+        }
       }
     })
     return stats.filter((stat) => stat.value)
@@ -401,7 +413,17 @@ export default class GCCStats extends Vue {
         font-size: 10px;
         margin-right: 5px;
       }
+    }
 
+    &-stat-average {
+      margin-top: -21px;
+      font-size: 7px;
+      transition: font-size 0.2s ease-in-out;
+
+      &:hover {
+        cursor: help;
+        font-size: 10px;
+      }
     }
   }
 
@@ -437,6 +459,12 @@ export default class GCCStats extends Vue {
 
     &--total {
       color: gray;
+      transition: font-size 0.2s ease-in-out;
+
+      &:hover {
+        cursor: help;
+        font-size: 12px;
+      }
     }
   }
 

@@ -4,11 +4,15 @@ import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
+import GCCPlayerStatsComparator from '../../components/GCCPlayerStatsComparator.vue'
 import { gcSelectors } from '../../utils/gcSelectors'
 import serializer from './serializer'
 import lobbyFilter from './lobbyFilter'
 import Logger from 'js-logger'
 import BrowserStorage from '../../utils/storage'
+import gcBooster from '@/utils/gcBooster'
+import { newTippy } from '@/utils/tippy'
+import Lobby from './domain/Lobby'
 
 export default class LobbiesModifier {
 
@@ -110,7 +114,9 @@ export default class LobbiesModifier {
   }
 
   reactToNewLobby(node: any){
-    this.showKDForLobby(node)
+    const serializedLobby: Partial<Lobby> = serializer.serialize(node)
+    this.showKDForLobby(serializedLobby)
+    this.addTippyToLobby(serializedLobby)
     lobbyFilter.reactToFilter.call(lobbyFilter, node)
   }
 
@@ -136,8 +142,23 @@ export default class LobbiesModifier {
     }
   }
 
-  showKDForLobby(lobbyNode: any): void {
-    const { players } = serializer.serialize(lobbyNode)
+  showKDForLobby({ players }: Partial<Lobby>): void {
     players?.map( (player) => this.reactToNewPlayer(player.$el?.[0]) )
+  }
+
+  addTippyToLobby({ players, $el }: Partial<Lobby>){
+    const playersIds = players?.map((player) => player.id)
+    const $lobbyTittle = $el?.find(gcSelectors.lobbies.title)
+    if($lobbyTittle?.length && playersIds?.length) {
+      newTippy($lobbyTittle[0], {
+        placement: 'top',
+        showOnCreate: false,
+        onShow(instance: any) {
+          const container = document.createElement('div')
+          createApp(GCCPlayerStatsComparator, { playersIds }).mount(container)
+          instance.setContent(container)
+        }
+      })
+    }
   }
 }
