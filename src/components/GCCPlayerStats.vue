@@ -137,6 +137,7 @@ export default class GCCStats extends Vue {
         twitch: { name: 'Twitch', icon: 'fa-twitch'},
         twitter: { name: 'Twitter', icon: 'fa-twitter'},
         steam: { name: 'Steam', icon: 'fa-steam'},
+        youtube: { name: 'Youtube', icon: 'fa-youtube'},
         instagram: { name: 'Insta', icon: 'fa-instagram'}
       },
       statistics: [
@@ -266,7 +267,7 @@ export default class GCCStats extends Vue {
   $green: #95b300;
   $red: #eb2f2f;
   $wrapperHeight: 400px;
-  $wrapperWidth: 320px;
+  $wrapperWidth: 350px;
   .gcc-stats-wrapper {
     width: $wrapperWidth;
     height: $wrapperHeight;
@@ -298,7 +299,7 @@ export default class GCCStats extends Vue {
 
   .gcc-stats__core-info {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding-top: 5px;
 
     &:nth-child(even) {
@@ -313,7 +314,6 @@ export default class GCCStats extends Vue {
   }
 
   .gcc-stats__avatar-wrapper {
-    padding-left: 10px;
   }
 
   .gcc-stats__avatar {

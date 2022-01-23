@@ -48,6 +48,7 @@ export const gcSelectors = {
       twitch: '.Button--twitch',
       steam: '.Button--steam',
       twitter: '.Button--twitter',
+      youtube: '.Button--youtube'
     }
   },
 
