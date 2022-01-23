@@ -29,7 +29,7 @@
           </div>
 
           <div class="gcc-stats__profile-social-medias">
-            <a v-for="social in socialButtons" :key="social.icon" :href="social.url" class="gcc-stats__profile-social-media-buttom" target="blank">
+            <a v-for="social in socialButtons" :key="social.icon" :href="social.url" class="gcc-stats__profile-social-media-buttom" :class="[`gcc-stats__profile-social-media-buttom--${social.name}`]" target="blank">
               <i :class="['fa', social.icon]"></i>
               {{ social.name }}
             </a>
@@ -261,6 +261,7 @@ export default class GCCStats extends Vue {
 <style scoped lang="scss">
   @use "sass:color";
   @use "sass:math";
+  @import '../styles/_variables.scss';
 
   $green: #95b300;
   $red: #eb2f2f;
@@ -377,9 +378,49 @@ export default class GCCStats extends Vue {
         flex: 1;
         font-size: 12px;
         padding: 5px;
+        box-sizing: border-box;
+        border-radius: 5px;
+
+        &:hover {
+          box-shadow: $socialButtonShadow;
+          color: white;
+        }
+
+        &:visited {
+          color: white;
+        }
+
+        &:active {
+          color: white;
+          box-shadow: none;
+        }
 
         i {
           margin-right: 5px;
+        }
+
+        &--Twitch {
+          &:hover {
+            background-color: $twitchPurple;
+          }
+        }
+
+        &--Youtube {
+          &:hover {
+            background-color: $youtubeRed;
+          }
+        }
+
+        &--Steam {
+          &:hover {
+            background-color: $steamBlack;
+          }
+        }
+
+        &--Insta {
+          &:hover {
+            background-image: $instagramGradient;
+          }
         }
       }
     }
