@@ -16,7 +16,8 @@ class BrowserStorage {
       showChallengeListKDR: true,
       enableNameFilter: false,
       enableKDRFilter: true,
-      enableAutomaticChallengeButton: true
+      enableAutomaticChallengeButton: true,
+      enable3DGCCardEffect: true
     }
   }
 

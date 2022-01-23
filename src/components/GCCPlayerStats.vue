@@ -95,6 +95,7 @@ import Logger from 'js-logger'
 import $ from 'jquery'
 import { gcSelectors } from '@/utils/gcSelectors'
 import { socialMedia } from '../scripts/lobby/domain/socialMedia'
+import BrowserStorage from '@/utils/storage'
 
 const totalStatsMap = {
   firstKills: { name: "First kills", icon: 'fa fa-stopwatch' },
@@ -158,14 +159,16 @@ export default class GCCStats extends Vue {
   }
 
   mounted() {
-    // @ts-ignore
-    $(this.$el).tilt({
-      glare: true,
-      axis: 'x',
-      maxTilt: 10,
-      maxGlare: 0.1,
-      scale: 1.1
-    })
+    if(BrowserStorage.settings.options?.enable3DGCCardEffect) {
+      // @ts-ignore
+      $(this.$el).tilt({
+        glare: true,
+        axis: 'x',
+        maxTilt: 10,
+        maxGlare: 0.1,
+        scale: 1.1
+      })
+    }
   }
 
   get isLoading() {

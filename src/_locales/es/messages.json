@@ -35,6 +35,10 @@
     "message": "Habilitar el filtro por nombre de jugador"
   },
 
+  "settingsOption__enable3DGCCardEffect": {
+    "message": "Habilitar efecto de letra 3D"
+  },
+
   "playerStats__lostMatches": {
     "message": "Derrotas"
   },

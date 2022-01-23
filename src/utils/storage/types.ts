@@ -7,6 +7,7 @@ export interface GCCOptions {
   enableKDRFilter: boolean,
   enableNameFilter: boolean
   enableAutomaticChallengeButton: boolean
+  enable3DGCCardEffect: boolean
 }
 
 export type GCCOptionsKey = keyof GCCOptions;
