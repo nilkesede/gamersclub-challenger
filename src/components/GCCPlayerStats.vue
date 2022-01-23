@@ -29,7 +29,7 @@
           </div>
 
           <div class="gcc-stats__profile-social-medias">
-            <a v-for="social in socialButtons" :key="social.icon" :href="social.url" class="gcc-stats__profile-social-media-buttom" target="blank">
+            <a v-for="social in socialButtons" :key="social.icon" :href="social.url" class="gcc-stats__profile-social-media-buttom" :class="[`gcc-stats__profile-social-media-buttom--${social.name}`]" target="blank">
               <i :class="['fa', social.icon]"></i>
               {{ social.name }}
             </a>
@@ -42,7 +42,8 @@
             <span class="gcc-stats__profile-stat-name">
               <i :class="[stat.icon]"></i> {{ stat.name }}
             </span>
-            <p>{{ stat.value }}</p>
+            <p class="gcc-stats__profile-stat-value">{{ stat.value }}</p>
+            <span v-if="stat.average" class="gcc-stats__profile-stat-average">{{i18n.getMessage('playerStats__averagePerMatch', stat.average.toFixed(1))  }}</span>
           </li>
         </transition-group>
       </section>
@@ -94,7 +95,13 @@ import Logger from 'js-logger'
 import $ from 'jquery'
 import { gcSelectors } from '@/utils/gcSelectors'
 import { socialMedia } from '../scripts/lobby/domain/socialMedia'
+import BrowserStorage from '@/utils/storage'
 
+const totalStatsMap = {
+  firstKills: { name: "First kills", icon: 'fa fa-stopwatch' },
+  clutches: { name: "Clutches", icon: 'fas fa-brain' },
+  multiKills: { name: "Multi Kills", icon: 'fas fa-crosshairs' }
+};
 
 @Options({
   components: {
@@ -116,7 +123,7 @@ export default class GCCStats extends Vue {
   stats: Partial<{
     core: Partial<{
       social: Record<socialMedia, Partial<{ url?: string, name: string, icon: string }>>
-      statistics: Partial<{ name: string, icon: string, value?: string }>[]
+      statistics: Partial<{ name: string, icon: string, value?: string, average?: number }>[]
     }>,
     initial: GCInitialPlayerStats,
     history: GCPlayerStatsHistory
@@ -130,15 +137,16 @@ export default class GCCStats extends Vue {
         twitch: { name: 'Twitch', icon: 'fa-twitch'},
         twitter: { name: 'Twitter', icon: 'fa-twitter'},
         steam: { name: 'Steam', icon: 'fa-steam'},
+        youtube: { name: 'Youtube', icon: 'fa-youtube'},
         instagram: { name: 'Insta', icon: 'fa-instagram'}
       },
       statistics: [
         { name: "KDR", icon: 'fas fa-skull-crossbones' },
-        { name: "Clutches", icon: 'fas fa-brain' },
-        { name: "HS%", icon: 'fas fa-skull' },
-        { name: "First kills", icon: 'fa fa-stopwatch' },
         { name: "ADR", icon: 'fas fa-burn' },
-        { name: "Multi Kills", icon: 'fas fa-crosshairs' }
+        { name: "HS%", icon: 'fas fa-skull' },
+        totalStatsMap.firstKills,
+        totalStatsMap.clutches,
+        totalStatsMap.multiKills
       ]
     }
     return {
@@ -152,14 +160,16 @@ export default class GCCStats extends Vue {
   }
 
   mounted() {
-    // @ts-ignore
-    $(this.$el).tilt({
-      glare: true,
-      axis: 'x',
-      maxTilt: 10,
-      maxGlare: 0.1,
-      scale: 1.1
-    })
+    if(BrowserStorage.settings.options?.enable3DGCCardEffect) {
+      // @ts-ignore
+      $(this.$el).tilt({
+        glare: true,
+        axis: 'x',
+        maxTilt: 10,
+        maxGlare: 0.1,
+        scale: 1.1
+      })
+    }
   }
 
   get isLoading() {
@@ -171,7 +181,7 @@ export default class GCCStats extends Vue {
   }
 
   get historyMatchesNumbers() {
-    return this.stats?.history?.matches || {}
+    return this.stats?.history?.matches || { matches: 0, loss: 0, wins: 0}
   }
 
   get userBackground() {
@@ -190,10 +200,16 @@ export default class GCCStats extends Vue {
 
   get availableUserStats() {
     const stats =  this.stats.core?.statistics || []
+    const totalStatsNames = Object.values(totalStatsMap).map((item) => item.name)
+
     stats.map((stat) => {
       const historyStat = this.stats.history?.stat.find((currentHistoryStat) => currentHistoryStat.stat.toLowerCase() === stat.name?.toLowerCase())
       if(historyStat) {
         stat.value = historyStat.value
+        const numberValue = parseInt(stat.value, 10)
+        if(totalStatsNames.includes(stat.name as string) && numberValue && this.historyMatchesNumbers?.matches){
+          stat.average = numberValue / this.historyMatchesNumbers.matches
+        }
       }
     })
     return stats.filter((stat) => stat.value)
@@ -246,11 +262,12 @@ export default class GCCStats extends Vue {
 <style scoped lang="scss">
   @use "sass:color";
   @use "sass:math";
+  @import '../styles/_variables.scss';
 
   $green: #95b300;
   $red: #eb2f2f;
   $wrapperHeight: 400px;
-  $wrapperWidth: 320px;
+  $wrapperWidth: 350px;
   .gcc-stats-wrapper {
     width: $wrapperWidth;
     height: $wrapperHeight;
@@ -282,7 +299,7 @@ export default class GCCStats extends Vue {
 
   .gcc-stats__core-info {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding-top: 5px;
 
     &:nth-child(even) {
@@ -297,7 +314,6 @@ export default class GCCStats extends Vue {
   }
 
   .gcc-stats__avatar-wrapper {
-    padding-left: 10px;
   }
 
   .gcc-stats__avatar {
@@ -362,9 +378,49 @@ export default class GCCStats extends Vue {
         flex: 1;
         font-size: 12px;
         padding: 5px;
+        box-sizing: border-box;
+        border-radius: 5px;
+
+        &:hover {
+          box-shadow: $socialButtonShadow;
+          color: white;
+        }
+
+        &:visited {
+          color: white;
+        }
+
+        &:active {
+          color: white;
+          box-shadow: none;
+        }
 
         i {
           margin-right: 5px;
+        }
+
+        &--Twitch {
+          &:hover {
+            background-color: $twitchPurple;
+          }
+        }
+
+        &--Youtube {
+          &:hover {
+            background-color: $youtubeRed;
+          }
+        }
+
+        &--Steam {
+          &:hover {
+            background-color: $steamBlack;
+          }
+        }
+
+        &--Insta {
+          &:hover {
+            background-image: $instagramGradient;
+          }
         }
       }
     }
@@ -401,7 +457,17 @@ export default class GCCStats extends Vue {
         font-size: 10px;
         margin-right: 5px;
       }
+    }
 
+    &-stat-average {
+      margin-top: -21px;
+      font-size: 7px;
+      transition: font-size 0.2s ease-in-out;
+
+      &:hover {
+        cursor: help;
+        font-size: 10px;
+      }
     }
   }
 
@@ -437,6 +503,12 @@ export default class GCCStats extends Vue {
 
     &--total {
       color: gray;
+      transition: font-size 0.2s ease-in-out;
+
+      &:hover {
+        cursor: help;
+        font-size: 12px;
+      }
     }
   }
 

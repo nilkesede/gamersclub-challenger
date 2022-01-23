@@ -16,7 +16,8 @@ class BrowserStorage {
       showChallengeListKDR: true,
       enableNameFilter: false,
       enableKDRFilter: true,
-      enableAutomaticChallengeButton: true
+      enableAutomaticChallengeButton: true,
+      enable3DGCCardEffect: true
     }
   }
 
@@ -30,6 +31,7 @@ class BrowserStorage {
         Object.assign(this.settings, this.defaultSettings)
         Logger.debug('⚙️ Setup settings as defaults', JSON.stringify(this.settings))
       }
+      this.updateSettings()
     } catch(err) {
       analytics.sendError(err as string)
       Logger.error(err)

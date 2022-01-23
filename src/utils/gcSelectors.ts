@@ -48,6 +48,7 @@ export const gcSelectors = {
       twitch: '.Button--twitch',
       steam: '.Button--steam',
       twitter: '.Button--twitter',
+      youtube: '.Button--youtube'
     }
   },
 
@@ -74,6 +75,7 @@ export const gcSelectors = {
 
   booster: {
     buttonsContainer: '#gcbooster_botoes',
+    kdr: '#gcbooster_kdr'
   },
 
   extension: {

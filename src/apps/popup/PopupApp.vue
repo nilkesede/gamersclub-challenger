@@ -39,6 +39,7 @@ export default class KDR extends Vue {
     const showChallengeListKDR = ref(typeof options?.showChallengeListKDR !== 'undefined' ? options.showChallengeListKDR : true);
     const enableKDRFilter = ref(typeof options?.enableKDRFilter !== 'undefined' ? options.enableKDRFilter : true);
     const enableNameFilter = ref(typeof options?.enableNameFilter !== 'undefined' ? options.enableNameFilter : true)
+    const enable3DGCCardEffect = ref(typeof options?.enable3DGCCardEffect !== 'undefined' ? options.enable3DGCCardEffect : true)
 
     return {
       i18n,
@@ -48,6 +49,7 @@ export default class KDR extends Vue {
         { value: showChallengeListKDR, name: 'showChallengeListKDR'},
         { value: enableKDRFilter, name: 'enableKDRFilter'},
         { value: enableNameFilter, name: 'enableNameFilter'},
+        { value: enable3DGCCardEffect, name: 'enable3DGCCardEffect'}
       ]
     }
   }

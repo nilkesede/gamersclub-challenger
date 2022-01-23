@@ -35,6 +35,10 @@
     "message": "Habilitar el filtro por nombre de jugador"
   },
 
+  "settingsOption__enable3DGCCardEffect": {
+    "message": "Habilitar efecto de letra 3D"
+  },
+
   "playerStats__lostMatches": {
     "message": "Derrotas"
   },
@@ -45,5 +49,14 @@
 
   "playerStats__totalMatches": {
     "message": "Partidos"
+  },
+
+  "playerStats__averagePerMatch": {
+    "message": "$average$/partido",
+    "placeholders": {
+      "average": {
+        "content": "$1"
+      }
+    }
   }
 }

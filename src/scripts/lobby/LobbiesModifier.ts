@@ -4,11 +4,15 @@ import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
+import GCCLobbyTitle from '../../components/GCCLobbyTitle.vue'
 import { gcSelectors } from '../../utils/gcSelectors'
 import serializer from './serializer'
 import lobbyFilter from './lobbyFilter'
 import Logger from 'js-logger'
 import BrowserStorage from '../../utils/storage'
+import gcBooster from '@/utils/gcBooster'
+import { newTippy } from '@/utils/tippy'
+import Lobby from './domain/Lobby'
 
 export default class LobbiesModifier {
 
@@ -110,7 +114,9 @@ export default class LobbiesModifier {
   }
 
   reactToNewLobby(node: any){
-    this.showKDForLobby(node)
+    const serializedLobby: Partial<Lobby> = serializer.serialize(node)
+    this.showKDForLobby(serializedLobby)
+    // this.replaceLobbyTitle(serializedLobby)
     lobbyFilter.reactToFilter.call(lobbyFilter, node)
   }
 
@@ -136,8 +142,15 @@ export default class LobbiesModifier {
     }
   }
 
-  showKDForLobby(lobbyNode: any): void {
-    const { players } = serializer.serialize(lobbyNode)
+  showKDForLobby({ players }: Partial<Lobby>): void {
     players?.map( (player) => this.reactToNewPlayer(player.$el?.[0]) )
+  }
+
+  replaceLobbyTitle({ $el }: Partial<Lobby>){
+    const $lobbyTittle = $el?.find(gcSelectors.lobbies.title)
+    if($lobbyTittle?.length) {
+      const label = $lobbyTittle.text() || $lobbyTittle.attr('title')
+      createApp(GCCLobbyTitle, { label }).mount($lobbyTittle[0])
+    }
   }
 }

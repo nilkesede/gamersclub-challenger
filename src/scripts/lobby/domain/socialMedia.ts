@@ -1,1 +1,1 @@
-export type socialMedia = 'steam' | 'twitter' | 'twitch' | 'instagram'
+export type socialMedia = 'steam' | 'twitter' | 'twitch' | 'instagram' | 'youtube'
