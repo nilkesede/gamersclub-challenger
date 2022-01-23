@@ -37,7 +37,8 @@ const config = {
   pages: {
     popup: {
       entry: 'src/apps/popup/index.ts',
-      template: 'src/apps/popup/popup.html'
+      template: 'src/apps/popup/popup.html',
+      chunks: ['chunck-common', 'chunk-vendors', 'popup']
     },
 
     contentScripts: {
