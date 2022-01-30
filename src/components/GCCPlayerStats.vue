@@ -79,6 +79,37 @@
           </span>
         </div>
       </section>
+      <section
+        class="gcc-stats__maps-stats">
+        <transition-group class="gcc-stats__maps-stats-list" tag="ul">
+          <li v-for="mapStat in mapsStats" :key="mapStat.name" class="gcc-stats__map-stats-item" :class="{
+            'gcc-stats__map-stats-item--winner': mapStat.wins > mapStat.loss,
+            'gcc-stats__map-stats-item--loser': mapStat.wins < mapStat.loss
+          }">
+            <div class="gcc-stats__map-bg" :style="getCsgoMapImage(mapStat.name)"></div>
+            <span class="gcc-stats__map-stats-item-name">
+              {{ mapStat.name }}
+              <p class="gcc-stats__map-stats-item-number gcc-stats__map-stats-item-number--total">
+                {{ i18n.getMessage('playerStats__totalMatches') }}:{{ mapStat.matches }}
+              </p>
+            </span>
+            <div v-if="mapStat.percentage" class="gcc-stats__map-stats-item-number-wrapper">
+              <div class="gcc-stats__map-stats-item-number-wrapper-content gcc-stats__map-stats-item-number-wrapper-content--win">
+                <span class="gcc-stats__map-stats-item-number gcc-stats__map-stats-item-number--win">
+                  {{ mapStat.wins }}
+                  <p class="gcc-stats__map-stats-item-number--percentage">{{ mapStat.percentage.wins }}</p>
+                </span>
+              </div>
+              <div class="gcc-stats__map-stats-item-number-wrapper-content gcc-stats__map-stats-item-number-wrapper-content--loss">
+                <span class="gcc-stats__map-stats-item-number gcc-stats__map-stats-item-number--loss">
+                  {{ mapStat.loss }}
+                  <p class="gcc-stats__map-stats-item-number--percentage">{{ mapStat.percentage.loss }}</p>
+                </span>
+              </div>
+            </div>
+          </li>
+        </transition-group>
+      </section>
     </article>
     <p v-if="!isLoading && !stats">ERROR</p>
   </div>
@@ -96,12 +127,8 @@ import $ from 'jquery'
 import { gcSelectors } from '@/utils/gcSelectors'
 import { socialMedia } from '../scripts/lobby/domain/socialMedia'
 import BrowserStorage from '@/utils/storage'
-
-const totalStatsMap = {
-  firstKills: { name: "First kills", icon: 'fa fa-stopwatch' },
-  clutches: { name: "Clutches", icon: 'fas fa-brain' },
-  multiKills: { name: "Multi Kills", icon: 'fas fa-crosshairs' }
-};
+import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch"
+import { percentage } from '../utils/magicNumbers'
 
 @Options({
   components: {
@@ -128,7 +155,11 @@ export default class GCCStats extends Vue {
     initial: GCInitialPlayerStats,
     history: GCPlayerStatsHistory
   }> = {}
-
+  totalStatsMap = {
+    firstKills: { name: "First kills", icon: 'fa fa-stopwatch' },
+    clutches: { name: "Clutches", icon: 'fas fa-brain' },
+    multiKills: { name: "Multi Kills", icon: 'fas fa-crosshairs' }
+  };
 
   data() {
     const { i18n } = window.browser;
@@ -144,14 +175,15 @@ export default class GCCStats extends Vue {
         { name: "KDR", icon: 'fas fa-skull-crossbones' },
         { name: "ADR", icon: 'fas fa-burn' },
         { name: "HS%", icon: 'fas fa-skull' },
-        totalStatsMap.firstKills,
-        totalStatsMap.clutches,
-        totalStatsMap.multiKills
+        this.totalStatsMap.firstKills,
+        this.totalStatsMap.clutches,
+        this.totalStatsMap.multiKills
       ]
     }
     return {
       i18n,
       gcUrls,
+      browser: window.browser
     }
   }
 
@@ -164,7 +196,7 @@ export default class GCCStats extends Vue {
       // @ts-ignore
       $(this.$el).tilt({
         glare: true,
-        axis: 'x',
+        disableAxis: 'x',
         maxTilt: 10,
         maxGlare: 0.1,
         scale: 1.1
@@ -189,8 +221,15 @@ export default class GCCStats extends Vue {
     return image ? {
       'background-image': `url(${image})`
     } : {
-      'background-image': `url(${window.browser.runtime.getURL('../../assets/awesome-ct-bg.JPG')})`,
+      'background-image': `url(${window.browser.runtime.getURL('../../assets/logo_500.png')})`,
       'background-position': 'left center'
+    }
+  }
+
+  getCsgoMapImage(mapName: string) {
+    const url = window.browser.runtime.getURL(`../../assets/csgo_maps/${mapName}.png`)
+    return {
+      'background-image': `url(${url})`
     }
   }
 
@@ -200,10 +239,10 @@ export default class GCCStats extends Vue {
 
   get availableUserStats() {
     const stats =  this.stats.core?.statistics || []
-    const totalStatsNames = Object.values(totalStatsMap).map((item) => item.name)
+    const totalStatsNames = Object.values(this.totalStatsMap).map((item) => item.name)
 
     stats.map((stat) => {
-      const historyStat = this.stats.history?.stat.find((currentHistoryStat) => currentHistoryStat.stat.toLowerCase() === stat.name?.toLowerCase())
+      const historyStat = this.stats.history?.stat.find((currentHistoryStat) => currentHistoryStat.stat?.toLowerCase() === stat.name?.toLowerCase())
       if(historyStat) {
         stat.value = historyStat.value
         const numberValue = parseInt(stat.value, 10)
@@ -215,43 +254,77 @@ export default class GCCStats extends Vue {
     return stats.filter((stat) => stat.value)
   }
 
+  buildMapStats(csgoMap: string, list: GCMonthMatch[]){
+    const stats = { name:csgoMap, matches: list.length, loss: 0, wins: 0, percentage: { loss: '0', wins: '0' } }
+    list.forEach((match) => {
+      match.win ? stats.wins++ : stats.loss++
+    })
+
+    stats.percentage.loss = percentage(stats.loss, stats.matches, 1)
+    stats.percentage.wins = percentage(stats.wins, stats.matches, 1)
+
+    return stats
+  }
+
+  get mapsStats() {
+    if(this.stats.history?.monthMatches?.length){
+      //@ts-ignore
+      const groupedCsgoMaps = this.stats.history.monthMatches.groupByKey('map')
+      Logger.debug('Maps Stats', groupedCsgoMaps)
+
+      const mapsStats = []
+      for(let csgoMap in groupedCsgoMaps){
+        if(csgoMap !== 'undefined'){
+          mapsStats.push(this.buildMapStats(csgoMap, groupedCsgoMaps[csgoMap]))
+        }
+      }
+
+      return mapsStats
+    }
+    return []
+  }
+
   fetchPlayerStats() {
+    try {
 
-    fetch(gcUrls.player(this.playerId))
-    .then(response => response.text())
-      .then(data => {
-        const $page = $(data)
-        Logger.debug('player data length', $page.length)
+      fetch(gcUrls.player(this.playerId))
+      .then(response => response.text())
+        .then(data => {
+          const $page = $(data)
+          Logger.debug('player data length', $page.length)
 
-        const socialKeys = Object.keys(this.stats.core?.social as any)
-        socialKeys.forEach((socialKey) => {
-          const social = this.stats.core?.social?.[socialKey as socialMedia]
-          const selector = gcSelectors.playerPage.socialButtons[socialKey as socialMedia]
-          if(social && selector){
-            social.url =  $page.find(selector).attr('href') || ''
-          }
+          const socialKeys = Object.keys(this.stats.core?.social as any)
+          socialKeys.forEach((socialKey) => {
+            const social = this.stats.core?.social?.[socialKey as socialMedia]
+            const selector = gcSelectors.playerPage.socialButtons[socialKey as socialMedia]
+            if(social && selector){
+              social.url =  $page.find(selector).attr('href') || ''
+            }
+          })
+          this.isLoadingPlayer = false
         })
-        this.isLoadingPlayer = false
-      })
-      .catch(analytics.sendError)
+        .catch(analytics.sendError)
 
-    fetch(gcUrls.boxInitialMatches(this.playerId))
-      .then(response => response.json())
-      .then(data => {
-        Logger.debug('boxInitialMatches', data)
-        this.stats.initial = data
-        this.isLoadingInitialData = false
-      })
-      .catch(analytics.sendError)
+      fetch(gcUrls.boxInitialMatches(this.playerId))
+        .then(response => response.json())
+        .then(data => {
+          Logger.debug('boxInitialMatches', data)
+          this.stats.initial = data
+          this.isLoadingInitialData = false
+        })
+        .catch(analytics.sendError)
 
-    fetch(gcUrls.boxMatchesHistory(this.playerId))
-      .then(response => response.json())
-      .then(data => {
-        Logger.debug('boxMatchesHistory', data)
-        this.stats.history = data
-        this.isLoadingHistory = false
-      })
-      .catch(analytics.sendError)
+      fetch(gcUrls.boxMatchesHistory(this.playerId))
+        .then(response => response.json())
+        .then(data => {
+          Logger.debug('boxMatchesHistory', data)
+          this.stats.history = data
+          this.isLoadingHistory = false
+        })
+        .catch(analytics.sendError)
+    } catch (err: any) {
+      analytics.sendError(err)
+    }
   }
 
 
@@ -471,6 +544,17 @@ export default class GCCStats extends Vue {
     }
   }
 
+  .gcc-stats__profile-stats-list {
+    &-enter, &-leave-to {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .gcc-stats__profile-stat {
+      transition: all 0.4s;
+    }
+  }
+
 
   .gcc-stats__matches-section {
     display: flex;
@@ -521,6 +605,99 @@ export default class GCCStats extends Vue {
 
     .vue-slider-process {
       background-color: $green;
+    }
+  }
+
+  .gcc-stats__maps-stats-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: $wrapperWidth;
+    background-color: $gray;
+  }
+
+  .gcc-stats__map-stats-item {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    background-color: rgba($orange, 0.5);
+    width: math.div($wrapperWidth, 2);
+    height: 50px;
+    border-right: 1px solid black;
+    justify-content: space-between;
+
+    &:nth-child(n + 3) {
+      border-top: 1px solid black;
+    }
+
+    &--winner {
+      background-color: rgba($green, 0.5);
+
+      .gcc-stats__map-stats-item-number--loss {
+        opacity: 0.5;
+      }
+
+      .gcc-stats__map-stats-item-number-wrapper-content--win {
+        background-color: $green;
+      }
+    }
+
+    &--loser {
+      background-color: rgba($red, 0.5);
+
+      .gcc-stats__map-stats-item-number--win {
+        opacity: 0.5;
+      }
+
+      .gcc-stats__map-stats-item-number-wrapper-content--loss {
+        background-color: $red;
+      }
+    }
+  }
+
+  .gcc-stats__map-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.7;
+    z-index: 0;
+  }
+
+  .gcc-stats__map-stats-item-name {
+    z-index: 1;
+    padding: 5px;
+  }
+
+  .gcc-stats__map-stats-item-number-wrapper {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    z-index: 1;
+
+    .gcc-stats__map-stats-item-number-wrapper-content {
+      width: 35px;
+      padding: 5px;
+    }
+
+    .gcc-stats__map-stats-item-number {
+      font-weight: 600;
+      font-size: 18px;
+    }
+  }
+
+  .gcc-stats__map-stats-item-number {
+    transition: font-size 0.2s ease-in-out;
+    font-size: 10px;
+
+    &--percentage {
+      font-size: 8px;
+      font-weight: 400;
     }
   }
 </style>
