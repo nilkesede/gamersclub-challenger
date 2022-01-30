@@ -90,7 +90,7 @@
             <span class="gcc-stats__map-stats-item-name">
               {{ mapStat.name }}
               <p class="gcc-stats__map-stats-item-number gcc-stats__map-stats-item-number--total">
-                {{ i18n.getMessage('playerStats__totalMatches') }}:{{ mapStat.matches }}
+                {{ i18n.getMessage('playerStats__totalMatches') }}: {{ mapStat.matches }}
               </p>
             </span>
             <div v-if="mapStat.percentage" class="gcc-stats__map-stats-item-number-wrapper">
@@ -635,7 +635,7 @@ export default class GCCStats extends Vue {
     &--winner {
       background-color: rgba($green, 0.5);
 
-      .gcc-stats__map-stats-item-number--loss {
+      .gcc-stats__map-stats-item-number-wrapper-content--loss {
         opacity: 0.5;
       }
 
@@ -647,7 +647,7 @@ export default class GCCStats extends Vue {
     &--loser {
       background-color: rgba($red, 0.5);
 
-      .gcc-stats__map-stats-item-number--win {
+      .gcc-stats__map-stats-item-number-wrapper-content--win {
         opacity: 0.5;
       }
 
@@ -672,6 +672,7 @@ export default class GCCStats extends Vue {
   .gcc-stats__map-stats-item-name {
     z-index: 1;
     padding: 5px;
+    font-weight: 600;
   }
 
   .gcc-stats__map-stats-item-number-wrapper {
