@@ -57,6 +57,10 @@
     "message": "Partidas"
   },
 
+  "playerStats__lastMatches": {
+    "message": "Últimas Partidas"
+  },
+
   "playerStats__averagePerMatch": {
     "message": "$average$/partida",
     "placeholders": {

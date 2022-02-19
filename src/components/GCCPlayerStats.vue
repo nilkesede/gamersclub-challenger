@@ -80,7 +80,9 @@
         </div>
       </section>
       <section
+        v-if="mapsStats && mapsStats.length"
         class="gcc-stats__maps-stats">
+        <div class="gcc-stats__maps-stats-header">{{ i18n.getMessage('playerStats__lastMatches') }}</div>
         <transition-group class="gcc-stats__maps-stats-list" tag="ul">
           <li v-for="mapStat in mapsStats" :key="mapStat.name" class="gcc-stats__map-stats-item" :class="{
             'gcc-stats__map-stats-item--winner': mapStat.wins > mapStat.loss,
@@ -95,12 +97,14 @@
             </span>
             <div v-if="mapStat.percentage" class="gcc-stats__map-stats-item-number-wrapper">
               <div class="gcc-stats__map-stats-item-number-wrapper-content gcc-stats__map-stats-item-number-wrapper-content--win">
+                <div class="gcc-stats__map-stats-item-number-label gcc-stats__map-stats-item-number-label--win">{{ i18n.getMessage('playerStats__wonMatches') }}</div>
                 <span class="gcc-stats__map-stats-item-number gcc-stats__map-stats-item-number--win">
                   {{ mapStat.wins }}
                   <p class="gcc-stats__map-stats-item-number--percentage">{{ mapStat.percentage.wins }}</p>
                 </span>
               </div>
               <div class="gcc-stats__map-stats-item-number-wrapper-content gcc-stats__map-stats-item-number-wrapper-content--loss">
+                <div class="gcc-stats__map-stats-item-number-label gcc-stats__map-stats-item-number-label--loss">{{ i18n.getMessage('playerStats__lostMatches') }}</div>
                 <span class="gcc-stats__map-stats-item-number gcc-stats__map-stats-item-number--loss">
                   {{ mapStat.loss }}
                   <p class="gcc-stats__map-stats-item-number--percentage">{{ mapStat.percentage.loss }}</p>
@@ -279,7 +283,23 @@ export default class GCCStats extends Vue {
         }
       }
 
-      return mapsStats
+      const sortedMapsStats = mapsStats.sort((map1, map2) => {
+        let result
+        const loss1 = parseFloat(map1.percentage.loss)
+        const loss2 = parseFloat(map2.percentage.loss)
+
+        if(loss1 < loss2){
+          result = -1
+        } else if(loss1 > loss2) {
+          result = 1
+        } else {
+          result = 0
+        }
+
+        return result
+      })
+
+      return sortedMapsStats
     }
     return []
   }
@@ -343,7 +363,7 @@ export default class GCCStats extends Vue {
   $wrapperWidth: 350px;
   .gcc-stats-wrapper {
     width: $wrapperWidth;
-    height: $wrapperHeight;
+    min-height: $wrapperHeight;
     position: relative;
     background-size: cover;
     transform-style: preserve-3d;
@@ -384,9 +404,6 @@ export default class GCCStats extends Vue {
     width: 200px;
     text-align: left;
     transform: translateZ(20px);
-  }
-
-  .gcc-stats__avatar-wrapper {
   }
 
   .gcc-stats__avatar {
@@ -608,6 +625,13 @@ export default class GCCStats extends Vue {
     }
   }
 
+  .gcc-stats__maps-stats-header {
+    background: $steamBlack;
+    width: 100%;
+    color: white;
+    text-align: center;
+  }
+
   .gcc-stats__maps-stats-list {
     list-style: none;
     padding: 0;
@@ -615,7 +639,7 @@ export default class GCCStats extends Vue {
     display: flex;
     flex-wrap: wrap;
     width: $wrapperWidth;
-    background-color: $gray;
+    background-color: rgba(#000, 0.4);
   }
 
   .gcc-stats__map-stats-item {
@@ -642,6 +666,12 @@ export default class GCCStats extends Vue {
       .gcc-stats__map-stats-item-number-wrapper-content--win {
         background-color: $green;
       }
+
+      .gcc-stats__map-stats-item-number-wrapper:hover{
+        .gcc-stats__map-stats-item-number-label--win {
+          opacity: 1;
+        }
+      }
     }
 
     &--loser {
@@ -653,6 +683,12 @@ export default class GCCStats extends Vue {
 
       .gcc-stats__map-stats-item-number-wrapper-content--loss {
         background-color: $red;
+      }
+
+      .gcc-stats__map-stats-item-number-wrapper:hover {
+        .gcc-stats__map-stats-item-number-label--loss {
+          opacity: 1;
+        }
       }
     }
   }
@@ -673,6 +709,16 @@ export default class GCCStats extends Vue {
     z-index: 1;
     padding: 5px;
     font-weight: 600;
+    text-shadow:
+    0px 0px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+
+    .gcc-stats__map-stats-item-number--total {
+      font-weight: 300;
+    }
   }
 
   .gcc-stats__map-stats-item-number-wrapper {
@@ -680,10 +726,17 @@ export default class GCCStats extends Vue {
     flex-direction: row;
     text-align: center;
     z-index: 1;
+    text-shadow:
+    3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 
     .gcc-stats__map-stats-item-number-wrapper-content {
       width: 35px;
       padding: 5px;
+      position: relative;
     }
 
     .gcc-stats__map-stats-item-number {
@@ -692,11 +745,44 @@ export default class GCCStats extends Vue {
     }
   }
 
+  .gcc-stats__map-stats-item-number-label {
+    position: absolute;
+    background: $steamBlack;
+    font-size: 10px;
+    stroke: none;
+    text-shadow: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    padding: 5px;
+    z-index: 1;
+
+    &--win {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      left: -47px;
+      bottom: 5px;
+    }
+
+    &--loss {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      right: -54px;
+      bottom: 5px;
+      z-index: 2;
+    }
+  }
+
   .gcc-stats__map-stats-item-number {
     transition: font-size 0.2s ease-in-out;
     font-size: 10px;
 
     &--percentage {
+      text-shadow:
+        0px 0px 0 #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
       font-size: 8px;
       font-weight: 400;
     }
