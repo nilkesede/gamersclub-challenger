@@ -41,7 +41,7 @@ export default class FiltersModifier {
       const $gccFilterSection = $(sectionModel!).clone()
       const cleanContainerClass = cleanSelector(gcSelectors.extension.kdrFilterContainer)
 
-      gcBooster.isInstalled()
+      gcBooster.isInstalled().catch(() => {})
         .finally(() => {
           $gccFilterSection.addClass(cleanContainerClass)
           $filtersContainer.get(0)!.append($gccFilterSection[0])

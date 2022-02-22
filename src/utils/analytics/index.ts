@@ -23,7 +23,7 @@ class AnalyticsManager {
     if(loggedPlayer) {
       const { id, level, name } = loggedPlayer
       this.set(customDimentions.gcId, id)
-      this.set(customDimentions.gcId, name)
+      this.set(customDimentions.gcNickname, name)
       this.set(customDimentions.gcLevel, level)
     }
   }
@@ -51,9 +51,9 @@ class AnalyticsManager {
   }
 
   sendError(errorDescription: string, isFatalError = false) {
-    Logger.error(errorDescription)
+    Logger.error('[Analytics Error]', errorDescription.toString())
     this.send('exception', {
-      'exDescription': errorDescription,
+      'exDescription': errorDescription.toString(),
       'exFatal': isFatalError
     })
   }

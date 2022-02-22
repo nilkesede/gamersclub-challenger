@@ -42,8 +42,9 @@ export default class GCCStatsPlayerComparator extends Vue {
   compare: { playersIds: string[] } = { playersIds: [] }
 
   data() {
-    const { i18n } = window.browser;
+    const { i18n } = window.browser
     this.compare.playersIds = this.compare.playersIds.concat(this.playersIds)
+    Logger.debug('compare.playersIds', this.compare.playersIds)
 
     return {
       i18n,

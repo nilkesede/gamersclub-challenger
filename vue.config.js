@@ -38,12 +38,12 @@ const config = {
     popup: {
       entry: 'src/apps/popup/index.ts',
       template: 'src/apps/popup/popup.html',
-      chunks: ['chunck-common', 'chunk-vendors', 'popup']
+      chunks: ['chunk-vendors', 'popup']
     },
 
     contentScripts: {
       entry: 'src/apps/content/index.js',
-      chunks: ['chunck-common', 'chunk-vendors', 'contentScripts'],
+      chunks: ['chunk-vendors', 'contentScripts'],
     },
   },
   chainWebpack: (config) => {
