@@ -1,5 +1,7 @@
 <template>
-  <div class="gcc-stats-wrapper" >
+  <div class="gcc-stats-wrapper" :class="{
+    'gcc-stats-wrapper--is-loading': isLoading
+  }">
     <div class="gcc-stats-bg" :style="userBackground"></div>
 
     <i v-if="isLoading" class="fas fa-spinner rotating gcc-stats__loading-icon" :class="{
@@ -360,13 +362,19 @@ export default class GCCStats extends Vue {
   $green: #95b300;
   $red: #eb2f2f;
   $wrapperHeight: 400px;
-  $wrapperWidth: 350px;
+  $wrapperWidth: 355px;
   .gcc-stats-wrapper {
     width: $wrapperWidth;
-    min-height: $wrapperHeight;
+    min-height: 100%;
     position: relative;
     background-size: cover;
     transform-style: preserve-3d;
+
+    &--is-loading {
+      min-height: $wrapperHeight;
+    }
+
+    &-
 
     &:hover {
       z-index: 12;
@@ -512,6 +520,14 @@ export default class GCCStats extends Vue {
             background-image: $instagramGradient;
           }
         }
+
+        &--Twitter {
+          &:hover {
+            background-color: $twitterBlue;
+          }
+        }
+
+
       }
     }
 
