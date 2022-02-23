@@ -26,16 +26,16 @@
  </li>
 
  <li>
-  <a href="https://chrome.google.com/webstore/detail/gamersclub-challenger/lokjofhgialghfkfmkbnjakcjenjhmpp?hl=pt-BR&authuser=0" target="_blank">
-      <img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/docs/images/browsers/firefox-logo.png?raw=true" align="left" height="24" width="24" style="padding-right: 5px;" >
-      <img src="https://img.shields.io/badge/Aguardando%20suporte%20do-Firefox-yellow">
+    <a href="https://chrome.google.com/webstore/detail/gamersclub-challenger/lokjofhgialghfkfmkbnjakcjenjhmpp?hl=pt-BR&authuser=0" target="_blank">
+      <img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/docs/images/browsers/opera-logo.png?raw=true" align="left" height="24" width="24" style="padding-right: 5px;" >
+      <img src="https://img.shields.io/badge/Dispon%C3%ADvel%20no-Opera-blue">
     </a>
  </li>
 
  <li>
-    <a href="https://chrome.google.com/webstore/detail/gamersclub-challenger/lokjofhgialghfkfmkbnjakcjenjhmpp?hl=pt-BR&authuser=0" target="_blank">
-      <img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/docs/images/browsers/opera-logo.png?raw=true" align="left" height="24" width="24" style="padding-right: 5px;" >
-      <img src="https://img.shields.io/badge/Em%20an%C3%A1lise%20para-Opera-yellow">
+  <a href="https://chrome.google.com/webstore/detail/gamersclub-challenger/lokjofhgialghfkfmkbnjakcjenjhmpp?hl=pt-BR&authuser=0" target="_blank">
+      <img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/docs/images/browsers/firefox-logo.png?raw=true" align="left" height="24" width="24" style="padding-right: 5px;" >
+      <img src="https://img.shields.io/badge/Aguardando%20suporte%20do-Firefox-yellow">
     </a>
  </li>
 </ul>
