@@ -6,6 +6,10 @@ import LoggedUser from '../../scripts/lobby/domain/LoggedUser'
 class AnalyticsManager {
   trackerName = 'gccAnalytics'
 
+  isAlive(): boolean {
+    return typeof window.ga !== 'undefined'
+  }
+
   setup(loggedPlayer: Partial<LoggedUser>){
     const manifest = window.browser.runtime.getManifest()
     const userId = loggedPlayer?.id ? loggedPlayer.id : undefined

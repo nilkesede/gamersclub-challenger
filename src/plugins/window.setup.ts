@@ -6,7 +6,8 @@ declare global {
     chrome: any,
     userId: number | string,
     localStorage: any,
-    browser: any
+    browser: any,
+    gcc?: any
   }
 }
 
