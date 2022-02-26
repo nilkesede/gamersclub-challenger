@@ -29,6 +29,8 @@ import { ref } from 'vue'
 import { Options, Vue, } from 'vue-class-component'
 import BrowserStorage from '../../utils/storage'
 
+let updateTriggerHolder: ReturnType<typeof setTimeout>;
+
 @Options({})
 export default class KDR extends Vue {
   data(): any {
@@ -55,9 +57,15 @@ export default class KDR extends Vue {
   }
 
   onChangeCheckbox(event: any, name:string, value: boolean): void {
-    BrowserStorage.settings.options ||= {}
-    BrowserStorage.settings.options[name as GCCOptionsKey] = value;
-    BrowserStorage.updateSettings();
+    clearTimeout(updateTriggerHolder);
+    updateTriggerHolder = setTimeout(() => {
+      BrowserStorage.settings.options ||= {}
+      BrowserStorage.settings.options[name as GCCOptionsKey] = value;
+      BrowserStorage.updateSettings().then(() => {
+        window.browser.runtime.sendMessage({ type: 'RELOAD_GC_TABS' })
+      })
+    }, 1500)
+
   }
 }
 </script>
