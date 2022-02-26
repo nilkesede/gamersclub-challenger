@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "minimum_chrome_version": "90",
   "name": "GamersClub Challenger",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "__MSG_appDescription__",
   "author": "Carlos Henrique (C8) <carloshpds@gmail.com>",
   "content_security_policy": {
@@ -31,8 +31,8 @@
         "*://gamersclub.com.br/lobby*",
         "*://csgo.gamersclub.gg/lobby*"
       ],
-      "js": ["js/chunk-vendors.js", "js/contentScripts.js"],
-      "css": ["css/chunk-vendors.css", "css/contentScripts.css"],
+      "js": ["js/chunk-vendors.js", "js/lobbyContentScripts.js"],
+      "css": ["css/chunk-vendors.css", "css/lobbyContentScripts.css"],
       "run_at": "document_end"
     }
   ],
@@ -43,7 +43,7 @@
 
   "permissions": [
     "storage",
-    "activeTab",
+    "tabs",
     "scripting"
   ],
 
