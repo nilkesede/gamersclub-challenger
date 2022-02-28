@@ -157,6 +157,7 @@ export default class GCCStats extends Vue {
     core: Partial<{
       social: Record<socialMedia, Partial<{ url?: string, name: string, icon: string }>>
       statistics: Partial<{ name: string, icon: string, value?: string, average?: number }>[]
+      punishments: Partial<{ reason: string }>[]
     }>,
     initial: GCInitialPlayerStats,
     history: GCPlayerStatsHistory
@@ -170,6 +171,7 @@ export default class GCCStats extends Vue {
   data() {
     const { i18n } = window.browser;
     this.stats.core = {
+      punishments: [],
       social: {
         twitch: { name: 'Twitch', icon: 'fa-twitch'},
         twitter: { name: 'Twitter', icon: 'fa-twitter'},
@@ -184,7 +186,7 @@ export default class GCCStats extends Vue {
         this.totalStatsMap.firstKills,
         this.totalStatsMap.clutches,
         this.totalStatsMap.multiKills
-      ]
+      ],
     }
     return {
       i18n,
@@ -306,23 +308,34 @@ export default class GCCStats extends Vue {
     return []
   }
 
+  receivePlayerPage(data: any){
+    const $page = $(data)
+    Logger.debug('player data length', $page.length)
+
+    // Punishments
+    const punishments = $page.find(gcSelectors.playerPage.punishments).get()
+    this.stats.core!.punishments = punishments.map((element) => {
+      return { reason: $(element).attr('title')}
+    })
+
+    // Social medias
+    const socialKeys = Object.keys(this.stats.core?.social as any)
+    socialKeys.forEach((socialKey) => {
+      const social = this.stats.core?.social?.[socialKey as socialMedia]
+      const selector = gcSelectors.playerPage.socialButtons[socialKey as socialMedia]
+      if(social && selector){
+        social.url =  $page.find(selector).attr('href') || ''
+      }
+    })
+  }
+
   fetchPlayerStats() {
     try {
 
       fetch(gcUrls.player(this.playerId))
       .then(response => response.text())
         .then(data => {
-          const $page = $(data)
-          Logger.debug('player data length', $page.length)
-
-          const socialKeys = Object.keys(this.stats.core?.social as any)
-          socialKeys.forEach((socialKey) => {
-            const social = this.stats.core?.social?.[socialKey as socialMedia]
-            const selector = gcSelectors.playerPage.socialButtons[socialKey as socialMedia]
-            if(social && selector){
-              social.url =  $page.find(selector).attr('href') || ''
-            }
-          })
+          this.receivePlayerPage(data)
           this.isLoadingPlayer = false
         })
         .catch(analytics.sendError)

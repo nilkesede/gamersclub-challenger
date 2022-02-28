@@ -43,6 +43,7 @@ export const gcSelectors = {
   },
 
   playerPage: {
+    punishments: '.gc-profile-user-punishments img',
     socialButtons: {
       instagram: '.Button--instagram',
       twitch: '.Button--twitch',
