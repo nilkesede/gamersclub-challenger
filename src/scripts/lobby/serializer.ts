@@ -78,8 +78,8 @@ class Serializer {
     const playerAvatarLink = $player.find( selectors.avatarLink )
     const title = playerAvatarLink.attr( 'title' )
     const playerId = playerAvatarLink.attr('href')?.split('/')[2]
-    let playerName = undefined
-    let kdr = undefined
+    let playerName = ''
+    let kdr = 0
 
     if ( title ) {
       const kdrIndex = title.indexOf('| KDR:')

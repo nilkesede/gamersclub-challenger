@@ -147,7 +147,7 @@ import { percentage } from '../utils/magicNumbers'
     tippyInstance: Object,
   }
 })
-export default class GCCStats extends Vue {
+export default class GCCPlayerStats extends Vue {
   playerId!: string
   tippyInstance!: any
   isLoadingInitialData = true
