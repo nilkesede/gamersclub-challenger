@@ -132,6 +132,7 @@ import Logger from 'js-logger'
 import $ from 'jquery'
 import { gcSelectors } from '@/utils/gcSelectors'
 import { socialMedia } from '../scripts/lobby/domain/socialMedia'
+import MapStat from '../scripts/lobby/domain/MapStat'
 import BrowserStorage from '@/utils/storage'
 import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch"
 import { percentage } from '../utils/magicNumbers'
@@ -280,7 +281,7 @@ export default class GCCPlayerStats extends Vue {
       const groupedCsgoMaps = this.stats.history.monthMatches.groupByKey('map')
       Logger.debug('Maps Stats', groupedCsgoMaps)
 
-      const mapsStats = []
+      const mapsStats: MapStat[] = []
       for(let csgoMap in groupedCsgoMaps){
         if(csgoMap !== 'undefined'){
           mapsStats.push(this.buildMapStats(csgoMap, groupedCsgoMaps[csgoMap]))
