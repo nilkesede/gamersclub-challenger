@@ -76,7 +76,8 @@ export default class KDR extends Vue {
   $meetBg: rgba($twitterBlue, 0.5);
   $belowBg: rgba(#000000, 0.2);
   $aboveBg: $youtubeRed;
-  $godBg: linear-gradient(90deg, rgb(164, 170, 4) 0%, rgba(121,14,9,1) 35%, rgba(0,74,255,1) 100%);;
+  $godBgFallback: rgb(63,94,251);
+  $godBg: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
 
   .gcc-kdr-wrapper {
     position: relative;
@@ -119,7 +120,7 @@ export default class KDR extends Vue {
     }
 
     &--god {
-      background: rgb(164, 170, 4);
+      background: $godBgFallback;
       background: $godBg;
     }
 
