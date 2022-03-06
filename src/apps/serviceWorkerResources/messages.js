@@ -2,7 +2,9 @@ const bgMessages = {
   INIT_GOOGLE_ANALYTICS: 'INIT_GOOGLE_ANALYTICS',
 
   GA_INITIALIZED: 'GA_INITIALIZED',
-  GA_FAILED: 'GA_FAILED'
+  GA_FAILED: 'GA_FAILED',
+
+  RELOAD_GC_TABS: 'RELOAD_GC_TABS'
 }
 
 self.backgroundMessages = bgMessages

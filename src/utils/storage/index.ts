@@ -69,9 +69,9 @@ class BrowserStorage {
     })
   }
 
-  updateSettings() {
-    this.set(this.settings)
+  updateSettings(): Promise<any> {
     Logger.debug('⚙️ Update settings', JSON.stringify(this.settings))
+    return this.set(this.settings)
   }
 
   remove(key: string){

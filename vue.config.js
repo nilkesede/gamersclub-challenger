@@ -41,10 +41,11 @@ const config = {
       chunks: ['chunk-vendors', 'popup']
     },
 
-    contentScripts: {
-      entry: 'src/apps/content/index.js',
-      chunks: ['chunk-vendors', 'contentScripts'],
+    lobbyContentScripts: {
+      entry: 'src/apps/content/lobby.js',
+      chunks: ['chunk-vendors', 'lobbyContentScripts'],
     },
+
   },
   chainWebpack: (config) => {
     config.plugin('writeFile')
