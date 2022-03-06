@@ -1,3 +1,5 @@
+import { GCInitialPlayerStats } from "@/scripts/lobby/domain/GCInitialPlayerStats";
+import { GCPlayerStatsHistory } from "@/scripts/lobby/domain/GCPlayerStatsHistory";
 import analytics from "./analytics";
 import { gcUrls } from "./gcUrls";
 
@@ -9,13 +11,13 @@ export const userAPI = {
       .catch(analytics.sendError)
   },
 
-  boxInitialMatches(id: string){
+  boxInitialMatches(id: string): Promise<GCInitialPlayerStats> {
     return fetch(gcUrls.boxInitialMatches(id))
       .then(response => response.json())
       .catch(analytics.sendError)
   },
 
-  boxMatchesHistory(id: string) {
+  boxMatchesHistory(id: string): Promise<GCPlayerStatsHistory> {
     return fetch(gcUrls.boxMatchesHistory(id))
     .then(response => response.json())
     .catch(analytics.sendError)

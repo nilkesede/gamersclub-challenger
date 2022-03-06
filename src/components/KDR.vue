@@ -13,22 +13,34 @@ import { Options, Vue } from 'vue-class-component'
 import tippy, { sticky } from 'tippy.js'
 import { createApp } from '@vue/runtime-dom'
 import GCCPlayerStatsComparator from './GCCPlayerStatsComparator.vue'
+import { userAPI } from '../utils/gcAPI'
 
 @Options({
   props: {
     value: Number,
     playerId: String,
+    toFetchData: Boolean,
   }
 })
 export default class KDR extends Vue {
   value!: number
   playerId!: string
   tippyInstance: any = null
-
+  toFetchData = false
 
   setup(): any {
     return {
 
+    }
+  }
+
+  beforeMount(){
+    if(this.toFetchData){
+      userAPI.boxMatchesHistory(this.playerId)
+      .then((data) => {
+        const kdrStat = data.stat.find((stat) => stat.stat === 'KDR')
+        this.value = kdrStat?.value ? parseFloat(kdrStat?.value) : 0
+      })
     }
   }
 

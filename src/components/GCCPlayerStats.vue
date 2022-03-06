@@ -25,6 +25,11 @@
                   {{ stats.initial.playerInfo.nick }}
                 </h4>
               </a>
+              <transition-group class="gcc-stats__punishment-list" tag="ul">
+                <li v-for="punishment in userPunishments" :key="punishment" class="gcc-stats__punishment-item">
+                  <img :src="punishmentCardURL" :alt="punishment.reason" :title="punishment.reason">
+                </li>
+              </transition-group>
               <!-- <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small> -->
             </div>
 
@@ -124,7 +129,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { GCInitialPlayerStats } from '../scripts/lobby/domain/GCInitialPlayerStats'
-import { gcUrls } from '../utils/gcUrls'
+import { gcUrls, gcAssetsUrls } from '../utils/gcUrls'
 import { GCPlayerStatsHistory } from '@/scripts/lobby/domain/GCPlayerStatsHistory'
 import VueSlider from 'vue-slider-component'
 import analytics from '@/utils/analytics'
@@ -190,7 +195,8 @@ export default class GCCPlayerStats extends Vue {
     return {
       i18n,
       gcUrls,
-      browser: window.browser
+      browser: window.browser,
+      punishmentCardURL: gcAssetsUrls.pushimentCard()
     }
   }
 
@@ -233,11 +239,17 @@ export default class GCCPlayerStats extends Vue {
     }
   }
 
+
+
   getCsgoMapImage(mapName: string) {
     const url = window.browser.runtime.getURL(`../../assets/csgo_maps/${mapName}.png`)
     return {
       'background-image': `url(${url})`
     }
+  }
+
+  get userPunishments() {
+    return this.stats.core?.punishments || []
   }
 
   get socialButtons() {
