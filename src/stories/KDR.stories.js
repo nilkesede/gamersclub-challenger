@@ -1,11 +1,15 @@
-import GCCPlayerStats from '../components/GCCPlayerStats.vue';
-
+import kdr from '../components/KDR.vue';
+import GCCPlayerStatsComparator from '../components/GCCPlayerStatsComparator.vue';
 
 export default {
-  title: 'Example/GCCPlayerStats',
-  component: GCCPlayerStats,
+  title: 'Lobby/KDR',
+  component: kdr,
 
   argTypes: {
+    value: {
+      name: 'value',
+      type: { name: 'string', required: false },
+    },
     playerId: {
       name: 'playerId',
       type: { name: 'string', required: false },
@@ -13,20 +17,20 @@ export default {
   },
 };
 
-
 const Template = (args) => ({
   // Components used in your story `template` are defined in the `components` object
-  components: { GCCPlayerStats },
+  components: { kdr, GCCPlayerStatsComparator },
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
     return { args };
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: '<GCCPlayerStats v-bind="args" />',
+  template: '<kdr v-bind="args" />',
 });
 
-export const Common = Template.bind({})
+export const Primary = Template.bind({});
 // @ts-ignore
-Common.args = {
-  playerId: '340558'
-}
+Primary.args = {
+  value: '1.2',
+  playerId: '340558',
+};
