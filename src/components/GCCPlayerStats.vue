@@ -136,6 +136,7 @@ import MapStat from '../scripts/lobby/domain/MapStat'
 import BrowserStorage from '@/utils/storage'
 import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch"
 import { percentage } from '../utils/magicNumbers'
+import { userAPI } from '../utils/gcAPI'
 
 @Options({
   components: {
@@ -143,14 +144,11 @@ import { percentage } from '../utils/magicNumbers'
   },
 
   props: {
-    value: Number,
     playerId: String,
-    tippyInstance: Object,
   }
 })
 export default class GCCPlayerStats extends Vue {
   playerId!: string
-  tippyInstance!: any
   isLoadingInitialData = true
   isLoadingHistory = true
   isLoadingPlayer = true
@@ -332,32 +330,21 @@ export default class GCCPlayerStats extends Vue {
 
   fetchPlayerStats() {
     try {
+      userAPI.getById(this.playerId).then(data => {
+        this.receivePlayerPage(data)
+        this.isLoadingPlayer = false
+      })
 
-      fetch(gcUrls.player(this.playerId))
-      .then(response => response.text())
-        .then(data => {
-          this.receivePlayerPage(data)
-          this.isLoadingPlayer = false
-        })
-        .catch(analytics.sendError)
+      userAPI.boxInitialMatches(this.playerId).then(data => {
+        Logger.debug('boxInitialMatches', data)
+        this.stats.initial = data
+        this.isLoadingInitialData = false
+      })
 
-      fetch(gcUrls.boxInitialMatches(this.playerId))
-        .then(response => response.json())
-        .then(data => {
-          Logger.debug('boxInitialMatches', data)
-          this.stats.initial = data
-          this.isLoadingInitialData = false
-        })
-        .catch(analytics.sendError)
-
-      fetch(gcUrls.boxMatchesHistory(this.playerId))
-        .then(response => response.json())
-        .then(data => {
-          Logger.debug('boxMatchesHistory', data)
-          this.stats.history = data
-          this.isLoadingHistory = false
-        })
-        .catch(analytics.sendError)
+      userAPI.boxMatchesHistory(this.playerId).then(data => {
+        this.stats.history = data
+        this.isLoadingHistory = false
+      })
     } catch (err: any) {
       analytics.sendError(err)
     }
@@ -687,7 +674,7 @@ export default class GCCPlayerStats extends Vue {
     }
 
     &--winner {
-      background-color: rgba($green, 0.5);
+      background-color: rgba($steamBlack, 0.7);
 
       .gcc-stats__map-stats-item-number-wrapper-content--loss {
         opacity: 0.5;
@@ -705,7 +692,7 @@ export default class GCCPlayerStats extends Vue {
     }
 
     &--loser {
-      background-color: rgba($red, 0.5);
+      background-color: rgba($steamBlack, 0.7);
 
       .gcc-stats__map-stats-item-number-wrapper-content--win {
         opacity: 0.5;
