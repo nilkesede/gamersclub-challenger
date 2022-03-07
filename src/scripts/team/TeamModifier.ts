@@ -2,12 +2,10 @@
 import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from '../lobby/domain/domEntityType'
-import { createApp, reactive, ref } from 'vue'
+import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
-import GCChallengerComponent from '../../components/Challenger.vue'
 import { gcSelectors } from '../../utils/gcSelectors'
 import serializer from '../lobby/serializer'
-import Logger from 'js-logger'
 import LobbyPlayer from '../lobby/domain/LobbyPlayer'
 import BrowserStorage from '../../utils/storage'
 
