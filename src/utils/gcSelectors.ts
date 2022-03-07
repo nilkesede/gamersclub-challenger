@@ -53,6 +53,14 @@ export const gcSelectors = {
     }
   },
 
+  teamPage: {
+    teamRoot: '.TeamProfile__roster',
+    player: {
+      self: '.PlayerCard',
+      avatarLink: '.PlayerCard__avatar a',
+    }
+  },
+
   challengeList: {
     self: '#challengeList',
     currentLobbyContent: '.sidebar-desafios-team-content',

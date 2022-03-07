@@ -136,7 +136,7 @@ export default class LobbiesModifier {
         if($kdrElement.length === 0){
           const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
           $player!.prepend( $kdBooster )
-          createApp(KDRComponent, { value: kdr, playerId }).mount(`#${containerName}`)
+          createApp(KDRComponent, { value: kdr, playerId, toFetchData: false }).mount(`#${containerName}`)
         }
       }
     }

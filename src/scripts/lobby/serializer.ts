@@ -49,6 +49,21 @@ class Serializer {
     }
   }
 
+  serializeTeam(lobbyNode: any): Partial<Lobby> {
+    const $room = $( lobbyNode )
+
+    const players = $room.find( gcSelectors.teamPage.player.self )
+    const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder)))
+    const serializedPlayers = this.serializePlayers(realPlayers, gcSelectors.teamPage.player)
+
+    return {
+      $el: $room,
+      id: undefined,
+      players: serializedPlayers,
+      name: $room.find(gcSelectors.lobbies.title)?.text()
+    }
+  }
+
   serializeMyLobby(lobbyNode: any): Partial<Lobby> {
     const $lobby = $( lobbyNode )
     const $room = $lobby?.hasClass(cleanSelector(gcSelectors.myLobby.root)) ? $lobby : $lobby?.closest(gcSelectors.myLobby.root)

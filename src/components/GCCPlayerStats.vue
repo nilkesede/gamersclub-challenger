@@ -427,6 +427,16 @@ export default class GCCPlayerStats extends Vue {
     transform: translateZ(20px);
   }
 
+  .gcc-stats__punishment-list {
+    list-style: none;
+
+    .gcc-stats__punishment-item {
+      display: inline-block;
+      width: 20px;
+      height: 30px;
+    }
+  }
+
   .gcc-stats__avatar {
     width: 70px;
     height: 70px;

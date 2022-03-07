@@ -1,10 +1,10 @@
 <template>
   <div class="gcc-kdr-wrapper" @click="onClickToSeeMore">
     <div class="gcc-kdr" :class="{
-      'gcc-kdr--god': 1.5 <= value,
-      'gcc-kdr--above': 1.2 <= value && value < 1.5,
-      'gcc-kdr--below': value < 1
-    }">{{value}}</div>
+      'gcc-kdr--god': 1.5 <= kdrValue,
+      'gcc-kdr--above': 1.2 <= kdrValue && kdrValue < 1.5,
+      'gcc-kdr--below': kdrValue < 1
+    }">{{kdrValue}}</div>
   </div>
 </template>
 
@@ -14,6 +14,7 @@ import tippy, { sticky } from 'tippy.js'
 import { createApp } from '@vue/runtime-dom'
 import GCCPlayerStatsComparator from './GCCPlayerStatsComparator.vue'
 import { userAPI } from '../utils/gcAPI'
+import { ref } from 'vue'
 
 @Options({
   props: {
@@ -24,28 +25,38 @@ import { userAPI } from '../utils/gcAPI'
 })
 export default class KDR extends Vue {
   value!: number
+  _kdrValue!:number
   playerId!: string
   tippyInstance: any = null
   toFetchData = false
 
   setup(): any {
     return {
-
     }
   }
 
-  beforeMount(){
+  created(){
     if(this.toFetchData){
       userAPI.boxMatchesHistory(this.playerId)
       .then((data) => {
         const kdrStat = data.stat.find((stat) => stat.stat === 'KDR')
-        this.value = kdrStat?.value ? parseFloat(kdrStat?.value) : 0
+        if(typeof kdrStat?.value !== 'undefined') {
+          this._kdrValue = parseFloat(kdrStat.value)
+        }
       })
     }
   }
 
   unmounted(){
     this.tippyInstance?.destroy()
+  }
+
+  set kdrValue(value){
+    this._kdrValue = value
+  }
+
+  get kdrValue() {
+    return typeof this.value !== 'undefined' ? this.value : this._kdrValue;
   }
 
   onClickToSeeMore(){

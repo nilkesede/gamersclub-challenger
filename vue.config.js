@@ -38,12 +38,17 @@ const config = {
     popup: {
       entry: 'src/apps/popup/index.ts',
       template: 'src/apps/popup/popup.html',
-      chunks: ['chunk-vendors', 'popup']
+      chunks: ['chunk-vendors', 'chunk-common', 'popup']
     },
 
     lobbyContentScripts: {
       entry: 'src/apps/content/lobby.js',
-      chunks: ['chunk-vendors', 'lobbyContentScripts'],
+      chunks: ['chunk-vendors', 'chunk-common', 'lobbyContentScripts'],
+    },
+
+    teamContentScripts: {
+      entry: 'src/apps/content/team.js',
+      chunks: ['chunk-vendors', 'teamContentScripts'],
     },
 
   },

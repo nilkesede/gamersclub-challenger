@@ -18,7 +18,12 @@ class BrowserStorage {
       enableKDRFilter: true,
       enableAutomaticChallengeButton: true,
       enable3DGCCardEffect: true
-    }
+    },
+    betaTesters: [
+      '340558', // C8
+      '579773', // mooN
+      '731972', // hard
+    ]
   }
 
   async setup() {

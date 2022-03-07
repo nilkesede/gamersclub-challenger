@@ -15,4 +15,5 @@ export type GCCOptionsKey = keyof GCCOptions;
 export interface GCCStorageSettings {
   filters: Partial<GCCFilters>
   options: Partial<GCCOptions>
+  betaTesters: Array<string>
 }
