@@ -17,5 +17,15 @@ export const gcUrls = {
 
   boxMatchesHistory(userId: UserId){
     return `${gcSiteUrl}/api/box/history/${userId}`
+  },
+}
+
+export const gcAssetsUrls = {
+  pushimentCard(){
+    return 'https://gamersclub.com.br/assets/images/punishment/warning-card.svg'
+  },
+
+  backgroundLevel(level: number){
+    return `https://gamersclub.com.br/assets/images/level/${level}.svg`
   }
 }

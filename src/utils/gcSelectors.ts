@@ -43,12 +43,21 @@ export const gcSelectors = {
   },
 
   playerPage: {
+    punishments: '.gc-profile-user-punishments img',
     socialButtons: {
       instagram: '.Button--instagram',
       twitch: '.Button--twitch',
       steam: '.Button--steam',
       twitter: '.Button--twitter',
       youtube: '.Button--youtube'
+    }
+  },
+
+  teamPage: {
+    teamRoot: '.TeamProfile__roster',
+    player: {
+      self: '.PlayerCard',
+      avatarLink: '.PlayerCard__avatar a',
     }
   },
 

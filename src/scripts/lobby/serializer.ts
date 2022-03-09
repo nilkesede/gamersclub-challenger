@@ -49,6 +49,21 @@ class Serializer {
     }
   }
 
+  serializeTeam(lobbyNode: any): Partial<Lobby> {
+    const $room = $( lobbyNode )
+
+    const players = $room.find( gcSelectors.teamPage.player.self )
+    const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder)))
+    const serializedPlayers = this.serializePlayers(realPlayers, gcSelectors.teamPage.player)
+
+    return {
+      $el: $room,
+      id: undefined,
+      players: serializedPlayers,
+      name: $room.find(gcSelectors.lobbies.title)?.text()
+    }
+  }
+
   serializeMyLobby(lobbyNode: any): Partial<Lobby> {
     const $lobby = $( lobbyNode )
     const $room = $lobby?.hasClass(cleanSelector(gcSelectors.myLobby.root)) ? $lobby : $lobby?.closest(gcSelectors.myLobby.root)
@@ -78,8 +93,8 @@ class Serializer {
     const playerAvatarLink = $player.find( selectors.avatarLink )
     const title = playerAvatarLink.attr( 'title' )
     const playerId = playerAvatarLink.attr('href')?.split('/')[2]
-    let playerName = undefined
-    let kdr = undefined
+    let playerName: string | undefined = undefined
+    let kdr: number | undefined = undefined
 
     if ( title ) {
       const kdrIndex = title.indexOf('| KDR:')

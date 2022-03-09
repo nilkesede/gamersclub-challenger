@@ -25,6 +25,11 @@
                   {{ stats.initial.playerInfo.nick }}
                 </h4>
               </a>
+              <transition-group class="gcc-stats__punishment-list" tag="ul">
+                <li v-for="punishment in userPunishments" :key="punishment" class="gcc-stats__punishment-item">
+                  <img :src="punishmentCardURL" :alt="punishment.reason" :title="punishment.reason">
+                </li>
+              </transition-group>
               <!-- <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small> -->
             </div>
 
@@ -124,7 +129,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { GCInitialPlayerStats } from '../scripts/lobby/domain/GCInitialPlayerStats'
-import { gcUrls } from '../utils/gcUrls'
+import { gcUrls, gcAssetsUrls } from '../utils/gcUrls'
 import { GCPlayerStatsHistory } from '@/scripts/lobby/domain/GCPlayerStatsHistory'
 import VueSlider from 'vue-slider-component'
 import analytics from '@/utils/analytics'
@@ -132,9 +137,11 @@ import Logger from 'js-logger'
 import $ from 'jquery'
 import { gcSelectors } from '@/utils/gcSelectors'
 import { socialMedia } from '../scripts/lobby/domain/socialMedia'
+import MapStat from '../scripts/lobby/domain/MapStat'
 import BrowserStorage from '@/utils/storage'
 import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch"
 import { percentage } from '../utils/magicNumbers'
+import { userAPI } from '../utils/gcAPI'
 
 @Options({
   components: {
@@ -142,14 +149,11 @@ import { percentage } from '../utils/magicNumbers'
   },
 
   props: {
-    value: Number,
     playerId: String,
-    tippyInstance: Object,
   }
 })
-export default class GCCStats extends Vue {
+export default class GCCPlayerStats extends Vue {
   playerId!: string
-  tippyInstance!: any
   isLoadingInitialData = true
   isLoadingHistory = true
   isLoadingPlayer = true
@@ -157,6 +161,7 @@ export default class GCCStats extends Vue {
     core: Partial<{
       social: Record<socialMedia, Partial<{ url?: string, name: string, icon: string }>>
       statistics: Partial<{ name: string, icon: string, value?: string, average?: number }>[]
+      punishments: Partial<{ reason: string }>[]
     }>,
     initial: GCInitialPlayerStats,
     history: GCPlayerStatsHistory
@@ -170,6 +175,7 @@ export default class GCCStats extends Vue {
   data() {
     const { i18n } = window.browser;
     this.stats.core = {
+      punishments: [],
       social: {
         twitch: { name: 'Twitch', icon: 'fa-twitch'},
         twitter: { name: 'Twitter', icon: 'fa-twitter'},
@@ -184,12 +190,13 @@ export default class GCCStats extends Vue {
         this.totalStatsMap.firstKills,
         this.totalStatsMap.clutches,
         this.totalStatsMap.multiKills
-      ]
+      ],
     }
     return {
       i18n,
       gcUrls,
-      browser: window.browser
+      browser: window.browser,
+      punishmentCardURL: gcAssetsUrls.pushimentCard()
     }
   }
 
@@ -232,11 +239,17 @@ export default class GCCStats extends Vue {
     }
   }
 
+
+
   getCsgoMapImage(mapName: string) {
     const url = window.browser.runtime.getURL(`../../assets/csgo_maps/${mapName}.png`)
     return {
       'background-image': `url(${url})`
     }
+  }
+
+  get userPunishments() {
+    return this.stats.core?.punishments || []
   }
 
   get socialButtons() {
@@ -278,7 +291,7 @@ export default class GCCStats extends Vue {
       const groupedCsgoMaps = this.stats.history.monthMatches.groupByKey('map')
       Logger.debug('Maps Stats', groupedCsgoMaps)
 
-      const mapsStats = []
+      const mapsStats: MapStat[] = []
       for(let csgoMap in groupedCsgoMaps){
         if(csgoMap !== 'undefined'){
           mapsStats.push(this.buildMapStats(csgoMap, groupedCsgoMaps[csgoMap]))
@@ -306,44 +319,44 @@ export default class GCCStats extends Vue {
     return []
   }
 
+  receivePlayerPage(data: any){
+    const $page = $(data)
+    Logger.debug('player data length', $page.length)
+
+    // Punishments
+    const punishments = $page.find(gcSelectors.playerPage.punishments).get()
+    this.stats.core!.punishments = punishments.map((element) => {
+      return { reason: $(element).attr('title')}
+    })
+
+    // Social medias
+    const socialKeys = Object.keys(this.stats.core?.social as any)
+    socialKeys.forEach((socialKey) => {
+      const social = this.stats.core?.social?.[socialKey as socialMedia]
+      const selector = gcSelectors.playerPage.socialButtons[socialKey as socialMedia]
+      if(social && selector){
+        social.url =  $page.find(selector).attr('href') || ''
+      }
+    })
+  }
+
   fetchPlayerStats() {
     try {
+      userAPI.getById(this.playerId).then(data => {
+        this.receivePlayerPage(data)
+        this.isLoadingPlayer = false
+      })
 
-      fetch(gcUrls.player(this.playerId))
-      .then(response => response.text())
-        .then(data => {
-          const $page = $(data)
-          Logger.debug('player data length', $page.length)
+      userAPI.boxInitialMatches(this.playerId).then(data => {
+        Logger.debug('boxInitialMatches', data)
+        this.stats.initial = data
+        this.isLoadingInitialData = false
+      })
 
-          const socialKeys = Object.keys(this.stats.core?.social as any)
-          socialKeys.forEach((socialKey) => {
-            const social = this.stats.core?.social?.[socialKey as socialMedia]
-            const selector = gcSelectors.playerPage.socialButtons[socialKey as socialMedia]
-            if(social && selector){
-              social.url =  $page.find(selector).attr('href') || ''
-            }
-          })
-          this.isLoadingPlayer = false
-        })
-        .catch(analytics.sendError)
-
-      fetch(gcUrls.boxInitialMatches(this.playerId))
-        .then(response => response.json())
-        .then(data => {
-          Logger.debug('boxInitialMatches', data)
-          this.stats.initial = data
-          this.isLoadingInitialData = false
-        })
-        .catch(analytics.sendError)
-
-      fetch(gcUrls.boxMatchesHistory(this.playerId))
-        .then(response => response.json())
-        .then(data => {
-          Logger.debug('boxMatchesHistory', data)
-          this.stats.history = data
-          this.isLoadingHistory = false
-        })
-        .catch(analytics.sendError)
+      userAPI.boxMatchesHistory(this.playerId).then(data => {
+        this.stats.history = data
+        this.isLoadingHistory = false
+      })
     } catch (err: any) {
       analytics.sendError(err)
     }
@@ -412,6 +425,16 @@ export default class GCCStats extends Vue {
     width: 200px;
     text-align: left;
     transform: translateZ(20px);
+  }
+
+  .gcc-stats__punishment-list {
+    list-style: none;
+
+    .gcc-stats__punishment-item {
+      display: inline-block;
+      width: 20px;
+      height: 30px;
+    }
   }
 
   .gcc-stats__avatar {
@@ -673,7 +696,7 @@ export default class GCCStats extends Vue {
     }
 
     &--winner {
-      background-color: rgba($green, 0.5);
+      background-color: rgba($steamBlack, 0.7);
 
       .gcc-stats__map-stats-item-number-wrapper-content--loss {
         opacity: 0.5;
@@ -691,7 +714,7 @@ export default class GCCStats extends Vue {
     }
 
     &--loser {
-      background-color: rgba($red, 0.5);
+      background-color: rgba($steamBlack, 0.7);
 
       .gcc-stats__map-stats-item-number-wrapper-content--win {
         opacity: 0.5;
