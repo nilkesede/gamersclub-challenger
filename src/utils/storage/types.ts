@@ -8,6 +8,7 @@ export interface GCCOptions {
   enableNameFilter: boolean
   enableAutomaticChallengeButton: boolean
   enable3DGCCardEffect: boolean
+  enableToPinLobbies: boolean
 }
 
 export type GCCOptionsKey = keyof GCCOptions;

@@ -9,15 +9,15 @@ import LoggedUser from "./domain/LoggedUser"
 
 class Serializer {
   serialize(lobbyNode: any): Partial<Lobby> {
-    const $lobby = $( lobbyNode )
-    const $room = $lobby?.hasClass(cleanSelector(gcSelectors.lobby)) ? $lobby : $lobby?.closest(gcSelectors.lobby)
+    const $lobby = $(lobbyNode)
+    const $room = $lobby?.hasClass(cleanSelector(gcSelectors.lobbies.self)) ? $lobby : $lobby?.closest(gcSelectors.lobbies.self)
     const lobbyId = $room.attr('id')
 
-    if(!lobbyId) {
+    if (!lobbyId) {
       Logger.warn('Cannot find lobby id', $room[0])
     }
 
-    const players = $room.find( gcSelectors.lobbies.player.self )
+    const players = $room.find(gcSelectors.lobbies.player.self)
     const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder)))
     const serializedPlayers = this.serializePlayers(realPlayers)
 
@@ -30,14 +30,14 @@ class Serializer {
   }
 
   serializeChallengedLobby(lobbyNode: any): Partial<Lobby> {
-    const $room = $( lobbyNode )
+    const $room = $(lobbyNode)
     const lobbyId = $room.attr('id')
 
-    if(!lobbyId) {
+    if (!lobbyId) {
       Logger.warn('Cannot find challengedLobby id', $room[0])
     }
 
-    const players = $room.find( gcSelectors.lobbies.player.self )
+    const players = $room.find(gcSelectors.lobbies.player.self)
     const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder)))
     const serializedPlayers = this.serializePlayers(realPlayers, gcSelectors.challengeList.player)
 
@@ -50,9 +50,9 @@ class Serializer {
   }
 
   serializeTeam(lobbyNode: any): Partial<Lobby> {
-    const $room = $( lobbyNode )
+    const $room = $(lobbyNode)
 
-    const players = $room.find( gcSelectors.teamPage.player.self )
+    const players = $room.find(gcSelectors.teamPage.player.self)
     const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder)))
     const serializedPlayers = this.serializePlayers(realPlayers, gcSelectors.teamPage.player)
 
@@ -65,10 +65,10 @@ class Serializer {
   }
 
   serializeMyLobby(lobbyNode: any): Partial<Lobby> {
-    const $lobby = $( lobbyNode )
+    const $lobby = $(lobbyNode)
     const $room = $lobby?.hasClass(cleanSelector(gcSelectors.myLobby.root)) ? $lobby : $lobby?.closest(gcSelectors.myLobby.root)
 
-    const players = $room.find( gcSelectors.myLobby.player.self )
+    const players = $room.find(gcSelectors.myLobby.player.self)
     const serializedPlayers = players.get().map((node) => this.serializePlayer(node, gcSelectors.myLobby.player))
 
     return {
@@ -77,7 +77,7 @@ class Serializer {
     }
   }
 
-  serializePlayers(nodes: any, selectors?: playerSelectors) : Partial<LobbyPlayer>[] {
+  serializePlayers(nodes: any, selectors?: playerSelectors): Partial<LobbyPlayer>[] {
     const players: Partial<LobbyPlayer>[] = nodes.map((node: any) => this.serializePlayer(node, selectors))
 
     const realPlayers = players?.filter((player) => {
@@ -88,24 +88,24 @@ class Serializer {
   }
 
   serializePlayer(playerNode: any, selectors: playerSelectors = gcSelectors.lobbies.player): Partial<LobbyPlayer> {
-    const $player = $( playerNode )
+    const $player = $(playerNode)
 
-    const playerAvatarLink = $player.find( selectors.avatarLink )
-    const title = playerAvatarLink.attr( 'title' )
+    const playerAvatarLink = $player.find(selectors.avatarLink)
+    const title = playerAvatarLink.attr('title')
     const playerId = playerAvatarLink.attr('href')?.split('/')[2]
     let playerName: string | undefined = undefined
     let kdr: number | undefined = undefined
 
-    if ( title ) {
+    if (title) {
       const kdrIndex = title.indexOf('| KDR:')
       playerName = title.substring(0, kdrIndex).trim()
 
       let kd: any = title.match(/KDR: [0-9]+(.?[0-9]+)?/)
       kd = kd || ['']
-      kdr = parseFloat( kd[0].split( ':' )[1].trim() )
+      kdr = parseFloat(kd[0].split(':')[1].trim())
 
     } else {
-      if(!$player.hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder))){
+      if (!$player.hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder))) {
         Logger.warn('[serializePlayer] There is no TITLE', playerNode)
       }
     }

@@ -1,4 +1,4 @@
-  // @ts-check
+// @ts-check
 import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
@@ -13,44 +13,45 @@ import BrowserStorage from '../../utils/storage'
 import gcBooster from '@/utils/gcBooster'
 import { newTippy } from '@/utils/tippy'
 import Lobby from './domain/Lobby'
+import GCCLobbyPinner from '../../components/GCCLobbyPinner.vue'
 
 export default class LobbiesModifier {
 
-  strategiesForNewNodes: Record<domEntityType, (node: any) => void > = {
+  strategiesForNewNodes: Record<domEntityType, (node: any) => void> = {
     PLAYER: this.reactToNewPlayer.bind(this),
     LOBBY: this.reactToNewLobby.bind(this),
-    IGNORED: (node: any) => {},
+    IGNORED: (node: any) => { },
     UNKNOWN: (node: any) => {
       // Logger.warn('TeamsModifier UNKNOWN domEntityType', node)
     }
   }
 
-  strategiesForRemovedNodes: Record<domEntityType | string, (node: any) => void > = {
+  strategiesForRemovedNodes: Record<domEntityType | string, (node: any) => void> = {
     PLAYER: this.reactToRemovedPlayer.bind(this),
   }
 
-  constructor(){
+  constructor() {
     // Initial lobbies
-    $(gcSelectors.lobby).each((index, element) => this.reactToNewLobby(element))
+    $(gcSelectors.lobbies.self).each((index, element) => this.reactToNewLobby(element))
 
     // @ts-ignore
-    $(gcSelectors.list).observe(this.modifyAvailableTeams.bind(this))
+    $(gcSelectors.lobbies.list).observe(this.modifyAvailableTeams.bind(this))
   }
 
   modifyAvailableTeams(changes: any): void {
-    if(changes && changes.length){
+    if (changes && changes.length) {
       changes.map((change: any) => {
-        if(change.addedNodes && change.addedNodes.length) {
+        if (change.addedNodes && change.addedNodes.length) {
           change.addedNodes.forEach((node: any) => {
-            const addedNodeType: domEntityType  = this.identifyAddedNode(node)
+            const addedNodeType: domEntityType = this.identifyAddedNode(node)
             const strategy = this.strategiesForNewNodes[addedNodeType]
             strategy && strategy(node)
           })
         }
 
-        if(change.removedNodes && change.removedNodes.length){
+        if (change.removedNodes && change.removedNodes.length) {
           change.removedNodes.forEach((node: any) => {
-            const removedNodeType: domEntityType | string  = this.identifyAddedNode(node)
+            const removedNodeType: domEntityType | string = this.identifyAddedNode(node)
             const strategy = this.strategiesForRemovedNodes[removedNodeType]
             strategy && strategy(node)
           })
@@ -70,14 +71,14 @@ export default class LobbiesModifier {
 
     const isIgnored = ignoredSelectors.some((selector) => $node.hasClass(selector))
 
-    if(isIgnored){
+    if (isIgnored) {
       type = domEntityType.IGNORED
     } else {
-      const isLobby = $node.hasClass(cleanSelector(gcSelectors.lobby)) || $node.find('.sala-card').length > 0
+      const isLobby = $node.hasClass(cleanSelector(gcSelectors.lobbies.self)) || $node.find('.sala-card').length > 0
 
-      if(isLobby){
+      if (isLobby) {
         type = domEntityType.LOBBY
-      } else if($node.hasClass(cleanSelector(gcSelectors.lobbies.player.self))) {
+      } else if ($node.hasClass(cleanSelector(gcSelectors.lobbies.player.self))) {
         type = domEntityType.PLAYER
       }
     }
@@ -85,7 +86,7 @@ export default class LobbiesModifier {
     return type
   }
 
-  identifyRemovedNode(node: any):  domEntityType | string {
+  identifyRemovedNode(node: any): domEntityType | string {
     const $node = $(node)
     let type: domEntityType | string
 
@@ -95,7 +96,7 @@ export default class LobbiesModifier {
 
     const isPlayer = playersClasses.some((selector) => $node.hasClass(selector))
 
-    if(isPlayer) {
+    if (isPlayer) {
       type = domEntityType.PLAYER
     } else {
       type = domEntityType.IGNORED
@@ -105,37 +106,49 @@ export default class LobbiesModifier {
   }
 
   reactToRemovedPlayer(node: any) {
-    const $node = $( node )
-    const $lobby = $node.closest( gcSelectors.lobby )
+    const $node = $(node)
+    const $lobby = $node.closest(gcSelectors.lobbies.self)
 
-    if($lobby && $lobby.length) {
-      $lobby.removeClass(cleanSelector( gcSelectors.extension.lobbies.challenged ))
+    if ($lobby && $lobby.length) {
+      $lobby.removeClass(cleanSelector(gcSelectors.extension.lobbies.challenged))
     }
   }
 
-  reactToNewLobby(node: any){
+  reactToNewLobby(node: any) {
     const serializedLobby: Partial<Lobby> = serializer.serialize(node)
     this.showKDForLobby(serializedLobby)
     // this.replaceLobbyTitle(serializedLobby)
+    this.addLobbyPinner(serializedLobby)
     lobbyFilter.reactToFilter.call(lobbyFilter, node)
   }
 
-  reactToNewPlayer(node: any){
+  addLobbyPinner({ $el: $lobby }: Partial<Lobby>) {
+    if (BrowserStorage.settings.options?.enableToPinLobbies) {
+      const $pinner = $lobby!.find(gcSelectors.extension.lobbies.pinner.self)
+      if ($pinner.length === 0) {
+        const $pinnerContainer = $('<div></div>')
+        createApp(GCCLobbyPinner).mount($pinnerContainer[0])
+        $lobby!.find(gcSelectors.extension.lobbies.content).append($pinnerContainer)
+      }
+    }
+  }
+
+  reactToNewPlayer(node: any) {
     this.showPlayerKD(node)
-    const $lobby = $(node).closest(gcSelectors.lobby)
+    const $lobby = $(node).closest(gcSelectors.lobbies.self)
     lobbyFilter.reactToFilter.call(lobbyFilter, $lobby[0])
   }
 
   showPlayerKD(playerNode: any) {
-    if( BrowserStorage.settings.options?.showLobbiesKDR ){
+    if (BrowserStorage.settings.options?.showLobbiesKDR) {
       const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode)
       const $kdrElement = $player!.find(gcSelectors.extension.kdr)
       const containerName = `gcc-${playerId}`
 
-      if ( typeof kdr !== 'undefined') {
-        if($kdrElement.length === 0){
+      if (typeof kdr !== 'undefined') {
+        if ($kdrElement.length === 0) {
           const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
-          $player!.prepend( $kdBooster )
+          $player!.prepend($kdBooster)
           createApp(KDRComponent, { value: kdr, playerId, toFetchData: false }).mount(`#${containerName}`)
         }
       }
@@ -143,12 +156,12 @@ export default class LobbiesModifier {
   }
 
   showKDForLobby({ players }: Partial<Lobby>): void {
-    players?.map( (player) => this.reactToNewPlayer(player.$el?.[0]) )
+    players?.map((player) => this.reactToNewPlayer(player.$el?.[0]))
   }
 
-  replaceLobbyTitle({ $el }: Partial<Lobby>){
+  replaceLobbyTitle({ $el }: Partial<Lobby>) {
     const $lobbyTittle = $el?.find(gcSelectors.lobbies.title)
-    if($lobbyTittle?.length) {
+    if ($lobbyTittle?.length) {
       const label = $lobbyTittle.text() || $lobbyTittle.attr('title')
       createApp(GCCLobbyTitle, { label }).mount($lobbyTittle[0])
     }

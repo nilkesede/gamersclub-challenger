@@ -22,31 +22,31 @@ class LobbyFilter {
     Logger.debug('🧪 Filtered lobbies', gccFilters)
     Object.assign(this.filters, gccFilters)
 
-    const lobbiesElements = $(gcSelectors.lobby).get()
+    const lobbiesElements = $(gcSelectors.lobbies.self).get()
     lobbiesElements.map(this.reactToFilter.bind(this))
 
     await browserStorage.updateSettings()
   }
 
-  reactToFilter(lobbyNode: any){
+  reactToFilter(lobbyNode: any) {
     const { players, $el } = Serializer.serialize(lobbyNode)
-    const $room = $el?.hasClass(cleanSelector(gcSelectors.lobby)) ? $el : $el?.closest(gcSelectors.lobby)
+    const $room = $el?.hasClass(cleanSelector(gcSelectors.lobbies.self)) ? $el : $el?.closest(gcSelectors.lobbies.self)
     let validLobby: boolean | undefined = true
     const cleanHiddenSelector = cleanSelector(gcSelectors.extension.hidden)
 
-    if(typeof this.filters.kdr !== 'undefined' && players && browserStorage.settings.options?.enableKDRFilter){
+    if (typeof this.filters.kdr !== 'undefined' && players && browserStorage.settings.options?.enableKDRFilter) {
       validLobby = players.every((player) => {
         return this.filters.kdr! >= KDR_MAX_LIMIT || player.kdr as number <= this.filters.kdr!
       })
     }
 
-    if(validLobby && players && this.filters.playerName && browserStorage.settings.options?.enableNameFilter){
-      validLobby = players.some( player => {
+    if (validLobby && players && this.filters.playerName && browserStorage.settings.options?.enableNameFilter) {
+      validLobby = players.some(player => {
         return player.name && player.name.toLowerCase().indexOf(this.filters.playerName!.toLowerCase().trim()) > -1;
       });
     }
 
-    if(validLobby) {
+    if (validLobby) {
       $room?.removeClass(cleanHiddenSelector)
     } else {
       $room?.addClass(cleanHiddenSelector)

@@ -1,8 +1,5 @@
 
 export const gcSelectors = {
-  list: '.list-avaliable-teams',
-  lobby: '.lobby-room-list-item',
-
   loggedUser: {
     avatar: '.MainHeader__navbar .MainAvatar img',
     level: '.MainHeader__navbar .MainHeader__playerLevel .gcf-badge-level-value',
@@ -32,6 +29,8 @@ export const gcSelectors = {
   filterSection: '.FilterLobby_section__3UmYp',
 
   lobbies: {
+    list: '.list-avaliable-teams',
+    self: '.lobby-room-list-item',
     content: '.lobby-rooms-content',
     bigChallengeButton: '.lobby-btn-big.lobby-btn-play-big',
     player: {
@@ -93,7 +92,12 @@ export const gcSelectors = {
     kdrFilterContainer: '.gcc-kdr-filter-container',
     hidden: '.gcc-hide',
     lobbies: {
-      challenged: '.gcc-lobby-challenged'
+      challenged: '.gcc-lobby-challenged',
+      content: '.sala-card-content',
+      pinned: '.gcc-pinned-lobby',
+      pinner: {
+        self: 'gcc-lobby-pinner'
+      }
     },
     challenger: {
       self: '.gcc-challenger'
