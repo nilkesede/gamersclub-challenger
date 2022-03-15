@@ -51,6 +51,12 @@ const config = {
       chunks: ['chunk-vendors', 'teamContentScripts'],
     },
 
+    devPreMatch: {
+      entry: 'src/development/apps/content/preMatch.js',
+      chunks: ['chunk-vendors', 'chunk-common', 'devPreMatch'],
+      template: 'src/development/mocks/ready-to-match.html',
+    }
+
   },
   chainWebpack: (config) => {
     config.plugin('writeFile')

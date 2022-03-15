@@ -96,7 +96,7 @@ export const gcSelectors = {
       content: '.sala-card-content',
       pinned: '.gcc-pinned-lobby',
       pinner: {
-        self: 'gcc-lobby-pinner'
+        self: '.gcc-lobby-pinner'
       }
     },
     challenger: {

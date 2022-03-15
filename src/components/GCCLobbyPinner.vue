@@ -15,28 +15,49 @@ import { ref, defineComponent } from "vue";
 import $ from "jquery";
 import { gcSelectors } from "../utils/gcSelectors";
 
+const maxSlotsLenght = 3;
+const pinnedClass = gcSelectors.extension.lobbies.pinned;
+const cleanPinnedClass = pinnedClass.cleanCSSSelector();
+const slotsRange = [...Array(maxSlotsLenght).keys()];
+
 export default defineComponent({
   name: "gcc-lobby-pinner",
   setup() {
     return {
       isPinned: ref(false),
-      $lobby: ref(null),
+      lobby: ref(null),
+      pinnedSlot: ref(null),
     };
   },
   methods: {
     onClickHandler() {
       this.isPinned = !this.isPinned;
-      if (!this.$lobby)
-        this.$lobby = $(this.$el).closest(gcSelectors.lobbies.self);
+      if (!this.lobby)
+        this.lobby = $(this.$el).closest(gcSelectors.lobbies.self);
 
-      const pinnedClass =
-        gcSelectors.extension.lobbies.pinned.cleaCSSSelector();
-
-      if (this.isPinned) {
-        this.$lobby.addClass(pinnedClass);
+      if (this.isPinned && this.isEnabled()) {
+        this.pinnedSlot = this.buildSlotIndex();
+        this.lobby.addClass(
+          `${cleanPinnedClass} ${cleanPinnedClass}--slot-${this.pinnedSlot}`
+        );
       } else {
-        this.$lobby.removeClass(pinnedClass);
+        this.isPinned = false;
+        this.lobby.removeClass(
+          `${cleanPinnedClass} ${cleanPinnedClass}--slot-${this.pinnedSlot}`
+        );
       }
+    },
+
+    isEnabled() {
+      return $(pinnedClass).length < maxSlotsLenght;
+    },
+
+    buildSlotIndex() {
+      const slot = slotsRange.find((slotNumber) => {
+        const length = $(`${pinnedClass}--slot-${slotNumber}`).length;
+        return length === 0;
+      });
+      return slot;
     },
   },
 });
@@ -51,20 +72,39 @@ $font-family: "Roboto Condensed", sans-serif;
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 
+$pinnedSlots: 3;
+$slotWidth: 400px;
+$initalLeftSlotSalt: 331px;
+
+@for $i from 0 through $pinnedSlots {
+  .gcc-pinned-lobby--slot-#{$i} {
+    left: $slotWidth * $i + $initalLeftSlotSalt;
+  }
+}
+
 // GC Overrride
-.gcc-lobby-pinned {
+.gcc-pinned-lobby {
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+
   .gcc-lobby-pinner {
     opacity: 1;
   }
 
   .sala-card {
     position: relative;
+    box-shadow: 0 0 20px 14px black;
   }
 }
 
-.lobby-room-list-item:hover {
-  .gcc-lobby-pinner {
-    opacity: 1;
+.lobby-room-list-item {
+  transition: top 0.3s ease-in-out;
+
+  &:hover {
+    .gcc-lobby-pinner {
+      opacity: 1;
+    }
   }
 }
 
@@ -77,6 +117,7 @@ $font-family: "Roboto Condensed", sans-serif;
   height: 30px;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+  cursor: pointer;
 
   &:hover,
   &--pinned {
