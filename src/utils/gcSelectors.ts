@@ -16,12 +16,17 @@ export const gcSelectors = {
     },
     player: {
       self: '.sidebar-item',
-      avatarLink: '.sidebar-item-imagem a',
+      avatarLink: '.PlayerIdentityAvatar__avatarImage .WasdAvatar__image',
     }
   },
 
   matchModal: {
-    self: '#GamersClubCSApp-modals-matchModal'
+    root: 'body.lobby',
+    self: '#GamersClubCSApp-modals-matchModal',
+    player: {
+      self: '.PlayerListCard',
+      avatarLink: '.PlayerIdentityAvatar__avatarImage img',
+    }
   },
 
   filtersContainer: '.FilterLobby_main__23Z64',

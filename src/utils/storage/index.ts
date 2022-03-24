@@ -19,6 +19,7 @@ class BrowserStorage {
       enableAutomaticChallengeButton: true,
       enable3DGCCardEffect: true,
       enableToPinLobbies: true,
+      enableAutoReady: true,
     },
     betaTesters: [
       '340558', // C8
