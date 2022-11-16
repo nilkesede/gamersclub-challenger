@@ -8,6 +8,7 @@ import { gcSelectors } from '../../utils/gcSelectors'
 import serializer from '../lobby/serializer'
 import Logger from 'js-logger'
 import BrowserStorage from '../../utils/storage'
+import LobbyPlayer from '../lobby/domain/LobbyPlayer'
 
 export default class PreMatchModifier {
 
@@ -32,10 +33,14 @@ export default class PreMatchModifier {
   }
 
   constructor() {
-
+    setTimeout(() => {
+      $(gcSelectors.preMatchModal.root).find(gcSelectors.preMatchModal.lobby.self).each((index, node) => {
+        this.reactToLobbyCreation(node)
+      })
+    }, 300)
 
     // @ts-ignore
-    $(gcSelectors.matchModal.root).observe(this.modify.bind(this))
+    $(gcSelectors.preMatchModal.root).observe(this.modify.bind(this))
   }
 
   modify(changes: any): void {
@@ -68,7 +73,7 @@ export default class PreMatchModifier {
       cleanSelector(gcSelectors.extension.kdr),
     ]
     const playersClasses = [
-      gcSelectors.matchModal.player.self.cleanCSSSelector()
+      gcSelectors.preMatchModal.lobby.player.self.cleanCSSSelector()
     ]
 
     const isIgnored = ignoredSelectors.some((selector) => $node.hasClass(selector))
@@ -106,8 +111,8 @@ export default class PreMatchModifier {
   }
 
   reactToLobbyCreation(node: any) {
-    //this.lobby = serializer.serializeMyLobby(node)
-    //this.lobby.players?.map((player: Partial<LobbyPlayer>) => this.reactToNewPlayer(player.$el?.[0]))
+    this.lobby = serializer.serializePreMatchLobby(node)
+    this.lobby.players?.map((player: Partial<LobbyPlayer>) => this.reactToNewPlayer(player.$el?.[0]))
   }
 
   reactToNewPlayer(node: any) {
@@ -122,7 +127,7 @@ export default class PreMatchModifier {
 
   showPlayerKD(playerNode: any) {
     if (BrowserStorage.settings.options?.showMyLobbyKDR) {
-      const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode, gcSelectors.matchModal.player)
+      const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode, gcSelectors.preMatchModal.lobby.player)
       const $kdrElement = $player!.find(gcSelectors.extension.kdr)
       const containerName = `gcc-match-player--${playerId}`
 

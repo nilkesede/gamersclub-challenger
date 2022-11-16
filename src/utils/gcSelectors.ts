@@ -20,13 +20,17 @@ export const gcSelectors = {
     }
   },
 
-  matchModal: {
+  preMatchModal: {
     root: 'body.lobby',
     self: '#GamersClubCSApp-modals-matchModal',
-    player: {
-      self: '.PlayerListCard',
-      avatarLink: '.PlayerIdentityAvatar__avatarImage img',
-    }
+    lobby: {
+      self: 'aside ul',
+      title: 'aside h2',
+      player: {
+        self: '.PlayerListCard',
+        avatarLink: '.PlayerIdentityAvatar__avatarImage img',
+      }
+    },
   },
 
   filtersContainer: '.FilterLobby_main__23Z64',

@@ -54,7 +54,7 @@ const config = {
     devPreMatch: {
       entry: 'src/development/apps/content/preMatch.js',
       chunks: ['chunk-vendors', 'chunk-common', 'devPreMatch'],
-      template: 'src/development/mocks/pre-match.html',
+      subpage: 'src/development/mocks/pre-match.html',
     }
 
   },

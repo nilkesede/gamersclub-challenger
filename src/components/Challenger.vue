@@ -92,7 +92,7 @@ export default class Challenger extends Vue {
   }
 
   reactToChallegingState(): void {
-    const $matchModal = $(gcSelectors.matchModal.self);
+    const $matchModal = $(gcSelectors.preMatchModal.self);
     if (this.isChalleging && !$matchModal?.length) {
       this.makeChallenges();
     } else {

@@ -6,6 +6,8 @@ import GCChallengerContentRunner from '../../../utils/contentRunner'
 import PreMatchModifier from '../../../scripts/preMatch/PreMatchModifier'
 
 GCChallengerContentRunner.pageName = 'devPreMatch'
-GCChallengerContentRunner.preRun('GA_FAILED').finally(() => {
+const run = () => {
   new PreMatchModifier()
-})
+}
+
+GCChallengerContentRunner.preRun('GA_FAILED', run, run)

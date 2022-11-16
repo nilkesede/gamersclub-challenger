@@ -77,11 +77,26 @@ class Serializer {
     }
   }
 
+  serializePreMatchLobby(lobbyNode: any): Partial<Lobby> {
+    const $room = $(lobbyNode)
+
+    const players = $room.find(gcSelectors.preMatchModal.lobby.player.self)
+    const realPlayers = players.get().filter((node) => !$(node).hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder)))
+    const serializedPlayers = this.serializePlayers(realPlayers, gcSelectors.preMatchModal.lobby.player)
+
+    return {
+      $el: $room,
+      id: undefined,
+      players: serializedPlayers,
+      name: $room.find(gcSelectors.lobbies.title)?.text()
+    }
+  }
+
   serializePlayers(nodes: any, selectors?: playerSelectors): Partial<LobbyPlayer>[] {
     const players: Partial<LobbyPlayer>[] = nodes.map((node: any) => this.serializePlayer(node, selectors))
 
     const realPlayers = players?.filter((player) => {
-      return !player.$el?.hasClass(cleanSelector(gcSelectors.lobbies.player.placeHolder))
+      return selectors?.placeHolder ? !player.$el?.hasClass(cleanSelector(selectors?.placeHolder)) : true
     })
 
     return realPlayers
