@@ -1,8 +1,5 @@
 
 export const gcSelectors = {
-  list: '.list-avaliable-teams',
-  lobby: '.lobby-room-list-item',
-
   loggedUser: {
     avatar: '.MainHeader__navbar .MainAvatar img',
     level: '.MainHeader__navbar .MainHeader__playerLevel .gcf-badge-level-value',
@@ -19,19 +16,34 @@ export const gcSelectors = {
     },
     player: {
       self: '.sidebar-item',
-      avatarLink: '.sidebar-item-imagem a',
+      avatarLink: '.sidebar-item-imagem > a',
     }
   },
 
-  matchModal: {
-    self: '#GamersClubCSApp-modals-matchModal'
+  preMatchModal: {
+    root: 'body.lobby',
+    self: '#GamersClubCSApp-modals-matchModal',
+    lobby: {
+      self: 'aside ul',
+      title: 'aside h2',
+      player: {
+        self: '.PlayerListCard',
+        avatarLink: '.PlayerIdentityAvatar__avatarImage img',
+      }
+    },
   },
 
-  filtersContainer: '.FilterLobby_main__23Z64',
-  filterLabel: '.FilterLobby_sectionLabel__1zPew',
-  filterSection: '.FilterLobby_section__3UmYp',
-
   lobbies: {
+    filters: {
+      container: '#lobby-filters-container',
+      content: '.sc-jrAFXE',
+      section: {
+        self: '.sc-kEjbQP',
+        label: '.bbJJKl',
+      }
+    },
+    list: '#lobbies-wrapper',
+    self: '.lobby-room-list-item',
     content: '.lobby-rooms-content',
     bigChallengeButton: '.lobby-btn-big.lobby-btn-play-big',
     player: {
@@ -93,7 +105,12 @@ export const gcSelectors = {
     kdrFilterContainer: '.gcc-kdr-filter-container',
     hidden: '.gcc-hide',
     lobbies: {
-      challenged: '.gcc-lobby-challenged'
+      challenged: '.gcc-lobby-challenged',
+      content: '.sala-card-content',
+      pinned: '.gcc-pinned-lobby',
+      pinner: {
+        self: '.gcc-lobby-pinner'
+      }
     },
     challenger: {
       self: '.gcc-challenger'

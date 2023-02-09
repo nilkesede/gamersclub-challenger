@@ -1,4 +1,4 @@
-  // @ts-check
+// @ts-check
 import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from '../lobby/domain/domEntityType'
@@ -13,42 +13,42 @@ export default class TeamModifier {
   challenger: any
   lobby: any
 
-  strategiesForNewNodes: Record<domEntityType | string, (node: any) => void > = {
+  strategiesForNewNodes: Record<domEntityType | string, (node: any) => void> = {
     PLAYER: this.reactToNewPlayer.bind(this),
-    LOBBY: (node: any) => {},
-    IGNORED: (node: any) => {},
+    LOBBY: (node: any) => { },
+    IGNORED: (node: any) => { },
     UNKNOWN: (node: any) => {
       // Logger.warn('TeamModifier strategiesForNewNodes UNKNOWN domEntityType', node)
     },
   }
 
-  strategiesForRemovedNodes: Record<domEntityType | string, (node: any) => void > = {
+  strategiesForRemovedNodes: Record<domEntityType | string, (node: any) => void> = {
     PLAYER: this.reactToRemovedPlayer.bind(this),
     UNKNOWN: (node: any) => {
       // Logger.warn('TeamModifier strategiesForRemovedNodes UNKNOWN domEntityType', node)
     },
   }
 
-  constructor(){
+  constructor() {
     // @ts-ignore
     // $(gcSelectors.teamPage.teamRoot).observe(this.modify.bind(this))
     this.reactToRender()
   }
 
   modify(changes: any): void {
-    if(changes && changes.length){
+    if (changes && changes.length) {
       changes.map((change: any) => {
-        if(change.addedNodes && change.addedNodes.length) {
+        if (change.addedNodes && change.addedNodes.length) {
           change.addedNodes.forEach((node: any) => {
-            const addedNodeType: domEntityType | string  = this.identifyAddedNode(node)
+            const addedNodeType: domEntityType | string = this.identifyAddedNode(node)
             const strategy = this.strategiesForNewNodes[addedNodeType]
             strategy && strategy(node)
           })
         }
 
-        if(change.removedNodes && change.removedNodes.length){
+        if (change.removedNodes && change.removedNodes.length) {
           change.removedNodes.forEach((node: any) => {
-            const removedNodeType: domEntityType | string  = this.identifyAddedNode(node)
+            const removedNodeType: domEntityType | string = this.identifyAddedNode(node)
             const strategy = this.strategiesForRemovedNodes[removedNodeType]
             strategy && strategy(node)
           })
@@ -70,11 +70,11 @@ export default class TeamModifier {
 
     const isIgnored = ignoredSelectors.some((selector) => $node.hasClass(selector))
 
-    if(isIgnored){
+    if (isIgnored) {
       type = domEntityType.IGNORED
     } else {
       const isPlayer = playersClasses.some((selector) => $node.hasClass(selector))
-      if(isPlayer) {
+      if (isPlayer) {
         type = domEntityType.PLAYER
       }
     }
@@ -82,13 +82,13 @@ export default class TeamModifier {
     return type
   }
 
-  identifyRemovedNode(node: any):  domEntityType | string {
+  identifyRemovedNode(node: any): domEntityType | string {
     return domEntityType.UNKNOWN
   }
 
   reactToRender() {
     const team = serializer.serializeTeam($(gcSelectors.teamPage.teamRoot)[0])
-    team.players?.map( (player: Partial<LobbyPlayer>) => this.reactToNewPlayer(player.$el?.[0]) )
+    team.players?.map((player: Partial<LobbyPlayer>) => this.reactToNewPlayer(player.$el?.[0]))
   }
 
   reactToNewPlayer(node: any) {
@@ -101,12 +101,12 @@ export default class TeamModifier {
   showPlayerKD(playerNode: any) {
     const loggedUser = serializer.serializeLoggedPlayer()
 
-    if( BrowserStorage.settings.options?.showMyLobbyKDR && BrowserStorage.settings.betaTesters?.includes(loggedUser.id?.toString() || 'invalid-id') ){
+    if (BrowserStorage.settings.options?.showMyLobbyKDR && BrowserStorage.settings.betaTesters?.includes(loggedUser.id?.toString() || 'invalid-id')) {
       const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode, gcSelectors.teamPage.player)
       const containerName = `gcc-team-player--${playerId}`
 
-      const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top gcc-team-player'></div>`
-      $player!.append( $kdBooster )
+      const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-bottom gcc-team-player'></div>`
+      $player!.append($kdBooster)
       createApp(KDRComponent, { value: kdr, playerId, toFetchData: true }).mount(`#${containerName}`)
     }
   }

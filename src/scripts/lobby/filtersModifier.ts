@@ -14,19 +14,19 @@ export default class FiltersModifier {
     this.modifyFilters()
   }
 
-  modifyFilters(){
+  modifyFilters() {
     this.insertKDRFilter()
     this.insertLobbyNameFilter()
   }
 
   insertLobbyNameFilter() {
-    if( BrowserStorage.settings.options?.enableNameFilter ){
-      const $roomsContent = $( gcSelectors.lobbies.content )
+    if (BrowserStorage.settings.options?.enableNameFilter) {
+      const $roomsContent = $(gcSelectors.lobbies.content)
       const containerName = `gcc-lobby-player-filter-container`
       const $container = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
       const $lobbyFilter = $roomsContent.find(containerName)
 
-      if($lobbyFilter.length === 0){
+      if ($lobbyFilter.length === 0) {
         $roomsContent.prepend($container)
         createApp(LobbyNameFilterComponent).mount(`#${containerName}`)
       }
@@ -34,17 +34,18 @@ export default class FiltersModifier {
   }
 
   insertKDRFilter() {
-    if( BrowserStorage.settings.options?.enableKDRFilter ) {
-      const $filtersContainer = $(gcSelectors.filtersContainer)
-      const sections = $filtersContainer.find(gcSelectors.filterSection)
+    if (BrowserStorage.settings.options?.enableKDRFilter) {
+      const $filtersContainer = $(gcSelectors.lobbies.filters.container)
+      const $content = $filtersContainer.find(gcSelectors.lobbies.filters.content)
+      const sections = $content.find(gcSelectors.lobbies.filters.section.self)
       const sectionModel = sections.get(0)
       const $gccFilterSection = $(sectionModel!).clone()
       const cleanContainerClass = cleanSelector(gcSelectors.extension.kdrFilterContainer)
 
-      gcBooster.isInstalled().catch(() => {})
+      gcBooster.isInstalled().catch(() => { })
         .finally(() => {
           $gccFilterSection.addClass(cleanContainerClass)
-          $filtersContainer.get(0)!.append($gccFilterSection[0])
+          $content.get(0)!.append($gccFilterSection[0])
           createApp(KDRFilterComponent, { value: lobbyFilter.filters.kdr || BrowserStorage.defaultSettings.filters?.kdr }).mount($gccFilterSection.get(0)!)
         })
     }
