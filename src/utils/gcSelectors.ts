@@ -16,7 +16,7 @@ export const gcSelectors = {
     },
     player: {
       self: '.sidebar-item',
-      avatarLink: '.PlayerIdentityAvatar__avatarImage .WasdAvatar__image',
+      avatarLink: '.sidebar-item-imagem > a',
     }
   },
 
@@ -33,12 +33,16 @@ export const gcSelectors = {
     },
   },
 
-  filtersContainer: '.FilterLobby_main__23Z64',
-  filterLabel: '.FilterLobby_sectionLabel__1zPew',
-  filterSection: '.FilterLobby_section__3UmYp',
-
   lobbies: {
-    list: '.list-avaliable-teams',
+    filters: {
+      container: '#lobby-filters-container',
+      content: '.sc-jrAFXE',
+      section: {
+        self: '.sc-kEjbQP',
+        label: '.bbJJKl',
+      }
+    },
+    list: '#lobbies-wrapper',
     self: '.lobby-room-list-item',
     content: '.lobby-rooms-content',
     bigChallengeButton: '.lobby-btn-big.lobby-btn-play-big',

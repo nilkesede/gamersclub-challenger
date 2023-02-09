@@ -149,10 +149,10 @@ export default class MyLobbyModifier {
       const $kdrElement = $player!.find(gcSelectors.extension.kdr)
       const containerName = `gcc-my-lobby-player--${playerId}`
 
-      if (typeof kdr !== 'undefined' && $kdrElement.length === 0) {
+      if ($kdrElement.length === 0) {
         const $kdBooster = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top gcc-my-lobby-player'></div>`
         $player!.append($kdBooster)
-        createApp(KDRComponent, { value: kdr, playerId }).mount(`#${containerName}`)
+        createApp(KDRComponent, { value: kdr, playerId, toFetchData: typeof kdr === 'undefined' }).mount(`#${containerName}`)
       }
     }
   }
