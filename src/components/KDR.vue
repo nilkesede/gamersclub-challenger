@@ -46,6 +46,7 @@ export default defineComponent({
   setup(props) {
     return {
       tip: ref(props.tippyInstance),
+      _kdrValue: ref(0),
     };
   },
 
