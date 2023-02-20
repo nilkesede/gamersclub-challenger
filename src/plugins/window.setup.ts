@@ -1,6 +1,9 @@
 
 export { }
 declare global {
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface browser {}
   export interface Window {
     ga: any,
     chrome: any,
@@ -15,7 +18,8 @@ declare global {
   }
 }
 
-window.chrome ? (window.browser = window.chrome) : void 0
+// @ts-ignore
+window.chrome ? (window.browser = window.chrome) : (window.browser = browser)
 
 // @ts-ignore
 Array.prototype.groupByKey = function (key) { return this.reduce((hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }), {}) }
