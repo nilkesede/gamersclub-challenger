@@ -889,8 +889,9 @@ $wrapperWidth: 355px;
   z-index: 1;
   padding: 5px;
   font-weight: 600;
-  text-shadow: 0px 0px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
-    -1px 1px 0 #000, 1px 1px 0 #000;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-shadow: 0px 0px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 
   .gcc-stats__map-stats-item-number--total {
     font-weight: 300;
