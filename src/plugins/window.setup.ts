@@ -16,10 +16,14 @@ declare global {
   interface String {
     cleanCSSSelector(): string;
   }
+
+  interface Array<T> {
+    groupByKey(key: string): Record<string, Array<T>>
+  }
 }
 
 // @ts-ignore
 window.chrome ? (window.browser = window.chrome) : (window.browser = browser)
 
-// @ts-ignore
+
 Array.prototype.groupByKey = function (key) { return this.reduce((hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }), {}) }
