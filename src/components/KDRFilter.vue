@@ -4,11 +4,17 @@
     <vue-slider
       v-model="modelValue"
       :interval="0.1"
-      :marks="[1, 1.2, 1.7, 2]"
+      :marks="{
+        '1': '1',
+        '1.2': '1.2',
+        '1.5': '1.5',
+        '1.7': '1.7',
+        '2': '2+'
+      }"
       :min="1"
       :max="2"
       tooltip="always"
-      tooltipPlacement="right"
+      tooltipPlacement="top"
     ></vue-slider>
   </div>
 </template>
@@ -67,7 +73,7 @@ export default class KDR extends Vue {
 
 .gcc-kdr-filter {
   color: white;
-  width: 80%;
-  padding-top: 20px;
+  width: 100%;
+  padding-top: 30px;
 }
 </style>
