@@ -436,8 +436,8 @@ export default class GCCPlayerStats extends Vue {
 
   get mapsStats() {
     if (this.stats.history?.monthMatches?.length) {
-      //@ts-ignore
-      const groupedCsgoMaps = this.stats.history.monthMatches.groupByKey("map");
+      const groupedCsgoMaps = Array.prototype.groupByKey.call(this.stats.history.monthMatches, "map");
+
       Logger.debug("Maps Stats", groupedCsgoMaps);
 
       const mapsStats: MapStat[] = [];
