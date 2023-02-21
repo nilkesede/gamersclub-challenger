@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 const transformManifestToFirefox = require("../src/browser/firefox/transformManifest")
+const transformManifestDevelopment = require("./transformManifest.development")
 
 module.exports = function buildFilesToCopy(){
   let filesToCopy = [
@@ -22,7 +23,10 @@ module.exports = function buildFilesToCopy(){
     filesToCopy = filesToCopy.concat([
       {
         from: 'manifest.json',
-        transform: transformManifestToFirefox
+        transform: (content) => {
+          const devManifestBuffer = transformManifestDevelopment(content)
+          return transformManifestToFirefox(devManifestBuffer)
+        }
       },
       {
         from: 'src/browser/firefox/background.js',
@@ -33,6 +37,7 @@ module.exports = function buildFilesToCopy(){
     filesToCopy = filesToCopy.concat([
       {
         from: 'manifest.json',
+        transform: transformManifestDevelopment
       },
       {
         from: 'src/browser/chromium/background.js',

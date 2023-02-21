@@ -12,7 +12,7 @@ module.exports = function transformManifestToFirefox(content){
   delete manifest.background.service_worker
 
   /**
-   * Adding Firefox Properties
+   * Override Firefox Properties
    */
   Object.assign(manifest, {
     browser_specific_settings: {
@@ -26,13 +26,15 @@ module.exports = function transformManifestToFirefox(content){
   })
 
   /**
-   * Renaming Firefox Properties
+   * Mixing Firefox Properties
    */
   manifest.web_accessible_resources.map((resource) => {
     resource.extension_ids = [extensionId]
     delete resource.extensions
     return resource
   })
+
+  manifest.permissions.push('activeTab')
 
   // Copy Plugin needs a Buffer
   return Buffer.from(JSON.stringify(manifest))
