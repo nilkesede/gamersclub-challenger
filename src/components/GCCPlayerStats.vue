@@ -6,7 +6,6 @@
     }"
   >
     <div class="gcc-stats-bg" :style="userBackground"></div>
-
     <i
       v-if="isLoading"
       class="fas fa-spinner rotating gcc-stats__loading-icon"
@@ -15,7 +14,7 @@
         'gcc-stats__loading-icon--small-loading': isStillLoading,
       }"
     ></i>
-    <span class="gcc-stats-player-id">GC ID: {{ playerId }}</span>
+
 
     <article v-if="!isLoading && stats">
       <section class="gcc-stats__profile">
@@ -38,6 +37,7 @@
                   {{ stats.initial.playerInfo.nick }}
                 </h4>
               </a>
+              <p class="gcc-stats-player-id">#{{ playerId }}</p>
               <transition-group class="gcc-stats__punishment-list" tag="ul">
                 <li
                   v-for="punishment in userPunishments"
@@ -80,7 +80,7 @@
             class="gcc-stats__profile-stat"
           >
             <span class="gcc-stats__profile-stat-name">
-              <i :class="[stat.icon]"></i> {{ stat.name }}
+              <i :class="['fa', stat.icon]" /> {{ stat.name }}
             </span>
             <p class="gcc-stats__profile-stat-value">{{ stat.value }}</p>
             <span v-if="stat.average" class="gcc-stats__profile-stat-average">{{
@@ -157,6 +157,7 @@
             :class="{
               'gcc-stats__map-stats-item--winner': mapStat.wins > mapStat.loss,
               'gcc-stats__map-stats-item--loser': mapStat.wins < mapStat.loss,
+              'gcc-stats__map-stats-item--draw': mapStat.wins == mapStat.loss,
             }"
           >
             <div
@@ -164,7 +165,7 @@
               :style="getCsgoMapImage(mapStat.name)"
             ></div>
             <span class="gcc-stats__map-stats-item-name">
-              {{ mapStat.name }}
+              {{ mapStat.alias }}
               <p
                 class="
                   gcc-stats__map-stats-item-number
@@ -289,9 +290,9 @@ export default class GCCPlayerStats extends Vue {
     history: GCPlayerStatsHistory;
   }> = {};
   totalStatsMap = {
-    firstKills: { name: "First kills", icon: "fa fa-stopwatch" },
-    clutches: { name: "Clutches", icon: "fas fa-brain" },
-    multiKills: { name: "Multi Kills", icon: "fas fa-crosshairs" },
+    firstKills: { name: "First kills", icon: "fa-solid fa-stopwatch" },
+    clutches: { name: "Clutches", icon: "fa-solid fa-brain" },
+    multiKills: { name: "Multi Kills", icon: "fa-solid fa-crosshairs" },
   };
 
   data() {
@@ -306,9 +307,9 @@ export default class GCCPlayerStats extends Vue {
         instagram: { name: "Insta", icon: "fa-instagram" },
       },
       statistics: [
-        { name: "KDR", icon: "fas fa-skull-crossbones" },
-        { name: "ADR", icon: "fas fa-burn" },
-        { name: "HS%", icon: "fas fa-skull" },
+        { name: "KDR", icon: "fa-solid fa-skull-crossbones" },
+        { name: "ADR", icon: "fa-solid fa-burn" },
+        { name: "HS%", icon: "fa-solid fa-skull" },
         this.totalStatsMap.firstKills,
         this.totalStatsMap.clutches,
         this.totalStatsMap.multiKills,
@@ -417,6 +418,7 @@ export default class GCCPlayerStats extends Vue {
   buildMapStats(csgoMap: string, list: GCMonthMatch[]) {
     const stats = {
       name: csgoMap,
+      alias: csgoMap.replaceAll("de_", "").toUpperCase(),
       matches: list.length,
       loss: 0,
       wins: 0,
@@ -518,10 +520,14 @@ export default class GCCPlayerStats extends Vue {
 @use "sass:math";
 @import "../styles/_variables.scss";
 
+$fa-font-path: "../assets/fonts" !default;
+
 $green: #95b300;
 $red: #eb2f2f;
 $wrapperHeight: 400px;
 $wrapperWidth: 355px;
+$statsOverlay: rgba($steamBlack, 0.8);
+
 .gcc-stats-wrapper {
   width: $wrapperWidth;
   min-height: 100%;
@@ -607,9 +613,6 @@ $wrapperWidth: 355px;
 .gcc-stats-player-id {
   font-family: sans-serif;
   font-size: 10px;
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
   opacity: 0.4;
   font-style: italic;
 }
@@ -750,6 +753,10 @@ $wrapperWidth: 355px;
 
   .gcc-stats__profile-stat {
     transition: all 0.4s;
+
+    &:hover {
+      background: $statsOverlay
+    }
   }
 }
 
@@ -757,6 +764,10 @@ $wrapperWidth: 355px;
   display: flex;
   flex-direction: column;
   padding: 10px 40px;
+
+  &:hover {
+    background: $statsOverlay
+  }
 }
 
 .gcc-stats__matches-numbers {
@@ -810,6 +821,9 @@ $wrapperWidth: 355px;
   width: 100%;
   color: white;
   text-align: center;
+  font-size: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .gcc-stats__maps-stats-list {
@@ -825,8 +839,8 @@ $wrapperWidth: 355px;
 .gcc-stats__map-stats-item {
   display: flex;
   position: relative;
+  background-color: rgba($steamBlack, 0.7);
   flex-direction: row;
-  background-color: rgba($orange, 0.5);
   width: math.div($wrapperWidth, 2);
   height: 50px;
   border-right: 1px solid black;
@@ -871,6 +885,12 @@ $wrapperWidth: 355px;
       }
     }
   }
+
+  &:hover {
+    .gcc-stats__map-bg {
+      opacity: 0.7;
+    }
+  }
 }
 
 .gcc-stats__map-bg {
@@ -881,8 +901,11 @@ $wrapperWidth: 355px;
   left: 0;
   background-position: center;
   background-size: cover;
-  opacity: 0.7;
+  opacity: 0;
   z-index: 0;
+  transition: opacity 0.2s ease-in-out;
+
+
 }
 
 .gcc-stats__map-stats-item-name {
