@@ -46,7 +46,7 @@ export default defineComponent({
   setup(props) {
     return {
       tip: ref(props.tippyInstance),
-      _kdrValue: ref(0),
+      kdrValueStored: ref(0),
     };
   },
 
@@ -55,7 +55,7 @@ export default defineComponent({
       userAPI.boxMatchesHistory(this.playerId).then((data) => {
         const kdrStat = data.stat.find((stat) => stat.stat === "KDR");
         if (typeof kdrStat?.value !== "undefined") {
-          this._kdrValue = parseFloat(kdrStat.value);
+          this.kdrValueStored = parseFloat(kdrStat.value);
         }
       });
     }
@@ -69,10 +69,10 @@ export default defineComponent({
   computed: {
     kdrValue: {
       set(value) {
-        this._kdrValue = value;
+        this.kdrValueStored = value;
       },
       get() {
-        return typeof this.value !== "undefined" ? this.value : this._kdrValue;
+        return typeof this.value !== "undefined" ? this.value : this.kdrValueStored;
       },
     },
   },
