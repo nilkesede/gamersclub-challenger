@@ -2,9 +2,9 @@
   "manifest_version": 3,
   "minimum_chrome_version": "90",
   "name": "GamersClub Challenger",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "__MSG_appDescription__",
-  "author": "Carlos Henrique (C8) <carloshpds@gmail.com>",
+  "author": "Carlos Henrique (C8) <contatogcchallenger@gmail.com>",
   "content_security_policy": {
     "extension_pages": "script-src-elem 'self'; script-src 'self'; object-src 'self'"
   },
@@ -60,10 +60,12 @@
     {
       "resources": [
         "assets/*",
+        "fonts/*",
         "content-scripts/*"
       ],
       "matches": [
-        "*://gamersclub.com.br/*"
+        "*://gamersclub.com.br/*",
+        "*://csgo.gamersclub.gg/*"
       ],
       "extensions": [
         "__MSG_@@extension_id__"

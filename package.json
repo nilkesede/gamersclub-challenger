@@ -1,10 +1,13 @@
 {
   "name": "gamersclub-challenger",
-  "version": "1.4.2",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --mode development",
-    "build": "vue-cli-service build",
+    "dev": "vue-cli-service serve --mode development",
+    "dev:firefox": " vue-cli-service serve --mode devfirefox",
+    "build": "npm run build:chromium && npm run build:firefox",
+    "build:chromium": "vue-cli-service build --dest build/chromium",
+    "build:firefox": "vue-cli-service build --mode prodfirefox --dest build/firefox",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "test:e2e": "cypress open --browser chrome",
@@ -12,7 +15,10 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "6.0.0-beta2",
+    "@fortawesome/fontawesome-free": "6.3.0",
+    "@fortawesome/fontawesome-svg-core": "6.3.0",
+    "@fortawesome/free-solid-svg-icons": "6.3.0",
+    "@fortawesome/vue-fontawesome": "3.0.3",
     "core-js": "^3.6.5",
     "cypress-browser-extension-plugin": "0.1.0",
     "jquery": "^3.6.0",
@@ -21,7 +27,7 @@
     "tippy.js": "6.3.7",
     "vue": "^3.2.20",
     "vue-class-component": "^8.0.0-0",
-    "vue-slider-component": "^4.0.0-beta.3"
+    "vue-slider-component": "^4.0.0-beta.9"
   },
   "devDependencies": {
     "@babel/core": "7.17.5",

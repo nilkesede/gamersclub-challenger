@@ -1,33 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const WriteFilePlugin = require('write-file-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const buildFilesToCopy = require('./webpack/buildFilesToCopy');
 
 const config = {
   configureWebpack: {
     devtool: 'cheap-module-source-map',
     plugins: [
       new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: 'manifest.json'
-          },
-          {
-            from: 'src/_locales',
-            to: '_locales'
-          },
-          {
-            from: 'src/assets',
-            to: 'assets'
-          },
-          {
-            from: 'background.js'
-          },
-          {
-            from: 'src/apps/serviceWorkerResources',
-            to: 'serviceWorkerResources'
-          }
-        ]
+        patterns: buildFilesToCopy()
       }),
     ]
   },
