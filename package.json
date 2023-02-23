@@ -1,11 +1,13 @@
 {
   "name": "gamersclub-challenger",
-  "version": "1.4.2",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --mode development",
-    "serve:firefox": " vue-cli-service serve --mode devfirefox",
-    "build": "vue-cli-service build",
+    "dev": "vue-cli-service serve --mode development",
+    "dev:firefox": " vue-cli-service serve --mode devfirefox",
+    "build": "npm run build:chromium && npm run build:firefox",
+    "build:chromium": "vue-cli-service build --dest build/chromium",
+    "build:firefox": "vue-cli-service build --mode prodfirefox --dest build/firefox",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "test:e2e": "cypress open --browser chrome",

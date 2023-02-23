@@ -17,7 +17,8 @@ module.exports = function transformManifestToFirefox(content){
   Object.assign(manifest, {
     browser_specific_settings: {
       gecko: {
-        id: extensionId
+        id: extensionId,
+        strict_min_version: "109.0"
       }
     },
     background: {

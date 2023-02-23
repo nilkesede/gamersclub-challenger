@@ -36,10 +36,10 @@ export const gcSelectors = {
   lobbies: {
     filters: {
       container: '#lobby-filters-container',
-      content: '.sc-jrAFXE',
+      content: '.sc-kEjbQP',
       section: {
-        self: '.sc-kEjbQP',
-        label: '.bbJJKl',
+        self: '.sc-iqHYmW',
+        label: '.lnrdug',
       }
     },
     list: '#lobbies-wrapper',
