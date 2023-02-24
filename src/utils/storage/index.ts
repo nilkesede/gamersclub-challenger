@@ -25,7 +25,10 @@ class BrowserStorage {
       '340558', // C8
       '579773', // mooN
       '731972', // hard
-    ]
+    ],
+    custom: {
+      playersMarks: {}
+    },
   }
 
   async setup() {
@@ -34,6 +37,7 @@ class BrowserStorage {
       if (settings && Object.keys(settings).length) {
         Object.assign(this.settings.filters, this.defaultSettings.filters, settings.filters || {})
         Object.assign(this.settings.options, this.defaultSettings.options, settings.options || {})
+        Object.assign(this.settings.custom, this.defaultSettings.custom, settings.custom || {})
         this.settings.betaTesters = this.defaultSettings.betaTesters
         Logger.debug('⚙️ Loaded settings', JSON.stringify(settings))
       } else {
@@ -47,7 +51,7 @@ class BrowserStorage {
     }
   }
 
-  get(key?: string | string[]): Promise<GCCStorageSettings> {
+  get(key?: string | string[]): Promise<GCCStorageSettings | any> {
     return new Promise((resolve, reject) => {
       try {
         if (window.browser.storage) {

@@ -30,6 +30,7 @@
                   'background-image': `url(https://static.gamersclub.com.br/players/avatar/${playerId}/${playerId}_full.jpg)`,
                 }"
               ></div>
+              <p class="gcc-stats-player-id">#{{ playerId }}</p>
             </div>
             <div class="gcc-stats__core-general-info">
               <a :href="gcUrls.player(playerId)" target="blank">
@@ -37,7 +38,7 @@
                   {{ stats.initial.playerInfo.nick }}
                 </h4>
               </a>
-              <p class="gcc-stats-player-id">#{{ playerId }}</p>
+              <GCCMarks :enableAddButton="true" :playerId="playerId" />
               <transition-group class="gcc-stats__punishment-list" tag="ul">
                 <li
                   v-for="punishment in userPunishments"
@@ -254,6 +255,7 @@ import { gcSelectors } from "@/utils/gcSelectors";
 import { socialMedia } from "../scripts/lobby/domain/socialMedia";
 import MapStat from "../scripts/lobby/domain/MapStat";
 import BrowserStorage from "@/utils/storage";
+import GCCMarks from './GCCMarks.vue'
 import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch";
 import { percentage } from "../utils/magicNumbers";
 import { userAPI } from "../utils/gcAPI";
@@ -261,6 +263,7 @@ import { userAPI } from "../utils/gcAPI";
 @Options({
   components: {
     VueSlider,
+    GCCMarks
   },
 
   props: {
