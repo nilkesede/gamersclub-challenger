@@ -2,9 +2,11 @@ import { GCCMark } from '@/scripts/lobby/domain/GCCMark'
 
 export const GCCMarkEmojiMap: Record<GCCMark, string> = {
   friendly : '😄',
-  leader : '👓',
+  leader : '😎',
   cheater : '💣',
   toxic : '☣️',
+  tilted: '😤',
   smurf : '👻',
-  on_fire: '🔥'
+  on_fire: '🔥',
+  newbie: '🐴',
 }

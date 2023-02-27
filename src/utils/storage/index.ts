@@ -5,7 +5,7 @@ import { GCCStorageSettings } from "./types";
 class BrowserStorage {
 
   settingsKey = 'gccSettings'
-  settings: Partial<GCCStorageSettings> = { filters: {}, options: {}, betaTesters: [] };
+  settings: Partial<GCCStorageSettings> = { filters: {}, options: {}, betaTesters: [], custom: { playersMarks: {} } };
   defaultSettings: Partial<GCCStorageSettings> = {
     filters: {
       kdr: 1.2
