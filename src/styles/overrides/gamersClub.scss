@@ -8,3 +8,14 @@
 .gcc-my-lobby-player {
   padding-right: 5px;
 }
+
+.gcc-marks-container {
+  display: inline-block;
+}
+
+.gcc-kdr-wrapper {
+  .gcc-mark {
+    font-size: 10px !important;
+    margin-right: 2px;
+  }
+}

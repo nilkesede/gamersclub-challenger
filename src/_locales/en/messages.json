@@ -62,5 +62,45 @@
         "content": "$1"
       }
     }
+  },
+
+  "playerMark__friendly": {
+    "message": "Friendly"
+  },
+
+  "playerMark__leader": {
+    "message": "Thanks Teacher"
+  },
+
+  "playerMark__onFire": {
+    "message": "On Fire!"
+  },
+
+  "playerMark__cheater": {
+    "message": "Possible Cheater"
+  },
+
+  "playerMark__smurf": {
+    "message": "Possible Smurf"
+  },
+
+  "playerMark__newbie": {
+    "message": "Newbie"
+  },
+
+  "playerMark__toxic": {
+    "message": "Toxic"
+  },
+
+  "playerMark__tilted": {
+    "message": "Tilted"
+  },
+
+  "playerMarksEdit": {
+    "message": "Edit Tags"
+  },
+
+  "playerMarksSave": {
+    "message": "Save Tags"
   }
 }

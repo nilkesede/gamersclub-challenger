@@ -8,6 +8,7 @@
         'gcc-kdr--below': kdrValue < 1,
       }"
     >
+      <GCCMarks :playerId="playerId" :enableAddButton="false" :key="markRenderIndex" />
       {{ kdrValue }}
     </div>
   </div>
@@ -17,11 +18,16 @@
 import tippy, { sticky } from "tippy.js";
 import { createApp } from "@vue/runtime-dom";
 import GCCPlayerStatsComparator from "./GCCPlayerStatsComparator.vue";
+import GCCMarks from "./GCCMarks.vue";
 import { userAPI } from "../utils/gcAPI";
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  components: {
+    GCCMarks
+  },
+
   props: {
     tippyInstance: {
       type: Object,
@@ -47,6 +53,7 @@ export default defineComponent({
     return {
       tip: ref(props.tippyInstance),
       kdrValueStored: ref(0),
+      markRenderIndex: ref(0)
     };
   },
 
@@ -95,6 +102,12 @@ export default defineComponent({
           content: `<div id="gcc-tippy-content-${playerId}">Loading...</div>`,
           trigger: "click",
           showOnCreate: true,
+          onDestroy: () => {
+            this.markRenderIndex += 1
+          },
+          onHide: () => {
+            this.markRenderIndex += 1
+          },
           onShow(instance) {
             const container = document.createElement("div");
             createApp(GCCPlayerStatsComparator, {
@@ -134,6 +147,10 @@ $godBg: radial-gradient(
     .gcc-stats-trigger {
       display: block;
     }
+  }
+
+  .gcc-mark {
+    font-size: 10px !important;
   }
 }
 

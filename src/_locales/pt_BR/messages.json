@@ -68,5 +68,46 @@
         "content": "$1"
       }
     }
+  },
+
+  "playerMark__friendly": {
+    "message": "Gente Boa"
+  },
+
+  "playerMark__leader": {
+    "message": "Presente professor!"
+  },
+
+  "playerMark__onFire": {
+    "message": "Brabo"
+  },
+
+  "playerMark__cheater": {
+    "message": "Possível Cheater"
+  },
+
+  "playerMark__smurf": {
+    "message": "Possível Smurf"
+  },
+
+  "playerMark__newbie": {
+    "message": "Mula do Chat (Newbie)"
+  },
+
+  "playerMark__toxic": {
+    "message": "Tóxico"
+  },
+
+  "playerMark__tilted": {
+    "message": "Tiltado"
+  },
+
+  "playerMarksEdit": {
+    "message": "Editar Tags"
+  },
+
+  "playerMarksSave": {
+    "message": "Salvar Tags"
   }
+
 }

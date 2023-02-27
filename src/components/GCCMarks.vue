@@ -1,5 +1,7 @@
 <template>
-  <div class="gcc-marks-wrapper" :key="componentKey">
+  <div class="gcc-marks-wrapper" :key="componentKey" v-if="marks" :class="{
+    'gcc-marks-wrapper--is-configuring': isConfiguring,
+  }">
     <span v-for="(value, key) in marks"
       :key="key"
       class="gcc-mark"
@@ -7,26 +9,25 @@
         'gcc-mark--selected': value
       }"
       @click="onClickAtMark(key)"
-      :title="key">
+      :title="i18n.getMessage(`playerMark__${key}`)">
       {{GCCMarkEmojiMap[key]}}
     </span>
       <i
         v-if="enableAddButton"
         @click="toggleConfiguring"
-        title="tags"
+        :title="tagsTitle"
         class="fas gcc-marks__configure-button" :class="{
-        'gcc-marks__configure-button--is-configuring': isConfiguring,
         'fa-tags': !isConfiguring && !isSaving,
         'fa-check': isConfiguring && !isSaving,
         'fa-spinner': isSaving,
         'rotating': isSaving
-      }"></i>
+      }">
+        <span v-if="isConfiguring" class="gcc-marks__configure-button-label">{{ tagsTitle }}</span>
+      </i>
   </div>
 </template>
 
 <script>
-import tippy, { sticky } from "tippy.js";
-import { createApp } from "@vue/runtime-dom";
 import { ref } from "vue";
 import { defineComponent } from "vue";
 import BrowserStorage from '@/utils/storage'
@@ -35,7 +36,7 @@ import { GCCMarkEmojiMap } from '@/utils/GCCMarkEmojiMap'
 const availableMarks = {
   'friendly': false,
   'leader': false,
-  'on_fire': false,
+  'onFire': false,
   'cheater': false,
   'smurf': false,
   'newbie': false,
@@ -45,11 +46,6 @@ const availableMarks = {
 
 const GCCMarkComponent = defineComponent({
   props: {
-    tippyInstance: {
-      type: Object,
-      required: false,
-      default: null,
-    },
     enableAddButton: {
       type: Boolean,
       required: false,
@@ -63,17 +59,12 @@ const GCCMarkComponent = defineComponent({
 
   setup(props) {
     return {
-      tip: ref(props.tippyInstance),
       componentKey: ref(0),
       isConfiguring: ref(false),
       isSaving: ref(false),
-      GCCMarkEmojiMap
+      GCCMarkEmojiMap,
+      i18n: window.browser.i18n
     };
-  },
-
-  unmounted() {
-    this.tippyInstance?.destroy();
-    this.tip?.destroy();
   },
 
   computed: {
@@ -82,6 +73,11 @@ const GCCMarkComponent = defineComponent({
         return this.isConfiguring ? this.buildAvailableMarks() : this.selectedMarks()
       },
     },
+
+    tagsTitle(){
+      const { i18n } = window.browser
+      return this.isConfiguring ? i18n.getMessage('playerMarksSave') : i18n.getMessage('playerMarksEdit')
+    }
   },
 
   methods: {
@@ -95,6 +91,15 @@ const GCCMarkComponent = defineComponent({
 
     selectedMarks() {
       const player = BrowserStorage.settings.custom?.players[this.playerId]
+
+      if(!this.enableAddButton){
+        const marksKeys = player && player.marks ? Object.keys(player.marks) : undefined
+        const filteredMarks = marksKeys?.length ? {} : undefined
+        if(marksKeys?.length){
+          filteredMarks[marksKeys[0]] = player.marks[marksKeys[0]]
+        }
+        return filteredMarks
+      }
       return player && player.marks ? player.marks : {}
     },
 
@@ -107,52 +112,25 @@ const GCCMarkComponent = defineComponent({
       this.isConfiguring = !this.isConfiguring
     },
 
-    onClickToSeeMore() {
-      if (this.tippyInstance) {
-        this.tippyInstance.show();
-      } else {
-        const playerId = this.playerId;
-        this.tip = tippy(this.$el, {
-          placement: "bottom",
-          plugins: [sticky],
-          allowHTML: true,
-          sticky: true,
-          animation: false,
-          maxWidth: "none",
-          interactive: true,
-          appendTo: document.body,
-          content: `<div id="gcc-tippy-content-${playerId}">Loading...</div>`,
-          trigger: "click",
-          showOnCreate: true,
-          onShow(instance) {
-            const container = document.createElement("div");
-            createApp(GCCMarkComponent, {
-              marks: ['friendly', 'leader', 'cheater', 'toxic', 'smurf', 'on_fire'],
-              playerId
-            }).mount(container);
-            instance.setContent(container);
-          },
-        });
-      }
-    },
-
     async onClickAtMark(mark) {
-      const playersMap = BrowserStorage.settings.custom?.players || {}
-      const currentPlayer = playersMap[this.playerId] || {}
-      const currentPlayerMarks = currentPlayer && currentPlayer.marks ? currentPlayer.marks : {}
+      if(this.isConfiguring){
+        const playersMap = BrowserStorage.settings.custom?.players || {}
+        const currentPlayer = playersMap[this.playerId] || {}
+        const currentPlayerMarks = currentPlayer && currentPlayer.marks ? currentPlayer.marks : {}
 
-      playersMap[this.playerId] = currentPlayer
-      currentPlayer.marks = currentPlayerMarks
+        playersMap[this.playerId] = currentPlayer
+        currentPlayer.marks = currentPlayerMarks
 
-      if(currentPlayerMarks[mark]){
-        delete currentPlayerMarks[mark]
-        availableMarks[mark] = false
-      } else {
-        currentPlayerMarks[mark] = true
-        availableMarks[mark] = true
+        if(currentPlayerMarks[mark]){
+          delete currentPlayerMarks[mark]
+          availableMarks[mark] = false
+        } else {
+          currentPlayerMarks[mark] = true
+          availableMarks[mark] = true
+        }
+
+        this.componentKey++
       }
-
-      this.componentKey++
     }
   },
 });
@@ -165,11 +143,30 @@ export default GCCMarkComponent
 @use "sass:color";
 @import "../styles/_variables.scss";
 
+.gcc-marks-wrapper {
+  display: inline-block;
+
+  &--is-configuring {
+    .gcc-marks__configure-button:hover {
+      color: $green;
+    }
+
+    .gcc-mark--selected {
+      cursor: pointer !important;
+    }
+  }
+}
+
 .gcc-mark {
   opacity: 0.5;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 22px;
   filter: grayscale(100%);
+  margin-left: 2px;
+
+  &--selected {
+    cursor: help;
+  }
 
   &--selected, &:hover {
     opacity: 1;
@@ -184,13 +181,12 @@ export default GCCMarkComponent
   cursor: pointer;
 
   &:hover {
-    color: $orange;
+    color: $blue;
   }
 
-  &--is-configuring {
-    &:hover {
-      color: $green;
-    }
+  .gcc-marks__configure-button-label {
+    padding-left: 5px;
+    font-family: Poppins, sans-serif;
   }
 }
 </style>

@@ -102,6 +102,10 @@ export const gcSelectors = {
   extension: {
     appContainer: '.gcc-app-container',
     kdr: '.gcc-kdr',
+    marks: {
+      wrapper: '.gcc-marks-wrapper',
+      self: '.gcc-mark'
+    },
     kdrFilterContainer: '.gcc-kdr-filter-container',
     hidden: '.gcc-hide',
     lobbies: {

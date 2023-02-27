@@ -7,6 +7,6 @@ export const GCCMarkEmojiMap: Record<GCCMark, string> = {
   toxic : '☣️',
   tilted: '😤',
   smurf : '👻',
-  on_fire: '🔥',
+  onFire: '🔥',
   newbie: '🐴',
 }
