@@ -1,27 +1,26 @@
 <template>
   <div class="gcc-marks-wrapper" :key="componentKey">
-    <span v-for="(mark, index) in marks"
-    :key="mark"
-    class="gcc-mark"
-    :class="{
-      'gcc-mark--selected': selectedMarks().includes(mark)
-    }"
-    @click="onClickAtMark(mark, index)"
-    :title="mark">
-      {{GCCMarkEmojiMap[mark]}}
-      </span>
-    <button v-if="enableAddButton"
-      @click="toggleConfiguring"
-      class="gcc-marks__configure-button" :class="{
-        'gcc-marks__configure-button--is-configuring': isConfiguring
-      }">
-      <i class="fas" :class="{
-        'fa-eye': !isConfiguring && !isSaving,
+    <span v-for="(value, key) in marks"
+      :key="key"
+      class="gcc-mark"
+      :class="{
+        'gcc-mark--selected': value
+      }"
+      @click="onClickAtMark(key)"
+      :title="key">
+      {{GCCMarkEmojiMap[key]}}
+    </span>
+      <i
+        v-if="enableAddButton"
+        @click="toggleConfiguring"
+        title="tags"
+        class="fas gcc-marks__configure-button" :class="{
+        'gcc-marks__configure-button--is-configuring': isConfiguring,
+        'fa-tags': !isConfiguring && !isSaving,
         'fa-check': isConfiguring && !isSaving,
         'fa-spinner': isSaving,
         'rotating': isSaving
       }"></i>
-    </button>
   </div>
 </template>
 
@@ -33,7 +32,16 @@ import { defineComponent } from "vue";
 import BrowserStorage from '@/utils/storage'
 import { GCCMarkEmojiMap } from '@/utils/GCCMarkEmojiMap'
 
-const availableMarks = ['friendly', 'leader', 'on_fire', 'cheater', 'smurf', 'newbie', 'toxic', 'tilted']
+const availableMarks = {
+  'friendly': false,
+  'leader': false,
+  'on_fire': false,
+  'cheater': false,
+  'smurf': false,
+  'newbie': false,
+  'toxic': false,
+  'tilted': false
+}
 
 const GCCMarkComponent = defineComponent({
   props: {
@@ -71,14 +79,23 @@ const GCCMarkComponent = defineComponent({
   computed: {
     marks: {
       get() {
-        return this.isConfiguring ? availableMarks : this.selectedMarks()
+        return this.isConfiguring ? this.buildAvailableMarks() : this.selectedMarks()
       },
     },
   },
 
   methods: {
+    buildAvailableMarks() {
+      const player = BrowserStorage.settings.custom?.players[this.playerId]
+      for(let mark in availableMarks){
+        availableMarks[mark] = !!(player && player.marks && player.marks[mark])
+      }
+      return availableMarks
+    },
+
     selectedMarks() {
-      return BrowserStorage.settings.custom?.playersMarks[this.playerId] || []
+      const player = BrowserStorage.settings.custom?.players[this.playerId]
+      return player && player.marks ? player.marks : {}
     },
 
     async toggleConfiguring() {
@@ -120,19 +137,19 @@ const GCCMarkComponent = defineComponent({
     },
 
     async onClickAtMark(mark) {
-      const playersMarksMap = BrowserStorage.settings.custom?.playersMarks
-      const currentPlayerMarks = playersMarksMap[this.playerId] || []
-      playersMarksMap[this.playerId] = currentPlayerMarks
+      const playersMap = BrowserStorage.settings.custom?.players || {}
+      const currentPlayer = playersMap[this.playerId] || {}
+      const currentPlayerMarks = currentPlayer && currentPlayer.marks ? currentPlayer.marks : {}
 
-      const markIndex = currentPlayerMarks.indexOf(mark)
-      if(markIndex > -1){
-        currentPlayerMarks.splice(markIndex, 1)
+      playersMap[this.playerId] = currentPlayer
+      currentPlayer.marks = currentPlayerMarks
+
+      if(currentPlayerMarks[mark]){
+        delete currentPlayerMarks[mark]
+        availableMarks[mark] = false
       } else {
-        currentPlayerMarks.push(mark)
-      }
-
-      if(currentPlayerMarks.length === 0){
-        playersMarksMap[this.playerId] = undefined // Prevents serialization on JSON to avoid unnecessary storage
+        currentPlayerMarks[mark] = true
+        availableMarks[mark] = true
       }
 
       this.componentKey++
@@ -152,27 +169,27 @@ export default GCCMarkComponent
   opacity: 0.5;
   cursor: pointer;
   font-size: 24px;
+  filter: grayscale(100%);
 
-  &--selected {
+  &--selected, &:hover {
     opacity: 1;
+    filter: brightness(100%);
   }
 }
 
 .gcc-marks__configure-button {
   color: white;
-  transition: background-color 0.2s ease-in-out;
-  margin: 0;
+  transition: color 0.2s ease-in-out;
+  margin-left: 10px;
+  cursor: pointer;
 
   &:hover {
-    background: $blue;
+    color: $orange;
   }
 
   &--is-configuring {
-    margin-left: 5px;
-    border: 0.3px dashed $green;
-
     &:hover {
-      background: $green;
+      color: $green;
     }
   }
 }
