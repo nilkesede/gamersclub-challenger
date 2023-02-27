@@ -31,14 +31,6 @@
                 }"
               ></div>
               <p class="gcc-stats-player-id">#{{ playerId }}</p>
-            </div>
-            <div class="gcc-stats__core-general-info">
-              <a :href="gcUrls.player(playerId)" target="blank">
-                <h4 class="gcc-stats__profile-name">
-                  {{ stats.initial.playerInfo.nick }}
-                </h4>
-              </a>
-              <GCCMarks :enableAddButton="true" :playerId="playerId" />
               <transition-group class="gcc-stats__punishment-list" tag="ul">
                 <li
                   v-for="punishment in userPunishments"
@@ -52,7 +44,14 @@
                   />
                 </li>
               </transition-group>
-              <!-- <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small> -->
+            </div>
+            <div class="gcc-stats__core-general-info">
+              <a :href="gcUrls.player(playerId)" target="blank">
+                <h4 class="gcc-stats__profile-name">
+                  {{ stats.initial.playerInfo.nick }}
+                </h4>
+              </a>
+              <GCCMarks :enableAddButton="true" :playerId="playerId" />
             </div>
           </div>
 
@@ -383,7 +382,7 @@ export default class GCCPlayerStats extends Vue {
   }
 
   get userPunishments() {
-    return this.stats.core?.punishments || [];
+    return this.stats.core?.punishments?.length ? this.stats.core?.punishments : []
   }
 
   get socialButtons() {
