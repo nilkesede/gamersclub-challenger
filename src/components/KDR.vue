@@ -20,7 +20,7 @@ import { createApp } from "@vue/runtime-dom";
 import GCCPlayerStatsComparator from "./GCCPlayerStatsComparator.vue";
 import GCCMarks from "./GCCMarks.vue";
 import { userAPI } from "../utils/gcAPI";
-import { ref, nextTick } from "vue";
+import { ref } from "vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -168,7 +168,7 @@ $godBg: radial-gradient(
 .gcc-kdr {
   background-color: $meetBg;
   color: white;
-  padding: 2px 5px;
+  padding: 2px;
   font-size: 10px;
   width: 100%;
   text-align: center;
@@ -195,6 +195,10 @@ $godBg: radial-gradient(
 
   &--below {
     background-color: $belowBg;
+  }
+
+  &--has-marks {
+    text-align: left;
   }
 }
 </style>
