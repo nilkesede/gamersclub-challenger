@@ -19,7 +19,7 @@ module.exports = function buildFilesToCopy(){
     }
   ]
 
-  if(process.env.browser === 'firefox'){
+  if(process.env.BROWSER === 'firefox'){
     filesToCopy = filesToCopy.concat([
       {
         from: 'manifest.json',
