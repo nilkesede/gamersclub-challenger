@@ -20,8 +20,8 @@ export interface GCCStorageSettings {
   options: Partial<GCCOptions>
   betaTesters: Array<string>
   custom: {
-    players: {
+    players: Record<string,{
       marks?: Partial<Record<GCCMark, boolean>>
-    }
+    }>
   }
 }
