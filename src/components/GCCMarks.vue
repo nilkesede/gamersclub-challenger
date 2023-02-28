@@ -55,6 +55,10 @@ const GCCMarkComponent = defineComponent({
       type: String,
       required: true,
     },
+    playerName: {
+      type: String,
+      required: false,
+    },
   },
 
   setup(props) {
@@ -106,6 +110,13 @@ const GCCMarkComponent = defineComponent({
     async toggleConfiguring() {
       if(this.isConfiguring) {
         this.isSaving = true
+
+        if(this.playerName){
+          const playersMap = BrowserStorage.settings.custom?.players || {}
+          const currentPlayer = playersMap[this.playerId] || {}
+          currentPlayer.name = this.playerName
+        }
+
         await BrowserStorage.updateSettings()
       }
       this.isSaving = false

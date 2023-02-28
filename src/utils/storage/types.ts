@@ -21,6 +21,7 @@ export interface GCCStorageSettings {
   betaTesters: Array<string>
   custom: {
     players: Record<string,{
+      name?: string
       marks?: Partial<Record<GCCMark, boolean>>
     }>
   }

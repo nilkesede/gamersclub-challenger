@@ -51,7 +51,7 @@
                   {{ stats.initial.playerInfo.nick }}
                 </h4>
               </a>
-              <GCCMarks :enableAddButton="true" :playerId="playerId" />
+              <GCCMarks :enableAddButton="true" :playerId="playerId" :playerName="stats.initial.playerInfo.nick" />
             </div>
           </div>
 
