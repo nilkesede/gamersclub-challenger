@@ -9,7 +9,10 @@
       }"
     >
       <GCCMarks :playerId="playerId" :enableAddButton="false" :key="markRenderIndex" />
-      {{ kdrValue }}
+      <i
+        v-if="isLoading"
+        class="fas fa-spinner rotating"></i>
+      <span v-if="!isLoading">{{ kdrValue }}</span>
     </div>
   </div>
 </template>
@@ -53,17 +56,21 @@ export default defineComponent({
     return {
       tip: ref(props.tippyInstance),
       kdrValueStored: ref(0),
-      markRenderIndex: ref(0)
+      markRenderIndex: ref(0),
+      isLoading: ref(false)
     };
   },
 
   created() {
     if (this.toFetchData) {
+      this.isLoading = true
       userAPI.boxMatchesHistory(this.playerId).then((data) => {
         const kdrStat = data.stat.find((stat) => stat.stat === "KDR");
         if (typeof kdrStat?.value !== "undefined") {
           this.kdrValueStored = parseFloat(kdrStat.value);
         }
+      }).finally(() => {
+        this.isLoading = false
       });
     }
   },
