@@ -63,7 +63,19 @@
 <br />
 
 ## 🔥 Funcionalidades
-[Visite o site com a nossa documentação](https://gamersclub-challenger.readme.io/docs/exibe-o-kdr-dos-jogadores)
+[Documentação e Tutoriais](https://github.com/carloshpds/gamersclub-challenger/discussions/categories/funcionalidades-e-tutoriais)
+* Exibe KDR dos jogadores de todas as lobbies
+* Filtro de lobbies pelo KDR dos jogadores
+* Filtro de lobbies pelo nome dos jogadores
+* Desafio automático de lobbies se baseando nos filtros existentes
+* Lobbies Fixadas
+* GC Cards com resumo do jogador
+  + Redes sociais
+  + Sinalização de punições relacionadas ao jogador
+  + Estatísticas individuais (KDR, ADR, HS%, Clutches, First Kills e Multi Kills)
+  + Estatísticas de vitórias/derrotas por mapa nas últimas 20 partidas
+  + 🆕 Tags [ NOVO ]
+
 
 
 # 💻 Dev
