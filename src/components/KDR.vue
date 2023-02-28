@@ -8,7 +8,11 @@
         'gcc-kdr--below': kdrValue < 1,
       }"
     >
-      {{ kdrValue }}
+      <GCCMarks :playerId="playerId" :enableAddButton="false" :key="markRenderIndex" />
+      <i
+        v-if="isLoading"
+        class="fas fa-spinner rotating"></i>
+      <span v-if="!isLoading">{{ kdrValue }}</span>
     </div>
   </div>
 </template>
@@ -17,11 +21,16 @@
 import tippy, { sticky } from "tippy.js";
 import { createApp } from "@vue/runtime-dom";
 import GCCPlayerStatsComparator from "./GCCPlayerStatsComparator.vue";
+import GCCMarks from "./GCCMarks.vue";
 import { userAPI } from "../utils/gcAPI";
 import { ref } from "vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  components: {
+    GCCMarks
+  },
+
   props: {
     tippyInstance: {
       type: Object,
@@ -47,16 +56,21 @@ export default defineComponent({
     return {
       tip: ref(props.tippyInstance),
       kdrValueStored: ref(0),
+      markRenderIndex: ref(0),
+      isLoading: ref(false)
     };
   },
 
   created() {
     if (this.toFetchData) {
+      this.isLoading = true
       userAPI.boxMatchesHistory(this.playerId).then((data) => {
         const kdrStat = data.stat.find((stat) => stat.stat === "KDR");
         if (typeof kdrStat?.value !== "undefined") {
           this.kdrValueStored = parseFloat(kdrStat.value);
         }
+      }).finally(() => {
+        this.isLoading = false
       });
     }
   },
@@ -95,6 +109,12 @@ export default defineComponent({
           content: `<div id="gcc-tippy-content-${playerId}">Loading...</div>`,
           trigger: "click",
           showOnCreate: true,
+          onDestroy: () => {
+            this.markRenderIndex += 1
+          },
+          onHide: () => {
+            this.markRenderIndex += 1
+          },
           onShow(instance) {
             const container = document.createElement("div");
             createApp(GCCPlayerStatsComparator, {
@@ -135,6 +155,10 @@ $godBg: radial-gradient(
       display: block;
     }
   }
+
+  .gcc-mark {
+    font-size: 10px !important;
+  }
 }
 
 .gcc-stats-trigger {
@@ -151,7 +175,7 @@ $godBg: radial-gradient(
 .gcc-kdr {
   background-color: $meetBg;
   color: white;
-  padding: 2px 5px;
+  padding: 2px;
   font-size: 10px;
   width: 100%;
   text-align: center;
@@ -178,6 +202,10 @@ $godBg: radial-gradient(
 
   &--below {
     background-color: $belowBg;
+  }
+
+  &--has-marks {
+    text-align: left;
   }
 }
 </style>

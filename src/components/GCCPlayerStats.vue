@@ -30,13 +30,6 @@
                   'background-image': `url(https://static.gamersclub.com.br/players/avatar/${playerId}/${playerId}_full.jpg)`,
                 }"
               ></div>
-            </div>
-            <div class="gcc-stats__core-general-info">
-              <a :href="gcUrls.player(playerId)" target="blank">
-                <h4 class="gcc-stats__profile-name">
-                  {{ stats.initial.playerInfo.nick }}
-                </h4>
-              </a>
               <p class="gcc-stats-player-id">#{{ playerId }}</p>
               <transition-group class="gcc-stats__punishment-list" tag="ul">
                 <li
@@ -51,7 +44,14 @@
                   />
                 </li>
               </transition-group>
-              <!-- <small class="gcc-stats__profile-rating">{{ stats.initial.playerInfo.rating }}</small> -->
+            </div>
+            <div class="gcc-stats__core-general-info">
+              <a :href="gcUrls.player(playerId)" target="blank">
+                <h4 class="gcc-stats__profile-name">
+                  {{ stats.initial.playerInfo.nick }}
+                </h4>
+              </a>
+              <GCCMarks :enableAddButton="true" :playerId="playerId" :playerName="stats.initial.playerInfo.nick" />
             </div>
           </div>
 
@@ -254,6 +254,7 @@ import { gcSelectors } from "@/utils/gcSelectors";
 import { socialMedia } from "../scripts/lobby/domain/socialMedia";
 import MapStat from "../scripts/lobby/domain/MapStat";
 import BrowserStorage from "@/utils/storage";
+import GCCMarks from './GCCMarks.vue'
 import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch";
 import { percentage } from "../utils/magicNumbers";
 import { userAPI } from "../utils/gcAPI";
@@ -261,6 +262,7 @@ import { userAPI } from "../utils/gcAPI";
 @Options({
   components: {
     VueSlider,
+    GCCMarks
   },
 
   props: {
@@ -380,7 +382,7 @@ export default class GCCPlayerStats extends Vue {
   }
 
   get userPunishments() {
-    return this.stats.core?.punishments || [];
+    return this.stats.core?.punishments?.length ? this.stats.core?.punishments : []
   }
 
   get socialButtons() {

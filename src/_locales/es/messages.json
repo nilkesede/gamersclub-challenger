@@ -62,5 +62,45 @@
         "content": "$1"
       }
     }
+  },
+
+  "playerMark__friendly": {
+    "message": "Amigable"
+  },
+
+  "playerMark__leader": {
+    "message": "Dale Professor!"
+  },
+
+  "playerMark__onFire": {
+    "message": "Joga Mucho Mano!"
+  },
+
+  "playerMark__cheater": {
+    "message": "Cheater?"
+  },
+
+  "playerMark__smurf": {
+    "message": "Smurf?"
+  },
+
+  "playerMark__newbie": {
+    "message": "Muy Malo (Newbie)"
+  },
+
+  "playerMark__toxic": {
+    "message": "Toxic"
+  },
+
+  "playerMark__tilted": {
+    "message": "Rage"
+  },
+
+  "playerMarksEdit": {
+    "message": "Cambiar Tags"
+  },
+
+  "playerMarksSave": {
+    "message": "Guardar Tags"
   }
 }

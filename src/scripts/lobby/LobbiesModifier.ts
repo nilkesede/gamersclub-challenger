@@ -4,6 +4,7 @@ import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
+import GCCMarkComponent from '../../components/GCCMarks.vue'
 import GCCLobbyTitle from '../../components/GCCLobbyTitle.vue'
 import { gcSelectors } from '../../utils/gcSelectors'
 import serializer from './serializer'
@@ -14,6 +15,7 @@ import gcBooster from '@/utils/gcBooster'
 import { newTippy } from '@/utils/tippy'
 import Lobby from './domain/Lobby'
 import GCCLobbyPinner from '../../components/GCCLobbyPinner.vue'
+import LobbyPlayer from './domain/LobbyPlayer'
 
 export default class LobbiesModifier {
 
@@ -134,14 +136,15 @@ export default class LobbiesModifier {
   }
 
   reactToNewPlayer(node: any) {
-    this.showPlayerKD(node)
+    const lobbyPlayer = serializer.serializePlayer(node)
+    this.showPlayerKD(lobbyPlayer)
     const $lobby = $(node).closest(gcSelectors.lobbies.self)
     lobbyFilter.reactToFilter.call(lobbyFilter, $lobby[0])
   }
 
-  showPlayerKD(playerNode: any) {
+  showPlayerKD(lobbyPlayer: Partial<LobbyPlayer>) {
     if (BrowserStorage.settings.options?.showLobbiesKDR) {
-      const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode)
+      const { $el: $player, kdr, id: playerId } = lobbyPlayer
       const $kdrElement = $player!.find(gcSelectors.extension.kdr)
       const containerName = `gcc-${playerId}`
 
@@ -154,6 +157,18 @@ export default class LobbiesModifier {
       }
     }
   }
+
+  // showPlayerMarks(lobbyPlayer: Partial<LobbyPlayer>) {
+  //   const { $el: $player, id: playerId } = lobbyPlayer
+  //   const $markWrapperElement = $player!.find(gcSelectors.extension.marks.wrapper)
+  //   const containerName = `gcc-mark-container-${playerId}`
+
+  //   if ($markWrapperElement.length === 0) {
+  //     const $markContainer = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)}'></div>`
+  //     $player!.append($markContainer)
+  //     createApp(GCCMarkComponent, { playerId, enableAddButton: false }).mount(`#${containerName}`)
+  //   }
+  // }
 
   showKDForLobby({ players }: Partial<Lobby>): void {
     players?.map((player) => this.reactToNewPlayer(player.$el?.[0]))

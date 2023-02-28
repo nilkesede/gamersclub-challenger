@@ -1,0 +1,1 @@
+export type GCCMark = 'friendly' | 'leader' | 'cheater' | 'toxic' | 'smurf' | 'onFire' | 'tilted' | 'newbie'

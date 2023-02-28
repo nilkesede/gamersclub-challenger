@@ -1,4 +1,5 @@
 import { GCCFilters } from "@/scripts/lobby/domain/gccFilters";
+import { GCCMark } from "@/scripts/lobby/domain/GCCMark";
 
 export interface GCCOptions {
   showLobbiesKDR: boolean,
@@ -18,4 +19,10 @@ export interface GCCStorageSettings {
   filters: Partial<GCCFilters>
   options: Partial<GCCOptions>
   betaTesters: Array<string>
+  custom: {
+    players: Record<string,{
+      name?: string
+      marks?: Partial<Record<GCCMark, boolean>>
+    }>
+  }
 }

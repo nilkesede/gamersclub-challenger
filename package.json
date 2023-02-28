@@ -1,6 +1,6 @@
 {
   "name": "gamersclub-challenger",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --mode development",
