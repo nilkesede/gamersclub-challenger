@@ -9,7 +9,7 @@
 ---
 <br />
 
-## 📥 Instalação
+## ⚙️ Instalação
 <ul style="list-style: none; margin: 0px; padding-left: 0px">
  <li>
     <a href="https://chrome.google.com/webstore/detail/gamersclub-challenger/lokjofhgialghfkfmkbnjakcjenjhmpp?hl=pt-BR&authuser=0" target="_blank">
@@ -33,9 +33,9 @@
  </li>
 
  <li>
-  <a href="https://chrome.google.com/webstore/detail/gamersclub-challenger/lokjofhgialghfkfmkbnjakcjenjhmpp?hl=pt-BR&authuser=0" target="_blank">
+  <a href="https://addons.mozilla.org/pt-BR/firefox/addon/gamersclub-challenger/" target="_blank">
       <img src="https://github.com/carloshpds/gamersclub-challenger/blob/main/docs/images/browsers/firefox-logo.png?raw=true" align="left" height="24" width="24" style="padding-right: 5px;" >
-      <img src="https://img.shields.io/badge/Aguardando%20análise%20do-Firefox-yellow">
+      <img src="https://img.shields.io/badge/Dispon%C3%ADvel%20do-Firefox-blue">
     </a>
  </li>
 </ul>
