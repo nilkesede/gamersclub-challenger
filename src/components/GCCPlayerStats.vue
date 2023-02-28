@@ -30,7 +30,15 @@
                   'background-image': `url(https://static.gamersclub.com.br/players/avatar/${playerId}/${playerId}_full.jpg)`,
                 }"
               ></div>
+              <GCCPlayerLevel :level="stats.initial.playerInfo.level" />
               <p class="gcc-stats-player-id">#{{ playerId }}</p>
+            </div>
+            <div class="gcc-stats__core-general-info">
+              <a :href="gcUrls.player(playerId)" target="blank">
+                <h4 class="gcc-stats__profile-name">
+                  {{ stats.initial.playerInfo.nick }}
+                </h4>
+              </a>
               <transition-group class="gcc-stats__punishment-list" tag="ul">
                 <li
                   v-for="punishment in userPunishments"
@@ -44,13 +52,6 @@
                   />
                 </li>
               </transition-group>
-            </div>
-            <div class="gcc-stats__core-general-info">
-              <a :href="gcUrls.player(playerId)" target="blank">
-                <h4 class="gcc-stats__profile-name">
-                  {{ stats.initial.playerInfo.nick }}
-                </h4>
-              </a>
               <GCCMarks :enableAddButton="true" :playerId="playerId" :playerName="stats.initial.playerInfo.nick" />
             </div>
           </div>
@@ -258,11 +259,14 @@ import GCCMarks from './GCCMarks.vue'
 import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch";
 import { percentage } from "../utils/magicNumbers";
 import { userAPI } from "../utils/gcAPI";
+import GCCPlayerLevel from "./GCCPlayerLevel.vue";
+
 
 @Options({
   components: {
     VueSlider,
-    GCCMarks
+    GCCMarks,
+    GCCPlayerLevel
   },
 
   props: {
@@ -581,11 +585,27 @@ $statsOverlay: rgba($steamBlack, 0.8);
 
 .gcc-stats__punishment-list {
   list-style: none;
+  margin-left: 0;
+  margin-bottom: 0;
+  padding-bottom: 10px;
 
   .gcc-stats__punishment-item {
     display: inline-block;
     width: 20px;
-    height: 30px;
+    height: 25px;
+
+    img {
+      height: inherit;
+    }
+  }
+}
+.gcc-stats__avatar-wrapper {
+  position: relative;
+
+  .gcc-player-level-badge {
+    position: absolute;
+    left: calc(35px - 12.5px);
+    bottom: 35px;
   }
 }
 
@@ -613,6 +633,7 @@ $statsOverlay: rgba($steamBlack, 0.8);
 }
 
 .gcc-stats-player-id {
+  margin-top: 15px;
   font-family: sans-serif;
   font-size: 10px;
   opacity: 0.4;
