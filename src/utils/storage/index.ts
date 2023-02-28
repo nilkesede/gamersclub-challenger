@@ -17,7 +17,7 @@ class BrowserStorage {
       enableNameFilter: false,
       enableKDRFilter: true,
       enableAutomaticChallengeButton: true,
-      enable3DGCCardEffect: true,
+      enable3DGCCardEffect: false,
       enableToPinLobbies: true,
       enableAutoReady: true,
     },
