@@ -25,7 +25,7 @@ export const gcAssetsUrls = {
     return 'https://gamersclub.com.br/assets/images/punishment/warning-card.svg'
   },
 
-  backgroundLevel(level: number){
+  backgroundLevel(level: number | string){
     return `https://gamersclub.com.br/assets/images/level/${level}.svg`
   }
 }
