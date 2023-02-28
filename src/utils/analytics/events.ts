@@ -28,5 +28,12 @@ export const dynamicEvents = ({ value }: { value: string | number }): Record<str
       label: `Filter by KDR ${value}`,
       value,
     },
+
+    TOGGLE_PLAYER_MARK: {
+      category: 'playerMark',
+      action: 'click',
+      label: `Toggle player mark ${value}`,
+      value
+    }
   }
 }

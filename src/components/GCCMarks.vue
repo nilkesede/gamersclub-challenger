@@ -32,6 +32,8 @@ import { ref } from "vue";
 import { defineComponent } from "vue";
 import BrowserStorage from '@/utils/storage'
 import { GCCMarkEmojiMap } from '@/utils/GCCMarkEmojiMap'
+import AnalyticsManager from "@/utils/analytics";
+import { dynamicEvents } from "@/utils/analytics/events";
 
 const availableMarks = {
   'friendly': false,
@@ -140,6 +142,7 @@ const GCCMarkComponent = defineComponent({
           availableMarks[mark] = true
         }
 
+        AnalyticsManager.sendEvent(dynamicEvents({ value: mark }).TOGGLE_PLAYER_MARK);
         this.componentKey++
       }
     }
