@@ -32,13 +32,6 @@ const config = {
       entry: 'src/apps/content/team.js',
       chunks: ['chunk-vendors', 'teamContentScripts'],
     },
-
-    devPreMatch: {
-      entry: 'src/development/apps/content/preMatch.js',
-      chunks: ['chunk-vendors', 'chunk-common', 'devPreMatch'],
-      subpage: 'src/development/mocks/pre-match.html',
-    }
-
   },
   chainWebpack: (config) => {
     config.plugin('writeFile')
@@ -48,5 +41,13 @@ const config = {
     //   .use(ChromeExtensionReloader)
   },
 };
+
+if(process.env.NODE_ENV === 'development'){
+  config.pages.devPreMatch = {
+    entry: 'src/development/apps/content/preMatch.js',
+    chunks: ['chunk-vendors', 'chunk-common'],
+    template: 'src/development/mocks/pre-match.html',
+  }
+}
 
 module.exports = config;
