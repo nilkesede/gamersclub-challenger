@@ -129,12 +129,13 @@ export default class PreMatchModifier {
     if (BrowserStorage.settings.options?.showMyLobbyKDR) {
       const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode, gcSelectors.preMatchModal.lobby.player)
       const $kdrElement = $player!.find(gcSelectors.extension.kdr)
-      const containerName = `gcc-match-player--${playerId}`
+      const containerName = `gcc-pre-match-player--${playerId}`
 
-      if (typeof kdr !== 'undefined' && $kdrElement.length === 0) {
-        const $kdBooster = `<div id='${containerName}' class='${gcSelectors.extension.appContainer.cleanCSSSelector()} padding-top gcc-my-lobby-player'></div>`
+      if ($kdrElement.length === 0) {
+        $player!.append('<div class="flex-break"></div>')
+        const $kdBooster = `<div id='${containerName}' class='${gcSelectors.extension.appContainer.cleanCSSSelector()} padding-top gcc-pre-match-player'></div>`
         $player!.append($kdBooster)
-        createApp(KDRComponent, { value: kdr, playerId }).mount(`#${containerName}`)
+        createApp(KDRComponent, { value: kdr, playerId, toFetchData: typeof kdr === 'undefined' }).mount(`#${containerName}`)
       }
     }
   }
