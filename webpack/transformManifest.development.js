@@ -21,6 +21,10 @@ module.exports = function transformManifestToDevelopment(content){
       "run_at": "document_end"
     })
 
+    manifest.web_accessible_resources.forEach((webResource) => {
+      webResource.matches.push("*://localhost:8081/devPreMatch*")
+      webResource.matches.push("*://localhost/devPreMatch*")
+    })
     manifest.host_permissions.push("<all_urls>")
   }
 
