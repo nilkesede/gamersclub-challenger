@@ -444,7 +444,7 @@ export default class GCCPlayerStats extends Vue {
     if (this.stats.history?.monthMatches?.length) {
       const groupedCsgoMaps = Array.prototype.groupByKey.call(this.stats.history.monthMatches, "map");
 
-      Logger.debug("Maps Stats", groupedCsgoMaps);
+      Logger.debug("[GCCPlayerStats] Maps Stats", groupedCsgoMaps);
 
       const mapsStats: MapStat[] = [];
       for (let csgoMap in groupedCsgoMaps) {
@@ -476,7 +476,7 @@ export default class GCCPlayerStats extends Vue {
 
   receivePlayerPage(data: any) {
     const $page = $(data);
-    Logger.debug("player data length", $page.length);
+    Logger.debug("[GCCPlayerStats] player data length", $page.length);
 
     // Punishments
     const punishments = $page.find(gcSelectors.playerPage.punishments).get();
@@ -504,12 +504,13 @@ export default class GCCPlayerStats extends Vue {
       });
 
       userAPI.boxInitialMatches(this.playerId).then((data) => {
-        Logger.debug("boxInitialMatches", data);
+        Logger.debug("[GCCPlayerStats] boxInitialMatches", data);
         this.stats.initial = data;
         this.isLoadingInitialData = false;
       });
 
       userAPI.boxMatchesHistory(this.playerId).then((data) => {
+        Logger.debug("[GCCPlayerStats] boxMatchesHistory", data);
         this.stats.history = data;
         this.isLoadingHistory = false;
       });
