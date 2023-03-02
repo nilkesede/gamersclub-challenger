@@ -28,9 +28,14 @@ export const gcSelectors = {
       title: 'aside h2',
       player: {
         self: '.PlayerListCard',
+        selfFloatRight: '.PlayerListCard--right',
         avatarLink: '.PlayerIdentityAvatar__avatarImage img',
       }
     },
+    readyButton: {
+      absolute: "#GamersClubCSApp-modals-matchModal button:contains('Ready')",
+      relative: "button:contains('Ready')"
+    }
   },
 
   lobbies: {
@@ -118,6 +123,11 @@ export const gcSelectors = {
     },
     challenger: {
       self: '.gcc-challenger'
+    },
+    preMatchModal: {
+      readyButton: {
+        autoReadyDone: '.gcc-auto-ready-done'
+      }
     }
   }
 }
