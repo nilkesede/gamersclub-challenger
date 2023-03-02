@@ -1,7 +1,5 @@
 // @ts-check
-import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
-import { domEntityType } from '../lobby/domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
 import GCCLogo from '../../components/GCCLogo.vue'
