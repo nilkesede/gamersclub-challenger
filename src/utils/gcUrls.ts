@@ -1,5 +1,5 @@
 type UserId = string | number;
-export const gcSiteUrl = 'https://gamersclub.com.br'
+export const gcSiteUrl = window.location.hostname === 'localhost' ? 'https://gamersclub.com.br' : window.location.origin
 
 export const gcPages = {
   lobby: `${gcSiteUrl}/lobby`,
