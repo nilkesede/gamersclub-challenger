@@ -44,6 +44,7 @@ const config = {
 
 if(process.env.NODE_ENV === 'development'){
   config.pages.devPreMatch = {
+    title: 'devPreMatch',
     entry: 'src/development/apps/content/preMatch.js',
     chunks: ['chunk-vendors', 'chunk-common'],
     template: 'src/development/mocks/pre-match.html',
