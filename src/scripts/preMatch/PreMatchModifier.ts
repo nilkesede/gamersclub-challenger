@@ -12,121 +12,53 @@ import BrowserStorage from '../../utils/storage'
 import LobbyPlayer from '../lobby/domain/LobbyPlayer'
 
 export default class PreMatchModifier {
-
-  challenger: any
   lobby: any
-
-  strategiesForNewNodes: Record<domEntityType | string, (node: any) => void> = {
-    PLAYER: this.reactToNewPlayer.bind(this),
-    LOBBY: this.reactToLobbyCreation.bind(this),
-    IGNORED: (node: any) => { },
-    UNKNOWN: (node: any) => {
-      Logger.warn('PreMatchModifier strategiesForNewNodes UNKNOWN domEntityType', node)
-    },
-  }
-
-  strategiesForRemovedNodes: Record<domEntityType | string, (node: any) => void> = {
-    PLAYER: this.reactToRemovedPlayer.bind(this),
-    MY_LOBBY_CONTENT: this.reactToRemovedMyLobbyContent.bind(this),
-    UNKNOWN: (node: any) => {
-      // Logger.warn('PreMatchModifier strategiesForRemovedNodes UNKNOWN domEntityType', node)
-    },
-  }
+  preMatchIntervalHolder: number | undefined
 
   constructor() {
-    setTimeout(() => {
-      $(gcSelectors.preMatchModal.root).find(gcSelectors.preMatchModal.lobby.self).each((index, node) => {
-        this.reactToLobbyCreation(node)
-      })
-    }, 300)
-
-    // @ts-ignore
-    $(gcSelectors.preMatchModal.root).observe(this.modify.bind(this))
+    this.startPreMatchInterval()
   }
 
-  modify(changes: any): void {
-    if (changes && changes.length) {
-      changes.map((change: any) => {
-        if (change.addedNodes && change.addedNodes.length) {
-          change.addedNodes.forEach((node: any) => {
-            const addedNodeType: domEntityType | string = this.identifyAddedNode(node)
-            const strategy = this.strategiesForNewNodes[addedNodeType]
-            strategy && strategy(node)
-          })
-        }
-
-        if (change.removedNodes && change.removedNodes.length) {
-          change.removedNodes.forEach((node: any) => {
-            const removedNodeType: domEntityType | string = this.identifyAddedNode(node)
-            const strategy = this.strategiesForRemovedNodes[removedNodeType]
-            strategy && strategy(node)
-          })
-        }
-      })
-    }
+  startPreMatchInterval(){
+    this.preMatchIntervalHolder = setInterval(this.checkPreMatch.bind(this), 300)
+    Logger.debug('[PreMatchModifier] startPreMatchInterval', this.preMatchIntervalHolder)
   }
 
-  identifyAddedNode(node: any): domEntityType | string {
-    let type: domEntityType | string = domEntityType.UNKNOWN
-    const $node = $(node)
-    const playersClasses = [
-      gcSelectors.preMatchModal.lobby.player.self.cleanCSSSelector()
-    ]
-    const isPreMatchModal = $node.hasClass(gcSelectors.preMatchModal.self.cleanCSSSelector())
+  checkPreMatch(){
+    const $preMatchModal = $(gcSelectors.preMatchModal.root)
+    Logger.debug('[PreMatchModifier] [checkPreMatch] preMatchModal length', $preMatchModal.length)
 
-    if(isPreMatchModal){
-      type = domEntityType.LOBBY
-    } else {
-      const isPlayer = playersClasses.some((selector) => $node.hasClass(selector))
+    if($preMatchModal.length){
+      const $lobbies = $preMatchModal.find(gcSelectors.preMatchModal.lobby.self)
+      Logger.debug('[PreMatchModifier] [checkPreMatch] lobbies length', $lobbies.length)
 
-      if (isPlayer) {
-        type = domEntityType.PLAYER
-      } else {
-        type = domEntityType.IGNORED
+      if($lobbies.length){
+        $lobbies.each((index, node) => {
+          this.reactToLobby(node)
+        })
+
+        Logger.debug('[PreMatchModifier] clearInterval', this.preMatchIntervalHolder)
+        clearInterval(this.preMatchIntervalHolder)
+        Logger.debug('[PreMatchModifier] check after clearInterval', this.preMatchIntervalHolder)
       }
     }
-
-    return type
   }
 
-  identifyRemovedNode(node: any): domEntityType | string {
-    const $node = $(node)
-    let type: domEntityType | string
-
-    const playersClasses = [
-      gcSelectors.myLobby.player.self.cleanCSSSelector()
-    ]
-
-    const isPlayer = playersClasses.some((selector) => $node.hasClass(selector))
-
-    if (isPlayer) {
-      type = domEntityType.PLAYER
-    } else {
-      type = domEntityType.UNKNOWN
-    }
-
-    return type
-  }
-
-  reactToLobbyCreation(node: any) {
-    this.lobby = serializer.serializePreMatchLobby(node)
-    this.lobby.players?.map((player: Partial<LobbyPlayer>) => this.reactToNewPlayer(player.$el?.[0]))
+  reactToLobby(node: any) {
+    const lobby = serializer.serializePreMatchLobby(node)
+    Logger.debug('[PreMatchModifier] reactToLobby', lobby)
+    lobby.players?.map((player: Partial<LobbyPlayer>) => this.reactToNewPlayer(player.$el?.[0]))
     this.reactWithAutoReady()
   }
 
-  reactToNewPlayer(node: any) {
-    this.showPlayerKD(node)
+  reactToNewPlayer(playerNode: any) {
+    const lobbyPlayer = serializer.serializePlayer(playerNode, gcSelectors.preMatchModal.lobby.player)
+    this.showPlayerKD(lobbyPlayer)
   }
 
-  reactToRemovedPlayer(node: any) {
-  }
-
-  reactToRemovedMyLobbyContent() {
-  }
-
-  showPlayerKD(playerNode: any) {
+  showPlayerKD(lobbyPlayer: Partial<LobbyPlayer>) {
     if (BrowserStorage.settings.options?.showMyLobbyKDR) {
-      const { $el: $player, kdr, id: playerId } = serializer.serializePlayer(playerNode, gcSelectors.preMatchModal.lobby.player)
+      const { $el: $player, kdr, id: playerId } = lobbyPlayer
       const $kdrElement = $player!.find(gcSelectors.extension.kdr)
       const containerName = `gcc-pre-match-player--${playerId}`
 
@@ -153,7 +85,7 @@ export default class PreMatchModifier {
           const $container = $(`#${gccLogoContainerId}`)
           if($container.length === 0){
             $button.append(gccLogoContainer)
-            createApp(GCCLogo).mount(`#${gccLogoContainerId}`)
+            createApp(GCCLogo, { title: '✅ Auto Ready - GamersClub Challenger' }).mount(`#${gccLogoContainerId}`)
           }
         }, 200)
       }
