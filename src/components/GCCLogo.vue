@@ -1,5 +1,5 @@
 <template>
-  <span class="gcc-logo-component" :style="logoStyle" title="GamersClub Challenger">
+  <span class="gcc-logo-component" :style="logoStyle" :title="title">
   </span>
 </template>
 
@@ -8,10 +8,12 @@ import { defineComponent } from "vue";
 
 const GCCLogoComponent = defineComponent({
   props: {
-    level: {
-      type: Number,
-      required: true
-    }
+    title: {
+      type: String,
+      required: true,
+      default: 'GamersClub Challenger'
+    },
+
   },
 
   setup(props) {
