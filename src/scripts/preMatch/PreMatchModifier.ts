@@ -4,6 +4,7 @@ import $ from 'jquery'
 import { domEntityType } from '../lobby/domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
+import GCCLogo from '../../components/GCCLogo.vue'
 import { gcSelectors } from '../../utils/gcSelectors'
 import serializer from '../lobby/serializer'
 import Logger from 'js-logger'
@@ -68,23 +69,20 @@ export default class PreMatchModifier {
   identifyAddedNode(node: any): domEntityType | string {
     let type: domEntityType | string = domEntityType.UNKNOWN
     const $node = $(node)
-    const ignoredSelectors = [
-      cleanSelector(gcSelectors.extension.appContainer),
-      cleanSelector(gcSelectors.extension.kdr),
-    ]
     const playersClasses = [
       gcSelectors.preMatchModal.lobby.player.self.cleanCSSSelector()
     ]
+    const isPreMatchModal = $node.hasClass(gcSelectors.preMatchModal.self.cleanCSSSelector())
 
-    const isIgnored = ignoredSelectors.some((selector) => $node.hasClass(selector))
-
-    if (isIgnored) {
-      type = domEntityType.IGNORED
+    if(isPreMatchModal){
+      type = domEntityType.LOBBY
     } else {
       const isPlayer = playersClasses.some((selector) => $node.hasClass(selector))
 
       if (isPlayer) {
         type = domEntityType.PLAYER
+      } else {
+        type = domEntityType.IGNORED
       }
     }
 
@@ -113,6 +111,7 @@ export default class PreMatchModifier {
   reactToLobbyCreation(node: any) {
     this.lobby = serializer.serializePreMatchLobby(node)
     this.lobby.players?.map((player: Partial<LobbyPlayer>) => this.reactToNewPlayer(player.$el?.[0]))
+    this.reactWithAutoReady()
   }
 
   reactToNewPlayer(node: any) {
@@ -131,11 +130,32 @@ export default class PreMatchModifier {
       const $kdrElement = $player!.find(gcSelectors.extension.kdr)
       const containerName = `gcc-pre-match-player--${playerId}`
 
-      if ($kdrElement.length === 0) {
-        $player!.append('<div class="flex-break"></div>')
+      if (playerId && $kdrElement.length === 0) {
+        // $player!.append('<div class="flex-break"></div>')
         const $kdBooster = `<div id='${containerName}' class='${gcSelectors.extension.appContainer.cleanCSSSelector()} padding-top gcc-pre-match-player'></div>`
-        $player!.append($kdBooster)
+        $player?.hasClass(gcSelectors.preMatchModal.lobby.player.selfFloatRight.cleanCSSSelector()) ? $player!.prepend($kdBooster) : $player!.append($kdBooster)
         createApp(KDRComponent, { value: kdr, playerId, toFetchData: typeof kdr === 'undefined' }).mount(`#${containerName}`)
+      }
+    }
+  }
+
+  reactWithAutoReady(){
+    if(BrowserStorage.settings.options?.enableAutoReady){
+      const $button = $(gcSelectors.preMatchModal.readyButton.absolute)
+      const doneClass = gcSelectors.extension.preMatchModal.readyButton.autoReadyDone.cleanCSSSelector()
+      if($button?.length && !$button.prop('disabled') && !$button.hasClass(doneClass)){
+        const gccLogoContainerId = 'gcc-ready-logo-container'
+        const gccLogoContainer = $(`<div id='${gccLogoContainerId}' class='${gcSelectors.extension.appContainer.cleanCSSSelector()} padding-top gcc-pre-match-player'></div>`)
+        setTimeout(() => {
+          $button[0]?.click()
+          $button.trigger('click')
+          $button.addClass(doneClass)
+          const $container = $(`#${gccLogoContainerId}`)
+          if($container.length === 0){
+            $button.append(gccLogoContainer)
+            createApp(GCCLogo).mount(`#${gccLogoContainerId}`)
+          }
+        }, 200)
       }
     }
   }

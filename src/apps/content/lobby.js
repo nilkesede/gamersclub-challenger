@@ -8,6 +8,7 @@ import LobbiesModifier from '../../scripts/lobby/LobbiesModifier'
 import FiltersModifier from '../../scripts/lobby/filtersModifier'
 import MyLobbyModifier from '../../scripts/lobby/MyLobbyModifier'
 import ChallengeListModifier from '../../scripts/lobby/ChallengeListModifier'
+import PreMatchModifier from '../../scripts/lobby/PreMatchModifier'
 import lobbyFilter from '../../scripts/lobby/lobbyFilter'
 
 // ===
@@ -20,4 +21,5 @@ GCChallengerContentRunner.run('Lobby').then(() => {
   new FiltersModifier()
   new MyLobbyModifier()
   new ChallengeListModifier()
+  new PreMatchModifier()
 })
