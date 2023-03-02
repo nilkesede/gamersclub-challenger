@@ -10,7 +10,6 @@ module.exports = function transformManifestToDevelopment(content){
 
     manifest.content_scripts.push({
       "matches": [
-        "*://localhost:8081/devPreMatch*",
         "*://localhost/devPreMatch*",
       ],
       "js": [
@@ -22,8 +21,7 @@ module.exports = function transformManifestToDevelopment(content){
     })
 
     manifest.web_accessible_resources.forEach((webResource) => {
-      webResource.matches.push("*://localhost:8081/devPreMatch*")
-      webResource.matches.push("*://localhost/devPreMatch*")
+      webResource.matches.push("*://localhost/*")
     })
     manifest.host_permissions.push("<all_urls>")
   }
