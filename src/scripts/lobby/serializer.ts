@@ -107,7 +107,11 @@ class Serializer {
 
     const playerAvatarLink = $player.find(selectors.avatarLink)
     const title = playerAvatarLink.attr('title')
-    const playerId = playerAvatarLink.attr('href')?.split('/')[2]
+    const avatarSrc = playerAvatarLink.prop('tagName') === 'IMG' ? playerAvatarLink.attr('src') : playerAvatarLink.attr('href')
+    let playerId: string | undefined = undefined
+    if(!avatarSrc?.includes('steamcdn')){
+      playerId = playerAvatarLink.prop('tagName') === 'IMG' ? avatarSrc?.split('/')[5] : avatarSrc?.split('/')[2]
+    }
     let playerName: string | undefined = undefined
     let kdr: number | undefined = undefined
 

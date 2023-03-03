@@ -1,5 +1,7 @@
 
-export const cleanSelector = (selector: string): string => selector.replace(/\./g, '')
+export const cleanSelector = (selector: string): string => {
+  return selector.replace(/\./g, '').replace(/#/g, '')
+}
 
 export const getIdByAvatarUrl = (avatarUrl: string): string => {
   const matches = avatarUrl.match(/\/[0-9]+\//)
