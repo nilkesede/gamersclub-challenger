@@ -37,7 +37,7 @@ export default class PreMatchModifier {
 
         Logger.debug('[PreMatchModifier] clearInterval', this.preMatchIntervalHolder)
         clearInterval(this.preMatchIntervalHolder)
-        Logger.debug('[PreMatchModifier] check after clearInterval', this.preMatchIntervalHolder)
+        this.preMatchIntervalHolder = undefined
       }
     }
   }
