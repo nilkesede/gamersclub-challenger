@@ -5,10 +5,12 @@ import 'tippy.js/themes/light.css';
 import GCChallengerContentRunner from '../../utils/contentRunner'
 
 import TeamsModifier from '../../scripts/team/TeamModifier'
+import GlobalModiFier from '../../scripts/global/GlobalModifier'
 
 // ===
 // Run
 // ===
 GCChallengerContentRunner.run('Team').then(() => {
   new TeamsModifier()
+  new GlobalModiFier()
 })

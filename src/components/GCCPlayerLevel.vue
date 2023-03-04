@@ -44,6 +44,7 @@ export default GCCPlayerLevelComponent
   display: inline-block;
   width: 25px;
   height: 25px;
+  text-align: center;
 }
 
 .gcc-player-level {
