@@ -11,6 +11,7 @@ export interface GCCOptions {
   enable3DGCCardEffect: boolean
   enableToPinLobbies: boolean
   enableAutoReady: boolean
+  enablePlayerProgress: boolean
 }
 
 export type GCCOptionsKey = keyof GCCOptions;

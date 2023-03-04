@@ -20,6 +20,7 @@ class BrowserStorage {
       enable3DGCCardEffect: false,
       enableToPinLobbies: true,
       enableAutoReady: true,
+      enablePlayerProgress: true
     },
     betaTesters: [
       '340558', // C8
