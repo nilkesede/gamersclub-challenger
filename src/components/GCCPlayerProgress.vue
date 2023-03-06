@@ -258,7 +258,6 @@ export default GCCPlayerProgressComponent
 
   .rating-diff {
     font-family: Poppins, sans-serif;
-    font-weight: bold;
 
     &--win {
       color: $green;
@@ -271,6 +270,10 @@ export default GCCPlayerProgressComponent
     &--loss {
       color: $red;
     }
+  }
+
+  .custom-tooltip {
+    font-weight: bold;
   }
 }
 
