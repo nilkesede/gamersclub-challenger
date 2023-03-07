@@ -16,18 +16,22 @@ import serializer from '../../scripts/lobby/serializer'
 class GCChallengerContentRunner {
   pageName = ''
 
-  async preRun(response: string, resolve: any, reject: any) {
+  async preRun(response: string, resolve: any, reject: any, isGlobalRun?: boolean) {
     try {
+      const pageName = isGlobalRun ? 'GLOBAL' : this.pageName
+
       if(!response || response === 'GA_FAILED') {
-        Logger.error(`GA HAS NOT STARTED ON ${this.pageName}`)
+        Logger.error(`GA HAS NOT STARTED ON ${pageName}`)
       } else {
-        Logger.debug(`🟢 GA INITIALIZED ON ${this.pageName}`)
+        Logger.debug(`🟢 GA INITIALIZED ON ${pageName}`)
       }
 
       const loggedPlayer = serializer.serializeLoggedPlayer()
       Analytics.setup(loggedPlayer)
-      Analytics.set('title', this.pageName)
-      Analytics.send('pageview')
+      if(!isGlobalRun){
+        Analytics.set('title', pageName)
+        Analytics.send('pageview')
+      }
 
       await BrowserStorage.setup()
 
@@ -38,18 +42,21 @@ class GCChallengerContentRunner {
     }
   }
 
-  run(pageName: string): Promise<any> {
-    this.pageName = pageName
+  run(pageName?: string, isGlobalRun?: boolean): Promise<any> {
+    if(pageName){
+      this.pageName = pageName
+    }
 
     return new Promise((resolve, reject) => {
       try {
         Logger.log(`== 🚀 GamersClub Challenger is activated on ${pageName} ==`)
 
         if(Analytics.isAlive()){
-          this.preRun('GA_INITIALIZED', resolve, reject)
+          Logger.debug(`🟢 GA IS ALREARY LIVE -> INITIALIZED ON ${this.pageName}`)
+          this.preRun('GA_INITIALIZED', resolve, reject, isGlobalRun)
         } else {
           window.browser.runtime.sendMessage({ type: 'INIT_GOOGLE_ANALYTICS' }, (response: string) => {
-            this.preRun(response, resolve, reject)
+            this.preRun(response, resolve, reject, isGlobalRun)
           })
         }
 
