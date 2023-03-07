@@ -251,7 +251,7 @@ export default GCCPlayerProgressComponent
 
   .gcc-kdr-wrapper {
     width: 50px;
-    position: absolute;
+    position: absolute !important;
     bottom: -10px;
     right: 0;
   }
