@@ -102,5 +102,17 @@
 
   "playerMarksSave": {
     "message": "Guardar Tags"
+  },
+
+  "playerProgress__lastMatchWinPoints": {
+    "message": "Puntos ganados en el último partido"
+  },
+
+  "playerProgress__lastMatchLostPoints": {
+    "message": "Puntos perdidos en el último partido"
+  },
+
+  "playerProgress__lastMatchWithoutPoints": {
+    "message": "Sin puntos ganados o perdidos en el último partido"
   }
 }

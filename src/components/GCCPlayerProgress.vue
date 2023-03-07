@@ -23,8 +23,11 @@
       }"
     >
       <template v-slot:dot="{ value }">
-        <GCCPlayerLevel v-if="value === lastMatch.ratingPlayer" :level="gcLevel.level" :class="['custom-dot', { focus }]" />
-        <span v-if="lastMatch.ratingPlayer > 0 && value !== lastMatch.ratingPlayer && value !== gcLevel.minRating">🔥</span>
+        <!-- <GCCPlayerLevel v-if="value === lastMatch.ratingPlayer" :level="gcLevel.level" :class="['custom-dot', { focus }]" /> -->
+        <span v-if="value === lastMatch.ratingPlayer"></span>
+        <span v-if="lastMatch.ratingPlayer > 0 && value !== lastMatch.ratingPlayer && value !== gcLevel.minRating">
+          🔥
+        </span>
         <span v-if="lastMatch.ratingPlayer < 0 && value !== lastMatch.ratingPlayer && value !== gcLevel.minRating">😔</span>
         <span v-if="value === gcLevel.minRating"></span>
       </template>
@@ -40,11 +43,18 @@
       </template>
       <template v-slot:tooltip="{ value }">
         <div v-if="value !== ratingBeforeLastMatch" class="custom-tooltip">{{ value }}</div>
-        <div v-if="value === ratingBeforeLastMatch" class="custom-tooltip rating-diff" :class="{
-          'rating-diff--win': lastMatch.ratingDiff > 0,
-          'rating-diff--draw': lastMatch.ratingDiff === 0,
-          'rating-diff--loss': lastMatch.ratingDiff < 0,
-        }">{{lastMatch.ratingDiff}}</div>
+        <div v-if="value === ratingBeforeLastMatch"
+          class="custom-tooltip rating-diff" :class="{
+            'rating-diff--win': lastMatch.ratingDiff > 0,
+            'rating-diff--draw': lastMatch.ratingDiff === 0,
+            'rating-diff--loss': lastMatch.ratingDiff < 0,
+          }"
+          :title="ratingDiffTitle"
+        >
+          <span v-if="lastMatch.ratingDiff > 0" class="rating-diff__win-prefix">+</span>
+          <span v-if="lastMatch.ratingDiff < 0" class="rating-diff__win-prefix">-</span>
+          <span>{{lastMatch.ratingDiff}}</span>
+        </div>
       </template>
     </vue-slider>
     <KDR v-if="stats" :value="1.23" :playerId="playerId" />
@@ -75,6 +85,7 @@ const GCCPlayerProgressComponent = defineComponent({
 
   setup() {
     return {
+      i18n: window.browser.i18n,
       rating: ref(0),
       stats: ref(null),
       isLoading: ref(false),
@@ -146,6 +157,15 @@ const GCCPlayerProgressComponent = defineComponent({
       return null
     },
 
+    lastMatchEmoji(){
+      let emoji = '😐'
+      // if(this.lastMatch){
+
+      // }
+
+      return emoji
+    },
+
     marks(){
       if(this.stats){
         const marks = {}
@@ -180,6 +200,20 @@ const GCCPlayerProgressComponent = defineComponent({
         return this.lastMatch.ratingPlayer - this.lastMatch.ratingDiff
       }
       return null
+    },
+
+    ratingDiffTitle(){
+      let titleMessage = ''
+      if(this.lastMatch){
+        if(this.lastMatch.ratingDiff > 0) {
+          titleMessage = this.i18n.getMessage('playerProgress__lastMatchWinPoints')
+        } else if (this.lastMatch.ratingDiff < 0) {
+          titleMessage = this.i18n.getMessage('playerProgress__lastMatchLostPoints')
+        } else {
+          titleMessage = this.i18n.getMessage('playerProgress__lastMatchWithoutPoints')
+        }
+      }
+      return titleMessage
     },
 
     sliderValues(){
