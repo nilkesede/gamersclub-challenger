@@ -1,5 +1,5 @@
 
-export const knownWinEmojisMap = {
+export const winStreakMap = {
   1: '😌',
   2: '😄',
   3: '🔥',
@@ -7,7 +7,7 @@ export const knownWinEmojisMap = {
   7: '🛡️'
 }
 
-export const knownLossEmojisMap: Record<number, string> = {
+export const lossStreakMap: Record<number, string> = {
   1: '😒',
   2: '😪',
   3: '🤕',
@@ -47,9 +47,9 @@ const getEmoji = (streak: number, emojiMap:Record<number, string>) => {
 }
 
 export const getWinStreakEmoji = (streak: number) => {
-  return getEmoji(streak, knownWinEmojisMap)
+  return getEmoji(streak, winStreakMap)
 }
 
 export const getLossStreakEmoji = (streak: number) => {
-  return getEmoji(streak, knownLossEmojisMap)
+  return getEmoji(streak, lossStreakMap)
 }
