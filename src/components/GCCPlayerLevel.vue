@@ -1,5 +1,5 @@
 <template>
-  <span class="gcc-player-level-badge" :key="componentKey"
+  <span class="gcc-player-level-badge"
     :style="levelStyle">
     <span class="gcc-player-level">{{level}}</span>
   </span>
