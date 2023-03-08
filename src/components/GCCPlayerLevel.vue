@@ -1,5 +1,9 @@
 <template>
   <span class="gcc-player-level-badge"
+    :class="{
+      'gcc-player-level-badge--gc-subscriber': isGamersclubSubscriber,
+      'gcc-player-level-badge--not-gc-subscriber': !isGamersclubSubscriber,
+    }"
     :style="levelStyle">
     <span class="gcc-player-level">{{level}}</span>
   </span>
@@ -7,6 +11,7 @@
 
 <script>
 import { gcAssetsUrls } from "@/utils/gcUrls";
+import { gcLevelsMap } from '@/utils/gc/levels';
 import { defineComponent } from "vue";
 
 const GCCPlayerLevelComponent = defineComponent({
@@ -14,6 +19,11 @@ const GCCPlayerLevelComponent = defineComponent({
     level: {
       type: Number,
       required: true
+    },
+    isGamersclubSubscriber: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
 
@@ -24,11 +34,20 @@ const GCCPlayerLevelComponent = defineComponent({
 
   computed: {
     levelStyle() {
-      const bgUrl = gcAssetsUrls.backgroundLevel(this.level)
-      return {
-        'background-image': `url(${bgUrl})`,
-        'background-repeat': 'no-repeat'
+      let style = {}
+      if(this.isGamersclubSubscriber){
+        const bgUrl = gcAssetsUrls.backgroundLevel(this.level)
+        style = {
+          'background-image': `url(${bgUrl})`,
+          'background-repeat': 'no-repeat'
+        }
+      } else {
+        const bgColor = gcLevelsMap[this.level]?.color
+        style = {
+          'background-color': bgColor
+        }
       }
+      return style
     }
   }
 });
@@ -45,6 +64,10 @@ export default GCCPlayerLevelComponent
   width: 25px;
   height: 25px;
   text-align: center;
+
+  &--not-gc-subscriber {
+    border-radius: 100%;
+  }
 }
 
 .gcc-player-level {

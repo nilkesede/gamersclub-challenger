@@ -43,7 +43,11 @@
           class="custom-mark custom-mark--min"
           :style="{ left: `0%` }"
           >
-          <GCCPlayerLevel v-if="gcLevel.level > 0" :level="previousGCLevel.level" :title="previousGCLevel.maxRating" />
+          <GCCPlayerLevel
+            v-if="gcLevel.level > 0"
+            :level="previousGCLevel.level"
+            :is-gamersclub-subscriber="stats.playerInfo.isSubscriber"
+            :title="previousGCLevel.maxRating" />
           <div class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-downgrade"
             :title="i18n.getMessage('playerProgress__diffPointsToDowngrage', previousGCLevel.level)"
           >
@@ -53,7 +57,11 @@
         <div v-if="value === nextGCLevel.minRating"
           class="custom-mark"
           :style="{ left: `100%` }">
-          <GCCPlayerLevel v-if="gcLevel.level < 21" :level="nextGCLevel.level" :title="nextGCLevel.minRating" />
+          <GCCPlayerLevel
+            v-if="gcLevel.level < 21"
+            :level="nextGCLevel.level"
+            :is-gamersclub-subscriber="stats.playerInfo.isSubscriber"
+            :title="nextGCLevel.minRating" />
           <div class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-upgrade"
             :title="i18n.getMessage('playerProgress__diffPointsToUpgrade', nextGCLevel.level)">
             <span>{{ pointsToLevelUpgrade }}</span>

@@ -10,7 +10,7 @@ const GCCLogoComponent = defineComponent({
   props: {
     title: {
       type: String,
-      required: true,
+      required: false,
       default: 'GamersClub Challenger'
     },
 
