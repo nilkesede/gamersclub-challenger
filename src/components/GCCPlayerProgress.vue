@@ -32,7 +32,7 @@
           {{lastMatchEmoji}}
         </span>
         <span v-if="value === lastMatch.ratingPlayer && !showStreak"
-          @mouseenter="showStreak = true">
+          @mouseenter="discoverStreak">
           <GCCLogo />
         </span>
         <span v-if="value !== lastMatch.ratingPlayer && value !== gcLevel.minRating"></span>
@@ -93,12 +93,14 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { gcLevelsMap } from '../utils/gc/levels'
+import analytics from "@/utils/analytics";
 import { userAPI } from "../utils/gcAPI";
 import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
 import { getWinStreakEmoji, getLossStreakEmoji } from '@/utils/emojis/streak'
 import KDR from './KDR.vue'
+import { staticEvents } from "@/utils/analytics/events";
 
 const GCCPlayerProgressComponent = defineComponent({
   components: {
@@ -294,6 +296,13 @@ const GCCPlayerProgressComponent = defineComponent({
 
       return []
     },
+  },
+
+  methods: {
+    discoverStreak() {
+      this.showStreak = true
+      analytics.sendEvent({ ...staticEvents.DISCOVER_PROGRESS_STREAK, value: this.streakNumber })
+    }
   }
 });
 

@@ -18,6 +18,12 @@ export const staticEvents = {
     action: 'keyup',
     label: `Filter by player name`,
   },
+
+  DISCOVER_PROGRESS_STREAK: {
+    category: 'playerProgress',
+    action: 'mouseenter',
+    label: 'Discover Progress Streak'
+  }
 }
 
 export const dynamicEvents = ({ value }: { value: string | number }): Record<string, AnalyticsEvent> => {
@@ -34,6 +40,6 @@ export const dynamicEvents = ({ value }: { value: string | number }): Record<str
       action: 'click',
       label: `Toggle player mark ${value}`,
       value
-    }
+    },
   }
 }
