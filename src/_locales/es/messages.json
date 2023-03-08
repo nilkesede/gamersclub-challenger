@@ -114,5 +114,46 @@
 
   "playerProgress__lastMatchWithoutPoints": {
     "message": "Sin puntos ganados o perdidos en el último partido"
+  },
+
+  "playerProgress__currentRating": {
+    "message": "Puntos actuales (Rating)"
+  },
+
+  "playerProgress__diffPointsToDowngrage": {
+    "message": "Puntos para bajar al nivel $previousLevel$",
+    "placeholders": {
+      "previousLevel": {
+        "content": "$1"
+      }
+    }
+
+  },
+
+  "playerProgress__diffPointsToUpgrade": {
+    "message": "Puntos para subir al nivel $nextLevel$",
+    "placeholders": {
+      "nextLevel": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "playerProgress__winStreak": {
+    "message": "Victorias seguidas: $streak$",
+    "placeholders": {
+      "streak": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "playerProgress__lossStreak": {
+    "message": "Derrotas seguidas: $streak$",
+    "placeholders": {
+      "streak": {
+        "content": "$1"
+      }
+    }
   }
 }
