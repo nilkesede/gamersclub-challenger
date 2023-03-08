@@ -9,10 +9,10 @@
       v-model="sliderValues"
       :interval="1"
       :marks="[
-        previousGCLevel.minRating,
+        previousGCLevel.maxRating,
         nextGCLevel.minRating
       ]"
-      :min="gcLevel.minRating"
+      :min="previousGCLevel.maxRating"
       :max="gcLevel.maxRating"
       :disabled="true"
       :dot-options="dotOptions"
@@ -36,17 +36,23 @@
         <span v-if="value === gcLevel.minRating"></span>
       </template>
       <template v-slot:mark="{ value }">
-        <div v-if="value === previousGCLevel.minRating" class="custom-mark custom-mark--min" :style="{ left: `0%` }">
-          <GCCPlayerLevel v-if="gcLevel.level > 0" :level="previousGCLevel.level" :title="previousGCLevel.minRating" />
-          <!-- {{previousGCLevel.minRating}} -->
+        <div v-if="value === previousGCLevel.maxRating" class="custom-mark custom-mark--min" :style="{ left: `0%` }">
+          <GCCPlayerLevel v-if="gcLevel.level > 0" :level="previousGCLevel.level" :title="previousGCLevel.maxRating" />
+          <div class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-downgrade" >
+            <span>{{ pointsToLevelDowngrade }}</span>
+          </div>
         </div>
         <div v-if="value === nextGCLevel.minRating" class="custom-mark" :style="{ left: `100%` }">
           <GCCPlayerLevel v-if="gcLevel.level < 21" :level="nextGCLevel.level" :title="nextGCLevel.minRating" />
-          <!-- {{nextGCLevel.minRating}} -->
+          <div class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-upgrade">
+            <span>{{ pointsToLevelUpgrade }}</span>
+          </div>
         </div>
       </template>
       <template v-slot:tooltip="{ value }">
-        <div v-if="value !== ratingBeforeLastMatch" class="custom-tooltip">{{ value }}</div>
+        <div v-if="value === stats.playerInfo.rating" class="custom-tooltip gcc-player-rating">
+          <span class="gcc-player-rating__value">{{ value }}</span>
+        </div>
         <div v-if="value === ratingBeforeLastMatch"
           class="custom-tooltip rating-diff" :class="{
             'rating-diff--win': lastMatch.ratingDiff > 0,
@@ -99,17 +105,15 @@ const GCCPlayerProgressComponent = defineComponent({
         },
         {
           tooltip: 'always',
-          tooltipPlacement: 'top'
         },
         {
-          tooltip: 'hover',
-          tooltipPlacement: 'bottom'
+          tooltip: 'always',
         },
       ],
       tooltipPlacements: [
         'bottom',
         'top',
-        'bottom'
+        'bottom',
       ]
     };
   },
@@ -218,6 +222,22 @@ const GCCPlayerProgressComponent = defineComponent({
       return null
     },
 
+    pointsToLevelDowngrade(){
+      let points = 0
+      if(this.stats){
+        points = this.stats.playerInfo.rating - this.previousGCLevel.maxRating
+      }
+      return points
+    },
+
+    pointsToLevelUpgrade(){
+      let points = 0
+      if(this.stats){
+        points = this.nextGCLevel.minRating - this.stats.playerInfo.rating
+      }
+      return points
+    },
+
     ratingDiffTitle(){
       let titleMessage = ''
       if(this.lastMatch){
@@ -234,10 +254,11 @@ const GCCPlayerProgressComponent = defineComponent({
 
     sliderValues(){
       if(this.stats){
-        const values = [this.gcLevel.minRating]
+        const values = [this.previousGCLevel.maxRating]
         if(this.lastMatch){
           values.push(this.ratingBeforeLastMatch)
           values.push(this.lastMatch.ratingPlayer)
+          // values.push(this.gcLevel.maxRating)
         }
         return values
       }
@@ -302,8 +323,8 @@ export default GCCPlayerProgressComponent
   .gcc-kdr-wrapper {
     width: 50px;
     position: absolute !important;
-    bottom: -10px;
-    right: 0;
+    bottom: -94px;
+    right: 5px;
   }
 
   .rating-diff {
@@ -329,6 +350,24 @@ export default GCCPlayerProgressComponent
   .streak-emoji {
     text-shadow: 0px 0px 5px #000;
     font-size: 18px;
+  }
+
+  .gcc-player-rating {
+
+  }
+
+  .gcc-diff-level-rating-points {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0px 4px;
+
+    &--to-downgrade {
+      color: $red;
+    }
+
+    &--to-upgrade {
+      color: $green;
+    }
   }
 }
 
