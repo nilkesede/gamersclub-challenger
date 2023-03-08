@@ -24,11 +24,15 @@
     >
       <template v-slot:dot="{ value }">
         <!-- <GCCPlayerLevel v-if="value === lastMatch.ratingPlayer" :level="gcLevel.level" :class="['custom-dot', { focus }]" /> -->
-        <span v-if="value === lastMatch.ratingPlayer"></span>
-        <span v-if="lastMatch.ratingPlayer > 0 && value !== lastMatch.ratingPlayer && value !== gcLevel.minRating">
-          🔥
+        <span v-if="value === lastMatch.ratingPlayer" class="streak-emoji">
+          {{lastMatchEmoji}}
         </span>
-        <span v-if="lastMatch.ratingPlayer < 0 && value !== lastMatch.ratingPlayer && value !== gcLevel.minRating">😔</span>
+        <span v-if="value !== lastMatch.ratingPlayer && value !== gcLevel.minRating"></span>
+        <!-- <span v-if="lastMatch.ratingPlayer > 0 && value !== lastMatch.ratingPlayer && value !== gcLevel.minRating" :style="{'font-size': '13px'}">
+          🟢
+        </span>
+        <span v-if="lastMatch.ratingPlayer < 0 && value !== lastMatch.ratingPlayer && value !== gcLevel.minRating" :style="{'font-size': '13px'}">🔴</span>-->
+        <!--         <span v-if="value !== lastMatch.ratingPlayer && value !== gcLevel.minRating">{{lastMatchEmoji}}</span>-->
         <span v-if="value === gcLevel.minRating"></span>
       </template>
       <template v-slot:mark="{ value }">
@@ -52,7 +56,6 @@
           :title="ratingDiffTitle"
         >
           <span v-if="lastMatch.ratingDiff > 0" class="rating-diff__win-prefix">+</span>
-          <span v-if="lastMatch.ratingDiff < 0" class="rating-diff__win-prefix">-</span>
           <span>{{lastMatch.ratingDiff}}</span>
         </div>
       </template>
@@ -68,6 +71,7 @@ import { gcLevelsMap } from '../utils/gc/levels'
 import { userAPI } from "../utils/gcAPI";
 import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
+import { getWinStreakEmoji, getLossStreakEmoji } from '@/utils/emojis/streak'
 import KDR from './KDR.vue'
 
 const GCCPlayerProgressComponent = defineComponent({
@@ -152,16 +156,29 @@ const GCCPlayerProgressComponent = defineComponent({
 
     lastMatch(){
       if(this.stats){
-        return this.stats.lastMatches[this.stats.lastMatches.length - 1]
+        const last = this.stats.lastMatches[this.stats.lastMatches.length - 1]
+        last.ratingDiff = -10
+        return last
       }
       return null
     },
 
     lastMatchEmoji(){
-      let emoji = '😐'
-      // if(this.lastMatch){
+      let emoji = '❔'
+      if(this.lastMatch){
+        const lastMatchWinValue = this.lastMatch.win
+        let streak = 1
 
-      // }
+        const reversedMatches = this.stats.lastMatches.map((match) => match.win).reverse()
+
+        for(let i = 0; i < reversedMatches.length - 1; i++){
+          const isAMatchWin = reversedMatches[i]
+          if(isAMatchWin !== lastMatchWinValue) break
+          streak++
+        }
+
+        emoji = lastMatchWinValue ? getWinStreakEmoji(streak) : getLossStreakEmoji(streak)
+      }
 
       return emoji
     },
@@ -308,6 +325,11 @@ export default GCCPlayerProgressComponent
 
   .custom-tooltip {
     font-weight: bold;
+  }
+
+  .streak-emoji {
+    text-shadow: 0px 0px 5px #000;
+    font-size: 18px;
   }
 }
 
