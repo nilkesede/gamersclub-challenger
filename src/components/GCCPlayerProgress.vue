@@ -157,7 +157,6 @@ const GCCPlayerProgressComponent = defineComponent({
     lastMatch(){
       if(this.stats){
         const last = this.stats.lastMatches[this.stats.lastMatches.length - 1]
-        last.ratingDiff = -10
         return last
       }
       return null
