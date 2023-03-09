@@ -39,6 +39,10 @@
     "message": "Habilitar efecto de letra 3D"
   },
 
+  "settingsOption__enablePlayerProgress": {
+    "message": "Habilitar barra de progreso"
+  },
+
   "playerStats__lostMatches": {
     "message": "Derrotas"
   },

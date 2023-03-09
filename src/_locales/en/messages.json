@@ -39,6 +39,10 @@
     "message": "Enable 3D GC Card Effect"
   },
 
+  "settingsOption__enablePlayerProgress": {
+    "message": "Enable player progress bar"
+  },
+
   "playerStats__lostMatches": {
     "message": "Defeats"
   },

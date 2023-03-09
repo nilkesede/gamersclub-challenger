@@ -45,6 +45,10 @@
     "message": "Habilitar efeito de carta 3D"
   },
 
+  "settingsOption__enablePlayerProgress": {
+    "message": "Habilitar barra de progresso do jogador"
+  },
+
   "playerStats__lostMatches": {
     "message": "Derrotas"
   },
