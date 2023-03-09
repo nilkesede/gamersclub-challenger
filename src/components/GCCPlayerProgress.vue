@@ -113,14 +113,19 @@ const GCCPlayerProgressComponent = defineComponent({
     playerId: {
       type: String,
       required: true
+    },
+
+    initialStats: {
+      type: Object,
+      required: false
     }
   },
 
-  setup() {
+  setup(props) {
     return {
       i18n: window.browser.i18n,
       rating: ref(0),
-      stats: ref(null),
+      stats: ref(props.initialStats),
       isLoading: ref(false),
       showStreak: ref(false),
       dotOptions: [
@@ -143,12 +148,14 @@ const GCCPlayerProgressComponent = defineComponent({
   },
 
   created(){
-    this.isLoading = true
-    userAPI.boxInitialMatches(this.playerId).then((data) => {
-      this.stats = data
-    }).finally(() => {
-      this.isLoading = false
-    });
+    if(!this.initialStats){
+      this.isLoading = true
+      userAPI.boxInitialMatches(this.playerId).then((data) => {
+        this.stats = data
+      }).finally(() => {
+        this.isLoading = false
+      });
+    }
   },
 
   computed: {
