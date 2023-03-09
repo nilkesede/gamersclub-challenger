@@ -24,14 +24,14 @@
     >
       <template v-slot:dot="{ value }" >
         <!-- <GCCPlayerLevel v-if="value === lastMatch.ratingPlayer" :level="gcLevel.level" :class="['custom-dot', { focus }]" /> -->
-        <span v-if="value === lastMatch.ratingPlayer && showStreak"
+        <span v-if="value === lastMatch.ratingPlayer && showStreak && streakNumber"
           class="streak-emoji"
           @mouseleave="showStreak = false"
           :title="lastMatch.win ? i18n.getMessage('playerProgress__winStreak', streakNumber) : i18n.getMessage('playerProgress__lossStreak', streakNumber)"
         >
           {{lastMatchEmoji}}
         </span>
-        <span v-if="value === lastMatch.ratingPlayer && !showStreak"
+        <span v-if="value === lastMatch.ratingPlayer && !showStreak && streakNumber"
           @mouseenter="discoverStreak">
           <GCCLogo />
         </span>
@@ -48,7 +48,7 @@
             :level="previousGCLevel.level"
             :is-gamersclub-subscriber="stats.playerInfo.isSubscriber"
             :title="previousGCLevel.maxRating" />
-          <div class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-downgrade"
+          <div v-if="pointsToLevelDowngrade" class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-downgrade"
             :title="i18n.getMessage('playerProgress__diffPointsToDowngrage', previousGCLevel.level)"
           >
             <span>{{ pointsToLevelDowngrade }}</span>
