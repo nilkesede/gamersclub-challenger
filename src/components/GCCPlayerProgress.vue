@@ -27,7 +27,7 @@
         <span v-if="value === lastMatch.ratingPlayer && showStreak && streakNumber"
           class="streak-emoji"
           @mouseleave="showStreak = false"
-          :title="lastMatch.win ? i18n.getMessage('playerProgress__winStreak', streakNumber) : i18n.getMessage('playerProgress__lossStreak', streakNumber)"
+          :title="streakTitle"
         >
           {{lastMatchEmoji}}
         </span>
@@ -49,7 +49,7 @@
             :is-gamersclub-subscriber="stats.playerInfo.isSubscriber"
             :title="previousGCLevel.maxRating" />
           <div v-if="pointsToLevelDowngrade" class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-downgrade"
-            :title="i18n.getMessage('playerProgress__diffPointsToDowngrage', previousGCLevel.level)"
+            :title="i18n.getMessage('playerProgress__diffPointsToDowngrage', previousGCLevel.level.toString())"
           >
             <span>{{ pointsToLevelDowngrade }}</span>
           </div>
@@ -63,7 +63,7 @@
             :is-gamersclub-subscriber="stats.playerInfo.isSubscriber"
             :title="nextGCLevel.minRating" />
           <div class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-upgrade"
-            :title="i18n.getMessage('playerProgress__diffPointsToUpgrade', nextGCLevel.level)">
+            :title="i18n.getMessage('playerProgress__diffPointsToUpgrade', nextGCLevel.level.toString())">
             <span>{{ pointsToLevelUpgrade }}</span>
           </div>
         </div>
@@ -209,6 +209,14 @@ const GCCPlayerProgressComponent = defineComponent({
       }
 
       return streak
+    },
+
+    streakTitle(){
+      let title = ''
+      if(this.lastMatch){
+        title = this.lastMatch.win ? this.i18n.getMessage('playerProgress__winStreak', this.streakNumber.toString()) : this.i18n.getMessage('playerProgress__lossStreak', this.streakNumber.toString())
+      }
+      return title
     },
 
     lastMatchEmoji(){
