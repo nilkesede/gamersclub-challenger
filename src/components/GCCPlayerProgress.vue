@@ -85,7 +85,6 @@
         </div>
       </template>
     </vue-slider>
-    <KDR v-if="stats" :value="1.23" :playerId="playerId" />
 
   </div>
 </template>
@@ -99,7 +98,6 @@ import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
 import { getWinStreakEmoji, getLossStreakEmoji } from '@/utils/emojis/streak'
-import KDR from './KDR.vue'
 import { staticEvents } from "@/utils/analytics/events";
 
 const GCCPlayerProgressComponent = defineComponent({
@@ -107,7 +105,6 @@ const GCCPlayerProgressComponent = defineComponent({
     VueSlider,
     GCCPlayerLevel,
     GCCLogo,
-    KDR
   },
   props: {
     playerId: {
