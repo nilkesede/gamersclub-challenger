@@ -34,8 +34,7 @@
       ],
       "css": [
         "css/chunk-vendors.css",
-        "css/chunk-common.css",
-        "css/globalContentScripts.css"
+        "css/chunk-common.css"
       ],
       "run_at": "document_end"
     },
