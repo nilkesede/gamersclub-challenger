@@ -12,7 +12,7 @@
         previousGCLevel.maxRating,
         nextGCLevel.minRating
       ]"
-      :min="previousGCLevel.maxRating"
+      :min="gcLevel.minRating"
       :max="gcLevel.maxRating"
       :disabled="true"
       :dot-options="dotOptions"
@@ -44,9 +44,9 @@
           >
           <GCCPlayerLevel
             v-if="gcLevel.level > 0"
-            :level="previousGCLevel.level"
+            :level="gcLevel.level"
             :is-gamersclub-subscriber="stats.playerInfo.isSubscriber"
-            :title="previousGCLevel.maxRating" />
+            :title="gcLevel.minRating" />
           <div v-if="pointsToLevelDowngrade" class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-downgrade"
             :title="i18n.getMessage('playerProgress__diffPointsToDowngrage', previousGCLevel.level.toString())"
           >
@@ -67,11 +67,11 @@
           </div>
         </div>
       </template>
-      <template v-slot:tooltip="{ value }">
-        <div v-if="value === stats.playerInfo.rating" class="custom-tooltip gcc-player-rating">
+      <template v-slot:tooltip="{ value, index }">
+        <div v-if="value === stats.playerInfo.rating && index === 2" class="custom-tooltip gcc-player-rating">
           <span class="gcc-player-rating__value" :title="i18n.getMessage('playerProgress__currentRating')">{{ value }}</span>
         </div>
-        <div v-if="value === ratingBeforeLastMatch && lastMatch.ratingDiff !== 0"
+        <div v-if="value === ratingBeforeLastMatch && lastMatch.ratingDiff !== 0 && ratingBeforeLastMatch !== stats.playerInfo.rating"
           class="custom-tooltip"
           :title="ratingDiffTitle"
         >
@@ -161,12 +161,6 @@ const GCCPlayerProgressComponent = defineComponent({
   },
 
   computed: {
-    logoStyle() {
-      return {
-        'background-image': `url(${window.browser.runtime.getURL("../../assets/logo_500.png")})`,
-        'background-repeat': 'no-repeat'
-      }
-    },
 
     gcLevel() {
       if(this.stats){
@@ -304,11 +298,10 @@ const GCCPlayerProgressComponent = defineComponent({
 
     sliderValues(){
       if(this.stats){
-        const values = [this.previousGCLevel.maxRating]
+        const values = [this.gcLevel.minRating]
         if(this.lastMatch){
           values.push(this.ratingBeforeLastMatch)
           values.push(this.lastMatch.ratingPlayer)
-          // values.push(this.gcLevel.maxRating)
         }
         return values
       }
