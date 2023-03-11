@@ -58,7 +58,7 @@
           :style="{ left: `100%` }">
           <GCCPlayerLevel
             v-if="gcLevel.level < 21"
-            :level="21"
+            :level="nextGCLevel.level"
             :is-gamersclub-subscriber="stats.playerInfo.isSubscriber"
             :title="nextGCLevel.minRating" />
           <div class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-upgrade"
