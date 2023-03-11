@@ -43,6 +43,10 @@
     "message": "Habilitar barra de progreso"
   },
 
+  "settingsOption__enableAutoReady": {
+    "message": "Habilitar el listo automático"
+  },
+
   "playerStats__lostMatches": {
     "message": "Derrotas"
   },

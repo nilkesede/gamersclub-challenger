@@ -43,6 +43,10 @@
     "message": "Enable player progress bar"
   },
 
+  "settingsOption__enableAutoReady": {
+    "message": "Enable auto ready"
+  },
+
   "playerStats__lostMatches": {
     "message": "Defeats"
   },
