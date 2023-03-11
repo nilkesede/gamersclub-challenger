@@ -39,6 +39,10 @@
     "message": "Enable 3D GC Card Effect"
   },
 
+  "settingsOption__enablePlayerProgress": {
+    "message": "Enable player progress bar"
+  },
+
   "playerStats__lostMatches": {
     "message": "Defeats"
   },
@@ -102,5 +106,58 @@
 
   "playerMarksSave": {
     "message": "Save Tags"
+  },
+
+  "playerProgress__lastMatchWinPoints": {
+    "message": "Points earned in the last match"
+  },
+
+  "playerProgress__lastMatchLostPoints": {
+    "message": "Points lost in the last match"
+  },
+
+  "playerProgress__lastMatchWithoutPoints": {
+    "message": "No points were won or lost in the last match"
+  },
+
+  "playerProgress__currentRating": {
+    "message": "Current rating points"
+  },
+
+  "playerProgress__diffPointsToDowngrage": {
+    "message": "Points to downgrade for level $previousLevel$",
+    "placeholders": {
+      "previousLevel": {
+        "content": "$1"
+      }
+    }
+
+  },
+
+  "playerProgress__diffPointsToUpgrade": {
+    "message": "Points to upgrade for level $nextLevel$",
+    "placeholders": {
+      "nextLevel": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "playerProgress__winStreak": {
+    "message": "Wins in a row: $streak$",
+    "placeholders": {
+      "streak": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "playerProgress__lossStreak": {
+    "message": "Defeats in a row: $streak$",
+    "placeholders": {
+      "streak": {
+        "content": "$1"
+      }
+    }
   }
 }

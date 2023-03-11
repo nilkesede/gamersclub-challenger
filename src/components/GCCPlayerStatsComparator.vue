@@ -1,6 +1,9 @@
 <template>
   <div class="gcc-stats-comparator">
-    <button type="button" class="gcc-stats-comparator__comparate-button" v-if="compare.playersIds.length === 1" @click="comparateUser">
+    <button
+      v-if="compare.playersIds && compare.playersIds.length === 1 && compare.playersIds[compare.playersIds.length - 1] !== loggedPlayer.id"
+      type="button"
+      class="gcc-stats-comparator__comparate-button" @click="comparateUser">
       <span>VS</span>
     </button>
     <div class="gcc-stats-comparator__content">
@@ -49,6 +52,7 @@ export default class GCCStatsPlayerComparator extends Vue {
     return {
       i18n,
       gcUrls,
+      loggedPlayer: serializer.serializeLoggedPlayer()
     }
   }
 

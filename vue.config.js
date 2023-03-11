@@ -23,6 +23,11 @@ const config = {
       chunks: ['chunk-vendors', 'chunk-common', 'popup']
     },
 
+    globalContentScripts: {
+      entry: 'src/apps/content/global.js',
+      chunks: ['chunk-vendors', 'chunk-common', 'globalContentScripts'],
+    },
+
     lobbyContentScripts: {
       entry: 'src/apps/content/lobby.js',
       chunks: ['chunk-vendors', 'chunk-common', 'lobbyContentScripts'],

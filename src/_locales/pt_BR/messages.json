@@ -45,6 +45,10 @@
     "message": "Habilitar efeito de carta 3D"
   },
 
+  "settingsOption__enablePlayerProgress": {
+    "message": "Habilitar barra de progresso do jogador"
+  },
+
   "playerStats__lostMatches": {
     "message": "Derrotas"
   },
@@ -108,6 +112,59 @@
 
   "playerMarksSave": {
     "message": "Salvar Tags"
+  },
+
+  "playerProgress__lastMatchWinPoints": {
+    "message": "Pontos ganhos na última partida"
+  },
+
+  "playerProgress__lastMatchLostPoints": {
+    "message": "Pontos perdidos na última partida"
+  },
+
+  "playerProgress__lastMatchWithoutPoints": {
+    "message": "Nenhum ponto foi ganho ou perdido na última partida"
+  },
+
+  "playerProgress__currentRating": {
+    "message": "Pontuação atual (Rating)"
+  },
+
+  "playerProgress__diffPointsToDowngrage": {
+    "message": "Pontos para cair para o level $previousLevel$",
+    "placeholders": {
+      "previousLevel": {
+        "content": "$1"
+      }
+    }
+
+  },
+
+  "playerProgress__diffPointsToUpgrade": {
+    "message": "Pontos para subir para o level $nextLevel$",
+    "placeholders": {
+      "nextLevel": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "playerProgress__winStreak": {
+    "message": "Vitórias seguidas: $streak$",
+    "placeholders": {
+      "streak": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "playerProgress__lossStreak": {
+    "message": "Derrotas seguidas: $streak$",
+    "placeholders": {
+      "streak": {
+        "content": "$1"
+      }
+    }
   }
 
 }

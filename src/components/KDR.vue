@@ -76,7 +76,6 @@ export default defineComponent({
   },
 
   unmounted() {
-    this.tippyInstance?.destroy();
     this.tip?.destroy();
   },
 
@@ -93,8 +92,8 @@ export default defineComponent({
 
   methods: {
     onClickToSeeMore() {
-      if (this.tippyInstance) {
-        this.tippyInstance.show();
+      if (this.tip) {
+        this.tip.show();
       } else {
         const playerId = this.playerId;
         this.tip = tippy(this.$el, {

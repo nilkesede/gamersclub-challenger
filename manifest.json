@@ -24,6 +24,22 @@
   "content_scripts": [
     {
       "matches": [
+        "*://gamersclub.com.br/*",
+        "*://csgo.gamersclub.gg/*"
+      ],
+      "js": [
+        "js/chunk-vendors.js",
+        "js/chunk-common.js",
+        "js/globalContentScripts.js"
+      ],
+      "css": [
+        "css/chunk-vendors.css",
+        "css/chunk-common.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
         "*://gamersclub.com.br/lobby*",
         "*://csgo.gamersclub.gg/lobby*"
       ],

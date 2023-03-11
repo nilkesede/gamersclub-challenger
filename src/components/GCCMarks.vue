@@ -31,7 +31,7 @@
 import { ref } from "vue";
 import { defineComponent } from "vue";
 import BrowserStorage from '@/utils/storage'
-import { GCCMarkEmojiMap } from '@/utils/GCCMarkEmojiMap'
+import { GCCMarkEmojiMap } from '@/utils/emojis/GCCMarkEmojiMap'
 import AnalyticsManager from "@/utils/analytics";
 import { dynamicEvents } from "@/utils/analytics/events";
 

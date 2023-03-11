@@ -30,7 +30,7 @@
                   'background-image': `url(https://static.gamersclub.com.br/players/avatar/${playerId}/${playerId}_full.jpg)`,
                 }"
               ></div>
-              <GCCPlayerLevel :level="stats.initial.playerInfo.level" />
+              <GCCPlayerLevel :level="stats.initial.playerInfo.level" :is-gamersclub-subscriber="stats.initial.playerInfo.isSubscriber" />
               <p class="gcc-stats-player-id">#{{ playerId }}</p>
             </div>
             <div class="gcc-stats__core-general-info">

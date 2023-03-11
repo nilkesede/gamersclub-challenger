@@ -6,6 +6,10 @@ export const gcSelectors = {
     name: '.MainHeader__navbar .MainHeader__playerNickname'
   },
 
+  globalNavBar: {
+    self: '#navbar-placeholder',
+  },
+
   myLobby: {
     root: '#suaLobby',
     inviteButton: '#lobby-invite-friends',
