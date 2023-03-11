@@ -7,6 +7,7 @@ import BrowserStorage from '../../utils/storage'
 import serializer from '../lobby/serializer'
 import { userAPI } from '@/utils/gcAPI'
 import { GCInitialPlayerStats } from '../lobby/domain/GCInitialPlayerStats'
+import { GCPlayerStatsHistory } from '../lobby/domain/GCPlayerStatsHistory'
 
 export default class GlobalModifier {
   loggedPlayer
@@ -18,17 +19,16 @@ export default class GlobalModifier {
 
   modify() {
     const { id: playerId } = this.loggedPlayer
-    this.searchInitialBoxStats(playerId).then((data) => {
+    userAPI.boxInitialMatches(playerId).then((data) => {
       this.insertPlayerProgress(data)
+    })
+
+    userAPI.boxMatchesHistory(playerId).then((data) => {
       this.insertGlobalLoggedKDR(data)
     })
   }
 
-  searchInitialBoxStats(playerId: string): Promise<GCInitialPlayerStats> {
-    return userAPI.boxInitialMatches(playerId)
-  }
-
-  insertGlobalLoggedKDR(initialStats: GCInitialPlayerStats){
+  insertGlobalLoggedKDR(historyStats: GCPlayerStatsHistory){
     const $globalNavbar = $(gcSelectors.globalNavBar.self)
     const containerName = `gcc-global-logged-kdr-container`
     const $container = `<div id='${containerName}' class='${gcSelectors.extension.appContainer.cleanCSSSelector()}'></div>`
@@ -36,7 +36,7 @@ export default class GlobalModifier {
 
     if ($containerInDOM.length === 0) {
       const { id: playerId } = this.loggedPlayer
-      const kdrValue = initialStats.stats.find((stat) => stat.stat === "KDR")?.value
+      const kdrValue = historyStats.stat.find((stat) => stat.stat === "KDR")?.value
       $globalNavbar.append($container)
       createApp(KDR, { playerId, value: kdrValue, toFetchData: typeof kdrValue === 'undefined' }).mount(`#${containerName}`)
     }
@@ -53,7 +53,7 @@ export default class GlobalModifier {
       if ($containerInDOM.length === 0) {
         const { id: playerId } = this.loggedPlayer
         $globalNavbar.append($container)
-        createApp(GCCPlayerProgress, { playerId }).mount(`#${containerName}`)
+        createApp(GCCPlayerProgress, { playerId, initialStats }).mount(`#${containerName}`)
       }
     }
   }
