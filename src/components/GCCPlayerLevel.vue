@@ -64,6 +64,7 @@ export default GCCPlayerLevelComponent
   width: 25px;
   height: 25px;
   text-align: center;
+  background-size: cover;
 
   &--not-gc-subscriber {
     border-radius: 100%;

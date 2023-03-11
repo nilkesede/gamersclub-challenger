@@ -8,7 +8,11 @@ export const gcPages = {
 
 export const gcUrls = {
   player(userId: UserId){
-    return `${gcSiteUrl}/jogador/${userId}`
+    return `${gcSiteUrl}/player/${userId}`
+  },
+
+  match(matchId: string | number){
+    return `${gcSiteUrl}/lobby/match/${matchId}`
   },
 
   boxInitialMatches(userId: UserId) {

@@ -8,6 +8,10 @@ export const getIdByAvatarUrl = (avatarUrl: string): string => {
   return matches && matches.length ? matches[0].replace(/\//g, '') : ''
 }
 
+export const getCleanMapName = (csgoMapName: string) => {
+  return csgoMapName.replaceAll("de_", "")
+}
+
 String.prototype.cleanCSSSelector = function (): string {
   return cleanSelector(this as string)
 }

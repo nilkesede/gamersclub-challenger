@@ -23,7 +23,6 @@
       }"
     >
       <template v-slot:dot="{ value }" >
-        <!-- <GCCPlayerLevel v-if="value === lastMatch.ratingPlayer" :level="gcLevel.level" :class="['custom-dot', { focus }]" /> -->
         <span v-if="value === lastMatch.ratingPlayer && showStreak && streakNumber"
           class="streak-emoji"
           @mouseleave="showStreak = false"
@@ -59,7 +58,7 @@
           :style="{ left: `100%` }">
           <GCCPlayerLevel
             v-if="gcLevel.level < 21"
-            :level="nextGCLevel.level"
+            :level="21"
             :is-gamersclub-subscriber="stats.playerInfo.isSubscriber"
             :title="nextGCLevel.minRating" />
           <div class="gcc-diff-level-rating-points gcc-diff-level-rating-points--to-upgrade"
@@ -72,16 +71,19 @@
         <div v-if="value === stats.playerInfo.rating" class="custom-tooltip gcc-player-rating">
           <span class="gcc-player-rating__value" :title="i18n.getMessage('playerProgress__currentRating')">{{ value }}</span>
         </div>
-        <div v-if="value === ratingBeforeLastMatch"
-          class="custom-tooltip rating-diff" :class="{
-            'rating-diff--win': lastMatch.ratingDiff > 0,
-            'rating-diff--draw': lastMatch.ratingDiff === 0,
-            'rating-diff--loss': lastMatch.ratingDiff < 0,
-          }"
+        <div v-if="value === ratingBeforeLastMatch && lastMatch.ratingDiff !== 0"
+          class="custom-tooltip"
           :title="ratingDiffTitle"
         >
-          <span v-if="lastMatch.ratingDiff > 0" class="rating-diff__win-prefix">+</span>
-          <span>{{lastMatch.ratingDiff}}</span>
+          <a :href="gcUrls.match(lastMatch.id)"
+            class="rating-diff"
+            :class="{
+              'rating-diff--win': lastMatch.ratingDiff > 0,
+              'rating-diff--loss': lastMatch.ratingDiff < 0,
+            }">
+            <span v-if="lastMatch.ratingDiff > 0" class="rating-diff__win-prefix">+</span>
+            <span>{{lastMatch.ratingDiff}}</span>
+          </a>
         </div>
       </template>
     </vue-slider>
@@ -99,6 +101,8 @@ import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
 import { getWinStreakEmoji, getLossStreakEmoji } from '@/utils/emojis/streak'
 import { staticEvents } from "@/utils/analytics/events";
+import { gcUrls } from "@/utils/gcUrls";
+import { getCleanMapName } from "@/utils/StringUtils";
 
 const GCCPlayerProgressComponent = defineComponent({
   components: {
@@ -125,6 +129,7 @@ const GCCPlayerProgressComponent = defineComponent({
       stats: ref(props.initialStats),
       isLoading: ref(false),
       showStreak: ref(false),
+      gcUrls,
       dotOptions: [
         {
           tooltip: 'none',
@@ -291,6 +296,8 @@ const GCCPlayerProgressComponent = defineComponent({
         } else {
           titleMessage = this.i18n.getMessage('playerProgress__lastMatchWithoutPoints')
         }
+
+        titleMessage += ` (${getCleanMapName(this.lastMatch.map).toUpperCase()} ${this.lastMatch.scoreA}x${this.lastMatch.scoreB})`
       }
       return titleMessage
     },
@@ -382,14 +389,23 @@ export default GCCPlayerProgressComponent
 
     &--win {
       color: $green;
+      &:hover {
+        text-shadow: 0 0 16px $green;
+      }
     }
 
     &--draw {
       color: $yellow;
+      &:hover {
+        text-shadow: 0 0 16px $yellow;
+      }
     }
 
     &--loss {
       color: $red;
+      &:hover {
+        text-shadow: 0 0 16px $red;
+      }
     }
   }
 
