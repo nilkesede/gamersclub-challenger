@@ -17,13 +17,14 @@ window.gcChallenger = {
         urls: gcUrls,
         assets: gcAssetsUrls
       },
-      health: {
-        // @example const { missing, found } = window.gcChallenger.gc.api.health.checkGCSelectors(window.gcChallenger.gc.selectors.lobbies)
-        checkGCSelectors
-      },
     },
   },
-  serializer,
-  logger
+  api: {
+    serializer,
+    logger,
+    health: {
+      checkGCSelectors
+    },
+  }
 }
 
