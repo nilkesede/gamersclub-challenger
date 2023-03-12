@@ -16,20 +16,19 @@ import serializer from '../../scripts/lobby/serializer'
 class GCChallengerContentRunner {
   pageName = ''
 
-  async preRun(response: string, resolve: any, reject: any, isGlobalRun?: boolean) {
+  async preRun(response: string, resolve: any, reject: any) {
     try {
-      const pageName = isGlobalRun ? 'GLOBAL' : this.pageName
-
+      const isGlobalRun = this.pageName === 'GLOBAL_SCRIPTS'
       if(!response || response === 'GA_FAILED') {
-        Logger.error(`GA HAS NOT STARTED ON ${pageName}`)
+        Logger.error(`GA HAS NOT STARTED ON ${this.pageName}`)
       } else {
-        Logger.debug(`🟢 GA INITIALIZED ON ${pageName}`)
+        Logger.debug(`🟢 GA INITIALIZED ON ${this.pageName}`)
       }
 
       const loggedPlayer = serializer.serializeLoggedPlayer()
       Analytics.setup(loggedPlayer)
       if(!isGlobalRun){
-        Analytics.set('title', pageName)
+        Analytics.set('title', this.pageName)
         Analytics.send('pageview')
       }
 
@@ -42,10 +41,8 @@ class GCChallengerContentRunner {
     }
   }
 
-  run(pageName?: string, isGlobalRun?: boolean): Promise<any> {
-    if(pageName){
-      this.pageName = pageName
-    }
+  run(pageName: string): Promise<any> {
+    this.pageName = pageName
 
     return new Promise((resolve, reject) => {
       try {
@@ -53,10 +50,10 @@ class GCChallengerContentRunner {
 
         if(Analytics.isAlive()){
           Logger.debug(`🟢 GA IS ALREARY LIVE -> INITIALIZED ON ${this.pageName}`)
-          this.preRun('GA_INITIALIZED', resolve, reject, isGlobalRun)
+          this.preRun('GA_INITIALIZED', resolve, reject)
         } else {
           window.browser.runtime.sendMessage({ type: 'INIT_GOOGLE_ANALYTICS' }, (response: string) => {
-            this.preRun(response, resolve, reject, isGlobalRun)
+            this.preRun(response, resolve, reject)
           })
         }
 
