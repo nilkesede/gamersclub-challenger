@@ -10,6 +10,10 @@ export const gcSelectors = {
     self: '#navbar-placeholder',
   },
 
+  csgoHeader: {
+    subscriptionTopBar: '#subscription-status-topbar'
+  },
+
   myLobby: {
     root: '#suaLobby',
     inviteButton: '#lobby-invite-friends',

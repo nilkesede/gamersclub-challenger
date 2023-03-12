@@ -30,15 +30,20 @@ export default class GlobalModifier {
 
   insertGlobalLoggedKDR(historyStats: GCPlayerStatsHistory){
     const $globalNavbar = $(gcSelectors.globalNavBar.self)
-    const containerName = `gcc-global-logged-kdr-container`
-    const $container = `<div id='${containerName}' class='${gcSelectors.extension.appContainer.cleanCSSSelector()}'></div>`
-    const $containerInDOM = $globalNavbar.find(`#${containerName}`)
+    const containerId = `gcc-global-logged-kdr-container`
+    const subscriptionTopbarClass = $(gcSelectors.csgoHeader.subscriptionTopBar).length > 0 ? 'has-subscription-top-bar' : ''
+    const $container = $('<div>', {
+      id: containerId,
+      class: `${gcSelectors.extension.appContainer.cleanCSSSelector()} ${subscriptionTopbarClass}`
+    })
+
+    const $containerInDOM = $globalNavbar.find(`#${containerId}`)
 
     if ($containerInDOM.length === 0) {
       const { id: playerId } = this.loggedPlayer
       const kdrValue = historyStats.stat.find((stat) => stat.stat === "KDR")?.value
       $globalNavbar.append($container)
-      createApp(KDR, { playerId, value: kdrValue, toFetchData: typeof kdrValue === 'undefined' }).mount(`#${containerName}`)
+      createApp(KDR, { playerId, value: kdrValue, toFetchData: typeof kdrValue === 'undefined' }).mount(`#${containerId}`)
     }
   }
 

@@ -34,4 +34,8 @@
   position: fixed !important;
   top: 136px;
   right: 105px;
+
+  &.has-subscription-top-bar {
+    top: 184px
+  }
 }
