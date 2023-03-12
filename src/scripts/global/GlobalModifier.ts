@@ -34,7 +34,8 @@ export default class GlobalModifier {
     const subscriptionTopbarClass = $(gcSelectors.csgoHeader.subscriptionTopBar).length > 0 ? 'has-subscription-top-bar' : ''
     const $container = $('<div>', {
       id: containerId,
-      class: `${gcSelectors.extension.appContainer.cleanCSSSelector()} ${subscriptionTopbarClass}`
+      class: `${gcSelectors.extension.appContainer.cleanCSSSelector()} ${subscriptionTopbarClass}`,
+      title: 'KDR'
     })
 
     const $containerInDOM = $globalNavbar.find(`#${containerId}`)
