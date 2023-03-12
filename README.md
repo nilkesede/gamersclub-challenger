@@ -80,7 +80,7 @@
 
 
 ### Funcionalidades Legadas
-* Filtre de lobbies pelo nome dos jogadores `(Filtro Implementado pela GC)`
+* ~~Filtre de lobbies pelo nome dos jogadores~~ `(Filtro Implementado pela GC)`
 
 # 💻 Dev
 
