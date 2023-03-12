@@ -54,6 +54,13 @@ if(process.env.NODE_ENV === 'development'){
     chunks: ['chunk-vendors', 'chunk-common'],
     template: 'src/development/mocks/pre-match.html',
   }
+
+  config.pages.devPicksAndBans = {
+    title: 'devPicksAndBans',
+    entry: 'src/development/apps/content/picksAndBans.js',
+    chunks: ['chunk-vendors', 'chunk-common'],
+    template: 'src/development/mocks/picks-and-bans.mock.html',
+  }
 }
 
 module.exports = config;

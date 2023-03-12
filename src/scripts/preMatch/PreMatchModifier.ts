@@ -19,7 +19,7 @@ export default class PreMatchModifier {
 
   startPreMatchInterval(){
     this.preMatchIntervalHolder = setInterval(this.checkPreMatch.bind(this), 300)
-    Logger.debug('[PreMatchModifier] startPreMatchInterval', this.preMatchIntervalHolder)
+    Logger.debug('[PreMatchModifier] ⏲️ startPreMatchInterval', this.preMatchIntervalHolder)
   }
 
   checkPreMatch(){
@@ -35,7 +35,7 @@ export default class PreMatchModifier {
           this.reactToLobby(node)
         })
 
-        Logger.debug('[PreMatchModifier] clearInterval', this.preMatchIntervalHolder)
+        Logger.debug('[PreMatchModifier] ⏲️ clearInterval', this.preMatchIntervalHolder)
         clearInterval(this.preMatchIntervalHolder)
         this.preMatchIntervalHolder = undefined
       }
@@ -72,6 +72,7 @@ export default class PreMatchModifier {
   reactWithAutoReady(){
     if(BrowserStorage.settings.options?.enableAutoReady){
       const $button = $(gcSelectors.preMatchModal.readyButton.absolute)
+      Logger.debug('[PreMatchModifier] 🆚 Found Ready Button', $button.length)
       const doneClass = gcSelectors.extension.preMatchModal.readyButton.autoReadyDone.cleanCSSSelector()
       if($button?.length && !$button.prop('disabled') && !$button.hasClass(doneClass)){
         const gccLogoContainerId = 'gcc-ready-logo-container'

@@ -17,5 +17,5 @@ const gccLogger = Logger.createDefaultHandler({
 });
 
 Logger.useDefaults()
-Logger.setLevel(process.env.NODE_ENV === 'development' ? Logger.DEBUG : Logger.DEBUG)
+Logger.setLevel(process.env.NODE_ENV === 'development' ? Logger.DEBUG : Logger.ERROR)
 Logger.setHandler(gccLogger)

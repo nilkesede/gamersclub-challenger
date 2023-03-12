@@ -10,6 +10,6 @@ import GlobalModifier from '../../scripts/global/GlobalModifier'
 // ===
 // Run
 // ===
-GCChallengerContentRunner.run(undefined, true).then(() => {
+GCChallengerContentRunner.run('GLOBAL_SCRIPTS', true).then(() => {
   new GlobalModifier()
 })

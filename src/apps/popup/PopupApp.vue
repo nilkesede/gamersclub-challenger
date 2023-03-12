@@ -43,6 +43,7 @@ export default class KDR extends Vue {
     const enableNameFilter = ref(typeof options?.enableNameFilter !== 'undefined' ? options.enableNameFilter : true)
     const enable3DGCCardEffect = ref(typeof options?.enable3DGCCardEffect !== 'undefined' ? options.enable3DGCCardEffect : true)
     const enablePlayerProgress = ref(typeof options?.enablePlayerProgress !== 'undefined' ? options.enablePlayerProgress : true)
+    const enableAutoReady = ref(typeof options?.enableAutoReady !== 'undefined' ? options.enableAutoReady : true)
 
     return {
       i18n,
@@ -53,7 +54,8 @@ export default class KDR extends Vue {
         { value: enableKDRFilter, name: 'enableKDRFilter'},
         { value: enableNameFilter, name: 'enableNameFilter'},
         { value: enable3DGCCardEffect, name: 'enable3DGCCardEffect'},
-        { value: enablePlayerProgress, name: 'enablePlayerProgress'}
+        { value: enablePlayerProgress, name: 'enablePlayerProgress'},
+        { value: enableAutoReady, name: 'enableAutoReady'}
       ]
     }
   }

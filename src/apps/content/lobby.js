@@ -21,5 +21,5 @@ GCChallengerContentRunner.run('Lobby').then(() => {
   new FiltersModifier()
   new MyLobbyModifier()
   new ChallengeListModifier()
-  // new PreMatchModifier()
+  new PreMatchModifier()
 })

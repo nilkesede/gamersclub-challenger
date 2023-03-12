@@ -1,14 +1,17 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-case-declarations */
 
-let missingElements = []
-let foundElements = []
+import Logger from "js-logger"
+import $ from 'jquery'
 
-function checkGCSelectors(selectors, parentKey = '') {
+let missingGCCElements = []
+let foundGCCElements = []
+
+function checkSelectors(selectors, parentKey = '') {
   for (const key in selectors) {
     switch (typeof selectors[key]) {
       case 'object':
-        checkGCSelectors(selectors[key], parentKey ? `${parentKey}.${key}` : key)
+        checkSelectors(selectors[key], parentKey ? `${parentKey}.${key}` : key)
         break;
       case 'string':
         const $element = $(selectors[key])
@@ -19,11 +22,29 @@ function checkGCSelectors(selectors, parentKey = '') {
           element: $element
         }
 
-        if ($element.length > 0) {
-          foundElements.push(result)
+        if ($element?.length > 0) {
+          foundGCCElements.push(result)
         } else {
-          missingElements.push(result)
+          missingGCCElements.push(result)
         }
     }
+  }
+}
+
+/**
+ * @example const { missing, found } = checkGCSelectors(window.gcChallenger.gc.selectors.lobbies)
+ */
+export default function checkGCSelectors(selectors, parentKey = '') {
+  missingGCCElements = []
+  foundGCCElements = []
+
+  checkSelectors(selectors, parentKey)
+
+  Logger.debug('🩺 [checkGCSelectors] 🟢 foundElements', foundGCCElements.length, foundGCCElements)
+  Logger.debug('🩺 [checkGCSelectors] 🟡 missingElements', missingGCCElements.length, missingGCCElements)
+
+  return {
+    found: foundGCCElements,
+    missing: missingGCCElements
   }
 }
