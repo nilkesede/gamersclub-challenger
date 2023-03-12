@@ -10,7 +10,7 @@ declare global {
     userId: number | string,
     localStorage: any,
     browser: any,
-    gcc?: any
+    gcChallenger?: any
   }
 
   interface String {
