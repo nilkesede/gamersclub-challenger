@@ -178,13 +178,15 @@ export default GCCMarkComponent
   filter: grayscale(100%);
   margin-left: 2px;
 
-  &--selected {
-    cursor: help;
+  &:hover {
+    opacity: 0.8;
+    filter: brightness(70%);
   }
 
-  &--selected, &:hover {
+  &--selected {
+    cursor: help;
     opacity: 1;
-    filter: brightness(100%);
+    filter: brightness(100%) !important;
   }
 }
 
