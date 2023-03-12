@@ -69,7 +69,7 @@
 * Desafie automaticamente lobbies se baseando nos filtros
 * Fixe lobbies para não perder de vista
 * 🆕 Acompanhe seu desenpenho com a barra de progresso [ NOVO ]
-* 🆕 Veja seu KDR e estatísticas sem precisar entrar no Perfil
+* 🆕 Veja seu KDR e estatísticas sem precisar entrar no Perfil [ NOVO ]
 * 🆕 Nunca mais perca uma partida com o Ready automático [ NOVO ]
 * GC Cards com resumo do jogador
   + Acesse rapidamente as redes sociais do jogador
