@@ -4,7 +4,7 @@
 <br />
 
 <h1 style="text-align: center">GamersClub Challenger</h1>
-<p>Extensão para navegadores com melhorias para os desafios de lobbies na Gamersclub.</p>
+<p>Extensão para navegadores com melhorias na Gamersclub.</p>
 
 ---
 <br />
@@ -43,18 +43,18 @@
 <br />
 
 ## 💚 Apoie este projeto
-<div style="background: white;">
-  <a href="https://nubank.com.br/pagar/2umiz/ZVbnZJFucY" style="display: inline-block; vertical-align: top;  text-align: center; float: left;">
+<div style="background: white; display: flex; align-items: center; justify-content: center;">
+  <a href="https://nubank.com.br/pagar/2umiz/ZVbnZJFucY" style="display: inline-block; vertical-align: top;  text-align: center;">
     <img src="https://user-images.githubusercontent.com/2482989/125602525-9ab6c60a-1938-4008-92a8-390dfd26504a.png" height="100" width="200" style="padding-right: 5px;" />
     <p>carloshpds@gmail.com</p>
   </a>
 
-  <a href="https://www.paypal.com/donate?hosted_button_id=4MFUYEEFXNV5C" target="_blank" style="display: inline-block; vertical-align: middle;text-align: center; float: left;">
+  <a href="https://www.paypal.com/donate?hosted_button_id=4MFUYEEFXNV5C" target="_blank" style="display: inline-block; vertical-align: middle;text-align: center;">
     <img src="https://user-images.githubusercontent.com/2482989/125606613-ed7a312f-ad8e-4154-845d-67d3be5f4232.png" height="100" width="100" style="padding-right: 5px;" />
     <p>Paypal</p>
   </a>
 
-  <a href="https://ko-fi.com/carloshpds" style="display: inline-block; vertical-align: middle; text-align: center;float: left;">
+  <a href="https://ko-fi.com/carloshpds" style="display: inline-block; vertical-align: middle; text-align: center;">
     <img src="https://user-images.githubusercontent.com/2482989/125605889-2ecb2cce-38c8-4855-9397-fd13259e727d.png" height="100" width="100" style="padding-right: 5px;" />
     <p>Ko-fi</p>
   </a>
