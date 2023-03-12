@@ -35,7 +35,7 @@ export default class PreMatchModifier {
           this.reactToLobby(node)
         })
 
-        Logger.debug('[PreMatchModifier] clearInterval', this.preMatchIntervalHolder)
+        Logger.debug('[PreMatchModifier] ⏲️ clearInterval', this.preMatchIntervalHolder)
         clearInterval(this.preMatchIntervalHolder)
         this.preMatchIntervalHolder = undefined
       }
