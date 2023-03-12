@@ -31,6 +31,9 @@ function checkSelectors(selectors, parentKey = '') {
   }
 }
 
+/**
+ * @example const { missing, found } = checkGCSelectors(window.gcChallenger.gc.selectors.lobbies)
+ */
 export default function checkGCSelectors(selectors, parentKey = '') {
   missingGCCElements = []
   foundGCCElements = []
