@@ -35,7 +35,7 @@
           <GCCLogo />
         </span>
         <span v-if="value !== lastMatch.ratingPlayer && value !== gcLevel.minRating"></span>
-        <span v-if="value === gcLevel.minRating"></span>
+        <span v-if="value === gcLevel.minRating"><!-- Fake dot --></span>
       </template>
       <template v-slot:mark="{ value }">
         <div v-if="value === previousGCLevel.maxRating"
@@ -71,7 +71,7 @@
         <div v-if="value === stats.playerInfo.rating && index === 2" class="custom-tooltip gcc-player-rating">
           <span class="gcc-player-rating__value" :title="i18n.getMessage('playerProgress__currentRating')">{{ value }}</span>
         </div>
-        <div v-if="value === ratingBeforeLastMatch && lastMatch.ratingDiff !== 0 && ratingBeforeLastMatch !== stats.playerInfo.rating"
+        <div v-if="lastMatch && index === 1"
           class="custom-tooltip"
           :title="ratingDiffTitle"
         >
@@ -79,6 +79,7 @@
             class="rating-diff"
             :class="{
               'rating-diff--win': lastMatch.ratingDiff > 0,
+              'rating-diff--draw': lastMatch.ratingDiff === 0,
               'rating-diff--loss': lastMatch.ratingDiff < 0,
             }">
             <span v-if="lastMatch.ratingDiff > 0" class="rating-diff__win-prefix">+</span>

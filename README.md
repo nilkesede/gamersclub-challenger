@@ -4,7 +4,7 @@
 <br />
 
 <h1 style="text-align: center">GamersClub Challenger</h1>
-<p>Extensão para navegadores com melhorias para os desafios de lobbies na Gamersclub.</p>
+<p>Extensão para navegadores com melhorias na Gamersclub.</p>
 
 ---
 <br />
@@ -42,9 +42,9 @@
 
 <br />
 
-## Apoie este projeto
-<div style="background: white;">
-  <a href="https://nubank.com.br/pagar/2umiz/ZVbnZJFucY" style="display: inline-block; vertical-align: top;  text-align: center">
+## 💚 Apoie este projeto
+<div style="background: white; display: flex; align-items: center; justify-content: center;">
+  <a href="https://nubank.com.br/pagar/2umiz/ZVbnZJFucY" style="display: inline-block; vertical-align: top;  text-align: center;">
     <img src="https://user-images.githubusercontent.com/2482989/125602525-9ab6c60a-1938-4008-92a8-390dfd26504a.png" height="100" width="200" style="padding-right: 5px;" />
     <p>carloshpds@gmail.com</p>
   </a>
@@ -54,29 +54,34 @@
     <p>Paypal</p>
   </a>
 
-  <a href="https://ko-fi.com/carloshpds" style="display: inline-block; vertical-align: middle; text-align: center">
+  <a href="https://ko-fi.com/carloshpds" style="display: inline-block; vertical-align: middle; text-align: center;">
     <img src="https://user-images.githubusercontent.com/2482989/125605889-2ecb2cce-38c8-4855-9397-fd13259e727d.png" height="100" width="100" style="padding-right: 5px;" />
     <p>Ko-fi</p>
   </a>
 </div>
 
-<br />
+<br style="clear: both" />
 
 ## 🔥 Funcionalidades
-[Documentação e Tutoriais](https://github.com/carloshpds/gamersclub-challenger/discussions/categories/funcionalidades-e-tutoriais)
-* Exibe KDR dos jogadores de todas as lobbies
-* Filtro de lobbies pelo KDR dos jogadores
-* Filtro de lobbies pelo nome dos jogadores
-* Desafio automático de lobbies se baseando nos filtros existentes
-* Lobbies Fixadas
+🗂️ [Documentação e Tutoriais Detalhados](https://github.com/carloshpds/gamersclub-challenger/discussions/categories/funcionalidades-e-tutoriais)
+* Veja o KDR dos jogadores de todas as lobbies
+* Filtre de lobbies pelo KDR dos jogadores
+* Desafie automaticamente lobbies se baseando nos filtros
+* Fixe lobbies para não perder de vista
+* 🆕 Veja o KDR e estatísticas dos jogadores na dos vetos dos mapas [ NOVO ]
+* 🆕 Acompanhe seu desenpenho com a barra de progresso [ NOVO ]
+* 🆕 Veja seu KDR e estatísticas sem precisar entrar no Perfil [ NOVO ]
+* 🆕 Nunca mais perca uma partida com o Ready automático [ NOVO ]
 * GC Cards com resumo do jogador
-  + Redes sociais
-  + Sinalização de punições relacionadas ao jogador
-  + Estatísticas individuais (KDR, ADR, HS%, Clutches, First Kills e Multi Kills)
-  + Estatísticas de vitórias/derrotas por mapa nas últimas 20 partidas
-  + 🆕 Tags [ NOVO ]
+  + Acesse rapidamente as redes sociais do jogador
+  + Veja punições relacionadas ao jogador
+  + Veja estatísticas individuais (KDR, ADR, HS%, Clutches, First Kills e Multi Kills)
+  + Veja Estatísticas de vitórias/derrotas por mapa nas últimas 20 partidas
+  + 🆕 Marque os jogadores com tags para se lembrar deles no futuro [ NOVO ]
 
 
+### Funcionalidades Legadas
+* ~~Filtre de lobbies pelo nome dos jogadores~~ `(Filtro Implementado pela GC)`
 
 # 💻 Dev
 
