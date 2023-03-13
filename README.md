@@ -64,10 +64,11 @@
 
 ## 🔥 Funcionalidades
 🗂️ [Documentação e Tutoriais Detalhados](https://github.com/carloshpds/gamersclub-challenger/discussions/categories/funcionalidades-e-tutoriais)
-* Exiba KDR dos jogadores de todas as lobbies
+* Veja o KDR dos jogadores de todas as lobbies
 * Filtre de lobbies pelo KDR dos jogadores
 * Desafie automaticamente lobbies se baseando nos filtros
 * Fixe lobbies para não perder de vista
+* 🆕 Veja o KDR e estatísticas dos jogadores na dos vetos dos mapas [ NOVO ]
 * 🆕 Acompanhe seu desenpenho com a barra de progresso [ NOVO ]
 * 🆕 Veja seu KDR e estatísticas sem precisar entrar no Perfil [ NOVO ]
 * 🆕 Nunca mais perca uma partida com o Ready automático [ NOVO ]
