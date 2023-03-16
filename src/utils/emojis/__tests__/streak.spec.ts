@@ -1,4 +1,5 @@
-import { getLossStreakEmoji, getWinStreakEmoji, lossStreakMap, winStreakMap } from "../streak"
+import { BooleanNumber } from "@/scripts/lobby/domain/BooleanNumber"
+import { calcStreakNumber, getLossStreakEmoji, getWinStreakEmoji, lossStreakMap, winStreakMap } from "../streak"
 
 
 describe("streak", () => {
@@ -38,6 +39,40 @@ describe("streak", () => {
 
     test("less than min number", () => {
       expect(getLossStreakEmoji(-1)).toEqual(lossStreakMap[1])
+    })
+  })
+
+  describe("calcStreakNumber", () => {
+    test("ease win streak", () => {
+      expect(calcStreakNumber(1, [1, 1, 1, 1])).toBe(4)
+    })
+
+    test("win streak after one loss", () => {
+      expect(calcStreakNumber(1, [0, 1, 1, 1].reverse() as BooleanNumber[])).toBe(3)
+    })
+
+    test("win streak after loss streak", () => {
+      expect(calcStreakNumber(1, [0, 0, 1, 1, 1].reverse() as BooleanNumber[])).toBe(3)
+    })
+
+    test("win streak after one win and loss streak", () => {
+      expect(calcStreakNumber(1, [1, 0, 0, 1, 1].reverse() as BooleanNumber[])).toBe(2)
+    })
+
+    test("ease loss streak", () => {
+      expect(calcStreakNumber(0, [0, 0, 0, 0])).toBe(4)
+    })
+
+    test("loss streak after one win", () => {
+      expect(calcStreakNumber(0, [1, 0, 0, 0].reverse() as BooleanNumber[])).toBe(3)
+    })
+
+    test("loss streak after win streak", () => {
+      expect(calcStreakNumber(0, [1, 1, 0, 0].reverse() as BooleanNumber[])).toBe(2)
+    })
+
+    test("loss streak after one loss and win streak", () => {
+      expect(calcStreakNumber(0, [0, 1, 1, 0, 0].reverse() as BooleanNumber[])).toBe(2)
     })
   })
 })
