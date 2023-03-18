@@ -100,7 +100,7 @@ import { userAPI } from "../utils/gcAPI";
 import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
-import { getWinStreakEmoji, getLossStreakEmoji } from '@/utils/emojis/streak'
+import { getWinStreakEmoji, getLossStreakEmoji, calcStreakNumber } from '@/utils/emojis/streak'
 import { staticEvents } from "@/utils/analytics/events";
 import { gcUrls } from "@/utils/gcUrls";
 import { getCleanMapName } from "@/utils/StringUtils";
@@ -198,14 +198,8 @@ const GCCPlayerProgressComponent = defineComponent({
       let streak = 0
       if(this.lastMatch){
         const lastMatchWinValue = this.lastMatch.win
-        streak = 1
         const reversedMatches = this.stats.lastMatches.map((match) => match.win).reverse()
-
-        for(let i = 0; i < reversedMatches.length - 1; i++){
-          const isAMatchWin = reversedMatches[i]
-          if(isAMatchWin !== lastMatchWinValue) break
-          streak++
-        }
+        streak = calcStreakNumber(lastMatchWinValue, reversedMatches)
       }
 
       return streak

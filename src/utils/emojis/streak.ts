@@ -1,3 +1,4 @@
+import { BooleanNumber } from "@/scripts/lobby/domain/BooleanNumber"
 
 export const winStreakMap = {
   1: '😌',
@@ -52,4 +53,17 @@ export const getWinStreakEmoji = (streak: number) => {
 
 export const getLossStreakEmoji = (streak: number) => {
   return getEmoji(streak, lossStreakMap)
+}
+
+
+export const calcStreakNumber = (lastMatchWinValue: BooleanNumber, matches: Array<BooleanNumber>): number => {
+  let streak = 0
+
+  for(let i = 0; i < matches.length; i++){
+    const isAMatchWin = matches[i]
+    if(isAMatchWin !== lastMatchWinValue) break
+    streak++
+  }
+
+  return streak
 }
