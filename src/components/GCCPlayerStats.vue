@@ -251,14 +251,14 @@ import VueSlider from "vue-slider-component";
 import analytics from "@/utils/analytics";
 import Logger from "js-logger";
 import $ from "jquery";
-import { gcSelectors } from "@/utils/gcSelectors";
+import { gcSelectors } from "@/utils/gc/selectors";
 import { socialMedia } from "../scripts/lobby/domain/socialMedia";
 import MapStat from "../scripts/lobby/domain/MapStat";
 import BrowserStorage from "@/utils/storage";
 import GCCMarks from './GCCMarks.vue'
 import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch";
 import { percentage } from "../utils/magicNumbers";
-import { userAPI } from "../utils/gc/gcAPI";
+import { userAPI } from "../utils/gc/api";
 import GCCPlayerLevel from "./GCCPlayerLevel.vue";
 
 

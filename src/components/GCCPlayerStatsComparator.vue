@@ -26,7 +26,7 @@ import VueSlider from 'vue-slider-component'
 import analytics from '@/utils/analytics'
 import Logger from 'js-logger'
 import $ from 'jquery'
-import { gcSelectors } from '@/utils/gcSelectors'
+import { gcSelectors } from '@/utils/gc/selectors'
 import GCPlayerStats from './GCCPlayerStats.vue'
 import serializer from '@/scripts/lobby/serializer'
 

@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Ref, ref, watch, defineComponent } from 'vue'
-import { gcSelectors } from '../utils/gcSelectors'
+import { gcSelectors } from '../utils/gc/selectors'
 import { cleanSelector } from '@/utils/StringUtils'
 import serializer from '@/scripts/lobby/serializer'
 import $ from 'jquery'

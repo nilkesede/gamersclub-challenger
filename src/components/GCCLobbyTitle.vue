@@ -8,7 +8,7 @@ import { createApp } from "@vue/runtime-dom";
 import { newTippy } from "@/utils/tippy";
 import GCCPlayerStatsComparator from "./GCCPlayerStatsComparator.vue";
 import $ from "jquery";
-import { gcSelectors } from "@/utils/gcSelectors";
+import { gcSelectors } from "@/utils/gc/selectors";
 import serializer from "@/scripts/lobby/serializer";
 
 @Options({
