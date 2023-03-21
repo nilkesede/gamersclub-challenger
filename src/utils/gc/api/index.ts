@@ -1,7 +1,7 @@
 import { GCInitialPlayerStats } from "@/scripts/lobby/domain/GCInitialPlayerStats";
 import { GCPlayerStatsHistory } from "@/scripts/lobby/domain/GCPlayerStatsHistory";
-import analytics from "./analytics";
-import { gcUrls } from "./gcUrls";
+import analytics from "../../analytics";
+import { gcUrls } from "../../gcUrls";
 
 
 export const userAPI = {

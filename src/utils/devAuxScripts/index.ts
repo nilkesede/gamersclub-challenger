@@ -3,7 +3,7 @@ import logger from 'js-logger'
 import serializer from '../../scripts/lobby/serializer'
 import { gcSelectors } from '../gcSelectors'
 import { gcLevelsMap } from '../gc/levels'
-import { userAPI } from '../gcAPI'
+import { userAPI } from '../gc/api'
 import { gcAssetsUrls, gcUrls } from '../gcUrls'
 import checkGCSelectors from './checkGCSelectors'
 

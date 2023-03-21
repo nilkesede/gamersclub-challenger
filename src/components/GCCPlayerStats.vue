@@ -258,7 +258,7 @@ import BrowserStorage from "@/utils/storage";
 import GCCMarks from './GCCMarks.vue'
 import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch";
 import { percentage } from "../utils/magicNumbers";
-import { userAPI } from "../utils/gcAPI";
+import { userAPI } from "../utils/gc/gcAPI";
 import GCCPlayerLevel from "./GCCPlayerLevel.vue";
 
 

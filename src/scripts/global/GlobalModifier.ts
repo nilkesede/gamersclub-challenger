@@ -5,9 +5,10 @@ import KDR from '../../components/KDR.vue'
 import { createApp } from 'vue'
 import BrowserStorage from '../../utils/storage'
 import serializer from '../lobby/serializer'
-import { userAPI } from '@/utils/gcAPI'
+import { userAPI } from '@/utils/gc/api'
 import { GCInitialPlayerStats } from '../lobby/domain/GCInitialPlayerStats'
 import { GCPlayerStatsHistory } from '../lobby/domain/GCPlayerStatsHistory'
+import analytics from '@/utils/analytics'
 
 export default class GlobalModifier {
   loggedPlayer
@@ -21,6 +22,7 @@ export default class GlobalModifier {
     const { id: playerId } = this.loggedPlayer
     userAPI.boxInitialMatches(playerId).then((data) => {
       this.insertPlayerProgress(data)
+      analytics.set('gcNickname', data.playerInfo.nick)
     })
 
     userAPI.boxMatchesHistory(playerId).then((data) => {
