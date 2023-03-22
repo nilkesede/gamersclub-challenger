@@ -14,7 +14,13 @@
         "bug",
         "code",
         "maintenance",
-        "mentoring"
+        "mentoring",
+        "projectManagement",
+        "doc",
+        "ideas",
+        "review",
+        "translation",
+        "test"
       ]
     },
     {
