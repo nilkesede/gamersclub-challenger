@@ -132,9 +132,12 @@ npm run lint
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://github.com/carloshpds"><img src="https://avatars0.githubusercontent.com/u/2482989?s=100" width="100px;" alt=""/><br /><sub><b>Carlos Henrique (C8)</b></sub></a><br /><a href="https://github.com/carloshpds/gamersclub-challenger/issues?q=author%3Acarloshpds" title="Bug reports">🐛</a> <a href="https://github.com/carloshpds/gamersclub-challenger/commits?author=carloshpds" title="Code">💻</a> <a href="#maintenance-carloshpds" title="Maintenance">🚧</a> <a href="#mentoring-carloshpds" title="Mentoring">🧑‍🏫</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/carloshpds"><img src="https://avatars0.githubusercontent.com/u/2482989?s=100" width="100px;" alt="Carlos Henrique (C8)"/><br /><sub><b>Carlos Henrique (C8)</b></sub></a><br /><a href="https://github.com/carloshpds/gamersclub-challenger/issues?q=author%3Acarloshpds" title="Bug reports">🐛</a> <a href="https://github.com/carloshpds/gamersclub-challenger/commits?author=carloshpds" title="Code">💻</a> <a href="#maintenance-carloshpds" title="Maintenance">🚧</a> <a href="#mentoring-carloshpds" title="Mentoring">🧑‍🏫</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.islemos.com"><img src="https://avatars.githubusercontent.com/u/128564220?v=4?s=100" width="100px;" alt="Israel Lemos"/><br /><sub><b>Israel Lemos</b></sub></a><br /><a href="#design-islemos" title="Design">🎨</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
