@@ -6,7 +6,7 @@ import { createApp } from 'vue'
 import BrowserStorage from '../../utils/storage'
 import serializer from '../lobby/serializer'
 import { userAPI } from '@/utils/gc/api'
-import { GCInitialPlayerStats } from '../lobby/domain/GCInitialPlayerStats'
+import { GCInitialPlayerStats } from '../../utils/gc/types/GCInitialPlayerStats'
 import { GCPlayerStatsHistory } from '../lobby/domain/GCPlayerStatsHistory'
 import analytics from '@/utils/analytics'
 

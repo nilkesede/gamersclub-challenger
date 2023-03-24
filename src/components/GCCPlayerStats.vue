@@ -244,9 +244,9 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { GCInitialPlayerStats } from "../scripts/lobby/domain/GCInitialPlayerStats";
+import { GCInitialPlayerStats } from "../utils/gc/types/GCInitialPlayerStats";
 import { gcUrls, gcAssetsUrls } from "../utils/gcUrls";
-import { GCPlayerStatsHistory } from "@/scripts/lobby/domain/GCPlayerStatsHistory";
+import { GCPlayerStatsHistory } from "../utils/gc/types/GCPlayerStatsHistory";
 import VueSlider from "vue-slider-component";
 import analytics from "@/utils/analytics";
 import Logger from "js-logger";
@@ -256,7 +256,7 @@ import { socialMedia } from "../scripts/lobby/domain/socialMedia";
 import MapStat from "../scripts/lobby/domain/MapStat";
 import BrowserStorage from "@/utils/storage";
 import GCCMarks from './GCCMarks.vue'
-import { GCMonthMatch } from "../scripts/lobby/domain/GCMonthMatch";
+import { GCMonthMatch } from "../utils/gc/types/GCMonthMatch";
 import { percentage } from "../utils/magicNumbers";
 import { userAPI } from "../utils/gc/api";
 import GCCPlayerLevel from "./GCCPlayerLevel.vue";

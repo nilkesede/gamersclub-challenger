@@ -1,4 +1,4 @@
-import { GCInitialPlayerStats } from "@/scripts/lobby/domain/GCInitialPlayerStats";
+import { GCInitialPlayerStats } from "@/utils/gc/types/GCInitialPlayerStats";
 import { GCPlayerStatsHistory } from "@/scripts/lobby/domain/GCPlayerStatsHistory";
 import analytics from "../../analytics";
 import { gcUrls } from "../../gcUrls";

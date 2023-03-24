@@ -96,7 +96,7 @@
 import { defineComponent, ref } from "vue";
 import { gcLevelsMap } from '../utils/gc/levels'
 import analytics from "@/utils/analytics";
-import { userAPI } from "../utils/gcAPI";
+import { userAPI } from "../utils/gc/api";
 import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
