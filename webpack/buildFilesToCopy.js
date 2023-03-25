@@ -5,7 +5,7 @@ const transformManifestDevelopment = require("./transformManifest.development")
 module.exports = function buildFilesToCopy(){
   let filesToCopy = [
     {
-      from: 'src/_locales',
+      from: 'src/locales',
       to: '_locales'
     },
     {
