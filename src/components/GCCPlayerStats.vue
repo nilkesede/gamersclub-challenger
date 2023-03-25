@@ -257,7 +257,7 @@ import MapStat from "../scripts/lobby/domain/MapStat";
 import BrowserStorage from "@/utils/storage";
 import GCCMarks from './GCCMarks.vue'
 import { GCMonthMatch } from "../utils/gc/types/GCMonthMatch";
-import { percentage } from "../utils/magicNumbers";
+import { percentage } from "@/utils/gc/api/resources/constants/magicNumbers";
 import { userAPI } from "../utils/gc/api";
 import GCCPlayerLevel from "./GCCPlayerLevel.vue";
 

@@ -27,7 +27,7 @@ import { Options, Vue } from "vue-class-component";
 import { Ref, ref, watch } from "vue";
 import { gcSelectors } from "../utils/gc/selectors";
 import { cleanSelector } from "@/utils/StringUtils";
-import { FULL_LOBBY_PLAYERS_NUMBER } from "@/utils/magicNumbers";
+import { FULL_LOBBY_PLAYERS_NUMBER } from "@/utils/gc/api/resources/constants/magicNumbers";
 import serializer from "@/scripts/lobby/serializer";
 import $ from "jquery";
 import Logger from "js-logger";

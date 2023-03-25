@@ -4,7 +4,7 @@ import serializer from '../../scripts/lobby/serializer'
 import { gcSelectors } from '../gc/selectors'
 import { gcLevelsMap } from '../gc/levels'
 import { userAPI } from '../gc/api'
-import { gcAssetsUrls, gcUrls } from '../gcUrls'
+import { gcAssetsUrls, gcUrls } from '../gc/api/resources/urls/gcUrls'
 import checkGCSelectors from './checkGCSelectors'
 
 window.gcChallenger = {

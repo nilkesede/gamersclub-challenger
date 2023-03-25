@@ -2,15 +2,13 @@
 import { cleanSelector } from '@/utils/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
-import { createApp, reactive, ref } from 'vue'
+import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
 import GCChallengerComponent from '../../components/Challenger.vue'
 import { gcSelectors } from '../../utils/gc/selectors'
 import serializer from './serializer'
-import lobbyFilter from './lobbyFilter'
-import Logger from 'js-logger'
 import LobbyPlayer from './domain/LobbyPlayer'
-import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/magicNumbers'
+import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/gc/api/resources/constants/magicNumbers'
 import BrowserStorage from '../../utils/storage'
 
 export default class MyLobbyModifier {
