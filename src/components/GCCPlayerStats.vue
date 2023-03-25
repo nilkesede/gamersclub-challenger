@@ -248,16 +248,16 @@ import { GCInitialPlayerStats } from "@/shared/gc/types/GCInitialPlayerStats";
 import { gcUrls, gcAssetsUrls } from "@/shared/gc/api/resources/urls";
 import { GCPlayerStatsHistory } from "@/shared/gc/types/GCPlayerStatsHistory";
 import VueSlider from "vue-slider-component";
-import analytics from "@/shared/analytics";
+import analytics from "@/shared/tools/analytics";
 import Logger from "js-logger";
 import $ from "jquery";
-import { gcSelectors } from "@/shared/gc/selectors";
+import { gcSelectors } from "@/shared/extras/gc/selectors";
 import { socialMedia } from "@/apps/contentScripts/lobby/types/socialMedia";
 import MapStat from "@/apps/contentScripts/lobby/types/MapStat";
 import BrowserStorage from "@/shared/storage";
 import GCCMarks from './GCCMarks.vue'
 import { GCMonthMatch } from "@/shared/gc/types/GCMonthMatch";
-import { percentage } from "@/shared/gc/api/resources/constants/magicNumbers";
+import { percentage } from "@/shared/extras/gc/api/resources/constants/magicNumbers";
 import { userAPI } from "@/shared/gc/api";
 import GCCPlayerLevel from "./GCCPlayerLevel.vue";
 

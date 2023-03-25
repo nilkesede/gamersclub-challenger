@@ -95,13 +95,13 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { gcLevelsMap } from '@/shared/gc/levels'
-import analytics from "@/shared/analytics";
+import analytics from "@/shared/tools/analytics";
 import { userAPI } from "@/shared/gc/api";
 import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
 import { getWinStreakEmoji, getLossStreakEmoji, calcStreakNumber } from '@/shared/emojis/streak'
-import { staticEvents } from "@/shared/analytics/events";
+import { staticEvents } from "@/shared/tools/analytics/events";
 import { gcUrls } from "@/shared/gc/api/resources/urls";
 import { getCleanMapName } from "@/shared/StringUtils";
 

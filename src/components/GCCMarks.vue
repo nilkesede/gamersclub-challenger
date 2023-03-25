@@ -32,8 +32,8 @@ import { ref } from "vue";
 import { defineComponent } from "vue";
 import BrowserStorage from '@/shared/storage'
 import { GCCMarkEmojiMap } from '@/shared/emojis/GCCMarkEmojiMap'
-import AnalyticsManager from "@/shared/analytics";
-import { dynamicEvents } from "@/shared/analytics/events";
+import AnalyticsManager from "@/shared/tools/analytics";
+import { dynamicEvents } from "@/shared/tools/analytics/events";
 
 const availableMarks = {
   'friendly': false,

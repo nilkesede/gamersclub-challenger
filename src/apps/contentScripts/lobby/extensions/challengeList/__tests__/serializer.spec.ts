@@ -1,7 +1,7 @@
 import { onlyOnePlayer } from '../__mocks__/challengeList.mock';
 import $ from 'jquery'
 import serializer from '@/apps/contentScripts/lobby/serializer'
-import { gcSelectors } from '@/shared/gc/selectors';
+import { gcSelectors } from '@/shared/extras/gc/selectors';
 
 describe('serializer', () => {
 

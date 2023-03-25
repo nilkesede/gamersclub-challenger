@@ -1,5 +1,5 @@
-import { GCCFilters } from "@/scripts/lobby/domain/gccFilters";
-import { GCCMark } from "@/scripts/lobby/domain/GCCMark";
+import { GCCFilters } from "@/apps/contentScripts/lobby/types/gccFilters";
+import { GCCMark } from "@/apps/contentScripts/lobby/types/GCCMark";
 
 export interface GCCOptions {
   showLobbiesKDR: boolean,

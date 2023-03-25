@@ -1,11 +1,14 @@
-import '../../plugins/window.setup'
+import '../plugins/window.setup'
 import logger from 'js-logger'
+
 import serializer from '@/apps/contentScripts/lobby/serializer'
-import { gcSelectors } from '../gc/selectors'
-import { gcLevelsMap } from '../gc/levels'
-import { userAPI } from '../gc/api'
-import { gcAssetsUrls, gcUrls } from '../gc/api/resources/urls'
-import checkGCSelectors from './checkGCSelectors'
+
+import { gcSelectors } from '@/shared/extras/gc/selectors'
+import { gcLevelsMap } from '@/shared/extras/gc/levels'
+import { userAPI } from '@/shared/extras/gc/api'
+import { gcAssetsUrls, gcUrls } from '@/shared/extras/gc/api/resources/urls'
+
+import checkGCSelectors from '@/shared/tools/health/checkGCSelectors'
 
 window.gcChallenger = {
   gc: {

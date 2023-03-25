@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { gcSelectors } from "./gc/selectors"
+import { gcSelectors } from "@/shared/extras/gc/selectors"
 
 class GamersClubBooster {
   static EXTENSION_ID = 'dahnmmlhchpmmlgebpkpaofbefjdlpin'

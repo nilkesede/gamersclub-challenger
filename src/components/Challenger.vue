@@ -25,14 +25,14 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { Ref, ref, watch } from "vue";
-import { gcSelectors } from "@/shared/gc/selectors";
-import { cleanSelector } from "@/shared/StringUtils";
-import { FULL_LOBBY_PLAYERS_NUMBER } from "@/shared/gc/api/resources/constants/magicNumbers";
+import { gcSelectors } from "@/shared/extras/gc/selectors";
+import { cleanSelector } from "@/shared/plugins/StringUtils";
+import { FULL_LOBBY_PLAYERS_NUMBER } from "@/shared/extras/gc/api/resources/constants/magicNumbers";
 import serializer from "@/apps/contentScripts/lobby/serializer";
 import $ from "jquery";
 import Logger from "js-logger";
-import Analytics from "@/shared/analytics";
-import { staticEvents } from "@/shared/analytics/events";
+import Analytics from "@/shared/tools/analytics";
+import { staticEvents } from "@/shared/tools/analytics/events";
 
 let isEnabled: Ref<boolean>;
 

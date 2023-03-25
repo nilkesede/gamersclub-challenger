@@ -1,14 +1,14 @@
 import $ from 'jquery'
-import { gcSelectors } from '@/shared/gc/selectors'
+import { gcSelectors } from '@/shared/extras/gc/selectors'
 import GCCPlayerProgress from '@/components/GCCPlayerProgress.vue'
 import KDR from '@/components/KDR.vue'
 import { createApp } from 'vue'
-import BrowserStorage from '@/shared/storage'
+import BrowserStorage from '@/shared/tools/storage'
 import serializer from '../lobby/serializer'
 import { userAPI } from '@/shared/gc/api'
 import { GCInitialPlayerStats } from '@/shared/gc/types/GCInitialPlayerStats'
 import { GCPlayerStatsHistory } from '@/shared/gc/types/GCPlayerStatsHistory'
-import analytics from '@/shared/analytics'
+import analytics from '@/shared/tools/analytics'
 
 export default class GlobalModifier {
   loggedPlayer

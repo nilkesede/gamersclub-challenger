@@ -1,5 +1,5 @@
-import { BooleanNumber } from "@/scripts/lobby/domain/BooleanNumber"
-import { calcStreakNumber, getLossStreakEmoji, getWinStreakEmoji, lossStreakMap, winStreakMap } from "../streak"
+import { BooleanNumber } from "@/shared/extras/gc/types/BooleanNumber"
+import { calcStreakNumber, getLossStreakEmoji, getWinStreakEmoji, lossStreakMap, winStreakMap } from ".."
 
 
 describe("streak", () => {

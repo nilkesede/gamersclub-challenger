@@ -1,6 +1,6 @@
-import { GCInitialPlayerStats } from "@/shared/gc/types/GCInitialPlayerStats";
-import { GCPlayerStatsHistory } from "@/shared/gc/types/GCPlayerStatsHistory";
-import analytics from "../../analytics";
+import { GCInitialPlayerStats } from "@/shared/extras/gc/types/GCInitialPlayerStats";
+import { GCPlayerStatsHistory } from "@/shared/extras/gc/types/GCPlayerStatsHistory";
+import analytics from "@/shared/tools/analytics";
 import { gcUrls } from "./resources/urls";
 
 
