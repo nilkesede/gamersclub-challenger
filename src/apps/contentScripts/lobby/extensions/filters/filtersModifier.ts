@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { gcSelectors } from '@/shared/extras/gc/selectors'
+import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
 import { createApp } from 'vue'
 import GCCFiltersBar from '@/components/GCCFiltersBar.vue'
 

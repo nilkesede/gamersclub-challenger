@@ -3,10 +3,10 @@ import logger from 'js-logger'
 
 import serializer from '@/apps/contentScripts/lobby/serializer'
 
-import { gcSelectors } from '@/shared/extras/gc/selectors'
-import { gcLevelsMap } from '@/shared/extras/gc/levels'
-import { userAPI } from '@/shared/extras/gc/api'
-import { gcAssetsUrls, gcUrls } from '@/shared/extras/gc/api/resources/urls'
+import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
+import { gcLevelsMap } from '@/apps/shared/extras/gc/levels'
+import { userAPI } from '@/apps/shared/extras/gc/api'
+import { gcAssetsUrls, gcUrls } from '@/apps/shared/extras/gc/api/resources/urls'
 
 import checkGCSelectors from '@/shared/tools/health/checkGCSelectors'
 

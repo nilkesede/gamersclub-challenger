@@ -9,7 +9,7 @@ import Logger from "js-logger"
 import Analytics from '../analytics'
 import BrowserStorage from '../storage'
 
-import '@/shared/extras/gcChallenger'
+import '@/apps/shared/extras/gcChallenger'
 
 import serializer from '@/apps/contentScripts/lobby/serializer'
 

@@ -1,4 +1,4 @@
-import { BooleanNumber } from "@/shared/extras/gc/types/BooleanNumber"
+import { BooleanNumber } from "@/apps/shared/extras/gc/types/BooleanNumber"
 import { calcStreakNumber, getLossStreakEmoji, getWinStreakEmoji, lossStreakMap, winStreakMap } from ".."
 
 

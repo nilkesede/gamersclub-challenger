@@ -4,9 +4,9 @@ import $ from 'jquery'
 import { domEntityType } from '../../types/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '@/components/KDR.vue'
-import { gcSelectors } from '@/shared/extras/gc/selectors'
+import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
 import serializer from '../../serializer'
-import BrowserStorage from '@/shared/tools/storage'
+import BrowserStorage from '@/apps/shared/tools/storage'
 
 export default class ChallengeListModifier {
 

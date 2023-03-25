@@ -5,11 +5,11 @@ import { domEntityType } from '../../types/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '@/components/KDR.vue'
 import GCChallengerComponent from '@/components/Challenger.vue'
-import { gcSelectors } from '@/shared/extras/gc/selectors'
+import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
 import serializer from '../../serializer'
 import LobbyPlayer from '../../types/LobbyPlayer'
-import { FULL_LOBBY_PLAYERS_NUMBER } from '@/shared/extras/gc/api/resources/constants/magicNumbers'
-import BrowserStorage from '@/shared/tools/storage'
+import { FULL_LOBBY_PLAYERS_NUMBER } from '@/apps/shared/extras/gc/api/resources/constants/magicNumbers'
+import BrowserStorage from '@/apps/shared/tools/storage'
 
 export default class MyLobbyModifier {
 

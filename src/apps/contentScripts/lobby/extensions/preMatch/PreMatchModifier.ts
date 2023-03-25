@@ -3,10 +3,10 @@ import $ from 'jquery'
 import { createApp } from 'vue'
 import KDRComponent from '@/components/KDR.vue'
 import GCCLogo from '@/components/GCCLogo.vue'
-import { gcSelectors } from '@/shared/extras/gc/selectors'
+import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
 import serializer from '../../serializer'
 import Logger from 'js-logger'
-import BrowserStorage from '@/shared/tools/storage'
+import BrowserStorage from '@/apps/shared/tools/storage'
 import LobbyPlayer from '../../types/LobbyPlayer'
 
 export default class PreMatchModifier {

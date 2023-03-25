@@ -1,10 +1,10 @@
 
 import { GCCFilters } from '../../types/gccFilters'
-import { gcSelectors } from '@/shared/extras/gc/selectors'
+import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
 import Serializer from '../../serializer'
 import $ from 'jquery'
 import { cleanSelector } from '@/shared/plugins/string.setup'
-import browserStorage from '@/shared/tools/storage'
+import browserStorage from '@/apps/shared/tools/storage'
 import Logger from 'js-logger'
 
 const KDR_MAX_LIMIT = 2
