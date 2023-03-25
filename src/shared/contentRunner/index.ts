@@ -11,7 +11,7 @@ import BrowserStorage from '../storage'
 
 import '../devAuxScripts'
 
-import serializer from '../../scripts/lobby/serializer'
+import serializer from '@/apps/contentScripts/lobby/serializer'
 
 class GCChallengerContentRunner {
   pageName = ''

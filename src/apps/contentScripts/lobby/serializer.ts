@@ -1,11 +1,11 @@
 import { cleanSelector, getIdByAvatarUrl } from "@/shared/StringUtils"
-import Lobby from "./domain/Lobby"
-import LobbyPlayer from "./domain/LobbyPlayer"
-import { gcSelectors } from "../../shared/gc/selectors"
+import Lobby from "./types/Lobby"
+import LobbyPlayer from "./types/LobbyPlayer"
+import { gcSelectors } from "@/shared/gc/selectors"
 import $ from 'jquery'
-import { playerSelectors } from "./domain/playerSelectors"
+import { playerSelectors } from "./types/playerSelectors"
 import Logger from 'js-logger'
-import LoggedUser from "./domain/LoggedUser"
+import LoggedUser from "./types/LoggedUser"
 
 class Serializer {
   serialize(lobbyNode: any): Partial<Lobby> {

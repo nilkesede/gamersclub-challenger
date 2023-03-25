@@ -4,8 +4,8 @@ import 'tippy.js/themes/light.css';
 
 import GCChallengerContentRunner from '@/shared/contentRunner'
 
-import TeamsModifier from '@/scripts/team/TeamModifier'
-import GlobalModiFier from '@/scripts/global/GlobalModifier'
+import TeamsModifier from '@/apps/contentScripts/team/TeamModifier'
+import GlobalModiFier from '@/apps/contentScripts/global/global.modifier'
 
 // ===
 // Run

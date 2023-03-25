@@ -25,7 +25,7 @@ import { gcUrls } from '@/shared/gc/api/resources/urls'
 import VueSlider from 'vue-slider-component'
 import Logger from 'js-logger'
 import GCPlayerStats from './GCCPlayerStats.vue'
-import serializer from '@/scripts/lobby/serializer'
+import serializer from '@/apps/contentScripts/lobby/serializer'
 
 @Options({
   components: {

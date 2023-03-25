@@ -1,13 +1,13 @@
 // @ts-check
 import $ from 'jquery'
 import { createApp } from 'vue'
-import KDRComponent from '../../components/KDR.vue'
-import GCCLogo from '../../components/GCCLogo.vue'
-import { gcSelectors } from '../../shared/gc/selectors'
-import serializer from '../lobby/serializer'
+import KDRComponent from '@/components/KDR.vue'
+import GCCLogo from '@/components/GCCLogo.vue'
+import { gcSelectors } from '@/shared/gc/selectors'
+import serializer from '../../serializer'
 import Logger from 'js-logger'
-import BrowserStorage from '../../shared/storage'
-import LobbyPlayer from '../lobby/domain/LobbyPlayer'
+import BrowserStorage from '@/shared/storage'
+import LobbyPlayer from '../../types/LobbyPlayer'
 
 export default class PreMatchModifier {
   lobby: any

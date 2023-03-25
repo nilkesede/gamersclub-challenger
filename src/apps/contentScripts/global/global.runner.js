@@ -4,7 +4,7 @@ import 'tippy.js/themes/light.css';
 
 import GCChallengerContentRunner from '@/shared/contentRunner'
 
-import GlobalModifier from '@/scripts/global/GlobalModifier'
+import GlobalModifier from '@/apps/contentScripts/global/global.modifier'
 
 
 // ===

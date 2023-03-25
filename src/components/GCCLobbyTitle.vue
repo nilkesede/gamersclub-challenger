@@ -9,7 +9,7 @@ import { newTippy } from "@/shared/tippy";
 import GCCPlayerStatsComparator from "./GCCPlayerStatsComparator.vue";
 import $ from "jquery";
 import { gcSelectors } from "@/shared/gc/selectors";
-import serializer from "@/scripts/lobby/serializer";
+import serializer from "@/apps/contentScripts/lobby/serializer";
 
 @Options({
   components: {},

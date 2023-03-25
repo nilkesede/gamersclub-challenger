@@ -1,4 +1,4 @@
-import { BooleanNumber } from "./BooleanNumber";
+import { BooleanNumber } from "@/shared/gc/types/BooleanNumber";
 
 export type GCMatchType = "lobby" | "ranked"
 

@@ -1,4 +1,4 @@
-import { BooleanNumber } from "@/scripts/lobby/domain/BooleanNumber"
+import { BooleanNumber } from "@/shared/gc/types/BooleanNumber"
 
 export const winStreakMap = {
   1: '😌',

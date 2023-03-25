@@ -1,4 +1,4 @@
-import { GCCMark } from '@/scripts/lobby/domain/GCCMark'
+import { GCCMark } from '@/apps/contentScripts/lobby/types/GCCMark'
 
 export const GCCMarkEmojiMap: Record<GCCMark, string> = {
   friendly : '😄',

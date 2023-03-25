@@ -1,7 +1,7 @@
 import Logger from "js-logger"
 import { AnalyticsCustomDimention, AnalyticsEvent } from "./types"
 import { customDimentions } from "./dimentions"
-import LoggedUser from '../../scripts/lobby/domain/LoggedUser'
+import LoggedUser from '@/apps/contentScripts/lobby/types/LoggedUser'
 
 class AnalyticsManager {
   trackerName = 'gccAnalytics'

@@ -1,7 +1,7 @@
 
-import { GCCFilters } from './domain/gccFilters'
-import { gcSelectors } from '../../shared/gc/selectors'
-import Serializer from './serializer'
+import { GCCFilters } from '../../types/gccFilters'
+import { gcSelectors } from '@/shared/gc/selectors'
+import Serializer from '../../serializer'
 import $ from 'jquery'
 import { cleanSelector } from '@/shared/StringUtils'
 import browserStorage from '@/shared/storage'

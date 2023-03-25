@@ -22,7 +22,7 @@ import KDRFilter from './KDRFilter.vue'
 import LobbyNameFilter from './LobbyNameFilter.vue'
 import GCCLogo from './GCCLogo.vue'
 import BrowserStorage from '@/shared/storage'
-import lobbyFilter from '@/scripts/lobby/lobbyFilter'
+import lobbyFilter from '@/apps/contentScripts/lobby/extensions/filters/lobbyFilter'
 
 export default defineComponent({
   components: {

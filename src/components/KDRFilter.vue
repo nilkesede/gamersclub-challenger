@@ -25,7 +25,7 @@ import { ref, watch } from "vue";
 import { gcSelectors } from "@/shared/gc/selectors";
 import { cleanSelector } from "@/shared/StringUtils";
 import VueSlider from "vue-slider-component";
-import lobbyFilter from "@/scripts/lobby/lobbyFilter";
+import lobbyFilter from "@/apps/contentScripts/lobby/extensions/filters/lobbyFilter";
 import AnalyticsManager from "@/shared/analytics";
 import { dynamicEvents } from "@/shared/analytics/events";
 import { customDimentions } from "@/shared/analytics/dimentions";

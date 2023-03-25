@@ -3,7 +3,7 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 
 import GCChallengerContentRunner from '@/shared/contentRunner'
-import PreMatchModifier from '@/scripts/preMatch/PreMatchModifier'
+import PreMatchModifier from '@/apps/contentScripts/lobby/extensions/preMatch/PreMatchModifier'
 
 GCChallengerContentRunner.pageName = 'devPreMatch'
 const run = () => {

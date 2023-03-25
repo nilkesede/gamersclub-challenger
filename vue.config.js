@@ -24,17 +24,17 @@ const config = {
     },
 
     globalContentScripts: {
-      entry: 'src/apps/content/global.js',
+      entry: 'src/apps/contentScripts/global/global.runner.js',
       chunks: ['chunk-vendors', 'chunk-common', 'globalContentScripts'],
     },
 
     lobbyContentScripts: {
-      entry: 'src/apps/content/lobby.js',
+      entry: 'src/apps/contentScripts/lobby/lobby.runner.js',
       chunks: ['chunk-vendors', 'chunk-common', 'lobbyContentScripts'],
     },
 
     teamContentScripts: {
-      entry: 'src/apps/content/team.js',
+      entry: 'src/apps/contentScripts/team/team.runner.js',
       chunks: ['chunk-vendors', 'teamContentScripts'],
     },
   },

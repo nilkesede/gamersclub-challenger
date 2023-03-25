@@ -28,7 +28,7 @@ import { Ref, ref, watch } from "vue";
 import { gcSelectors } from "@/shared/gc/selectors";
 import { cleanSelector } from "@/shared/StringUtils";
 import { FULL_LOBBY_PLAYERS_NUMBER } from "@/shared/gc/api/resources/constants/magicNumbers";
-import serializer from "@/scripts/lobby/serializer";
+import serializer from "@/apps/contentScripts/lobby/serializer";
 import $ from "jquery";
 import Logger from "js-logger";
 import Analytics from "@/shared/analytics";

@@ -1,6 +1,6 @@
 import '../../plugins/window.setup'
 import logger from 'js-logger'
-import serializer from '../../scripts/lobby/serializer'
+import serializer from '@/apps/contentScripts/lobby/serializer'
 import { gcSelectors } from '../gc/selectors'
 import { gcLevelsMap } from '../gc/levels'
 import { userAPI } from '../gc/api'

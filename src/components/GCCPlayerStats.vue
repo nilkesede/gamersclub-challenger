@@ -252,8 +252,8 @@ import analytics from "@/shared/analytics";
 import Logger from "js-logger";
 import $ from "jquery";
 import { gcSelectors } from "@/shared/gc/selectors";
-import { socialMedia } from "../scripts/lobby/domain/socialMedia";
-import MapStat from "../scripts/lobby/domain/MapStat";
+import { socialMedia } from "@/apps/contentScripts/lobby/types/socialMedia";
+import MapStat from "@/apps/contentScripts/lobby/types/MapStat";
 import BrowserStorage from "@/shared/storage";
 import GCCMarks from './GCCMarks.vue'
 import { GCMonthMatch } from "@/shared/gc/types/GCMonthMatch";
