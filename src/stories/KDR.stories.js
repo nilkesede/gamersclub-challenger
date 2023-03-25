@@ -1,5 +1,5 @@
 
-import GCChallengerContentRunner from '../utils/contentRunner'
+import GCChallengerContentRunner from '../shared/contentRunner'
 
 import kdr from '../components/KDR.vue';
 import GCCPlayerStatsComparator from '../components/GCCPlayerStatsComparator.vue';

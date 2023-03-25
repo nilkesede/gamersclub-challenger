@@ -100,7 +100,7 @@ import { userAPI } from "@/shared/gc/api";
 import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
-import { getWinStreakEmoji, getLossStreakEmoji, calcStreakNumber } from '@/utils/emojis/streak'
+import { getWinStreakEmoji, getLossStreakEmoji, calcStreakNumber } from '@/shared/emojis/streak'
 import { staticEvents } from "@/shared/analytics/events";
 import { gcUrls } from "@/shared/gc/api/resources/urls";
 import { getCleanMapName } from "@/shared/StringUtils";

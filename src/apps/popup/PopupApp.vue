@@ -24,10 +24,10 @@
 </template>
 
 <script lang="ts">
-import { GCCOptionsKey } from '@/utils/storage/types';
+import { GCCOptionsKey } from '@/shared/storage/types';
 import { ref } from 'vue'
 import { Options, Vue, } from 'vue-class-component'
-import BrowserStorage from '../../utils/storage'
+import BrowserStorage from '@/shared/storage'
 
 let updateTriggerHolder: ReturnType<typeof setTimeout>;
 

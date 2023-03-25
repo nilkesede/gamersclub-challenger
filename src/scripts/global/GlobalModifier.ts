@@ -7,7 +7,7 @@ import BrowserStorage from '../../shared/storage'
 import serializer from '../lobby/serializer'
 import { userAPI } from '@/shared/gc/api'
 import { GCInitialPlayerStats } from '../../shared/gc/types/GCInitialPlayerStats'
-import { GCPlayerStatsHistory } from '../lobby/domain/GCPlayerStatsHistory'
+import { GCPlayerStatsHistory } from '@/shared/gc/types/GCPlayerStatsHistory'
 import analytics from '@/shared/analytics'
 
 export default class GlobalModifier {

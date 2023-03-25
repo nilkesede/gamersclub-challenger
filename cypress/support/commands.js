@@ -23,8 +23,8 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import { gcPages, gcSiteUrl } from '../../src/utils/gcUrls'
-import {gcSelectors} from '../../src/utils/gcSelectors'
+import { gcPages, gcSiteUrl } from '../../src/shared/gc/api/resources/urls'
+import {gcSelectors} from '../../src/shared/gc/selectors'
 
 const addExtensionCommands = require('cypress-browser-extension-plugin/commands');
 addExtensionCommands(Cypress);

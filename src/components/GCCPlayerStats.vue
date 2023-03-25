@@ -245,7 +245,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { GCInitialPlayerStats } from "@/shared/gc/types/GCInitialPlayerStats";
-import { gcUrls, gcAssetsUrls } from "@/shared/gc/api/resources/urlss";
+import { gcUrls, gcAssetsUrls } from "@/shared/gc/api/resources/urls";
 import { GCPlayerStatsHistory } from "@/shared/gc/types/GCPlayerStatsHistory";
 import VueSlider from "vue-slider-component";
 import analytics from "@/shared/analytics";

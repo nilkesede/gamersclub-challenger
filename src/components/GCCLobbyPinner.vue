@@ -13,7 +13,7 @@
 <script>
 import { ref, defineComponent } from "vue";
 import $ from "jquery";
-import { gcSelectors } from "../utils/gcSelectors";
+import { gcSelectors } from "@/shared/gc/selectors";
 
 const maxSlotsLenght = 3;
 const pinnedClass = gcSelectors.extension.lobbies.pinned;
