@@ -1,21 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const transformManifestToFirefox = require("../src/browser/firefox/transformManifest")
+const transformManifestToFirefox = require("./browser/firefox/transformManifest")
 const transformManifestDevelopment = require("./transformManifest.development")
 
 module.exports = function buildFilesToCopy(){
   let filesToCopy = [
     {
-      from: 'src/locales',
+      from: 'src/shared/core/browser/languages',
       to: '_locales'
     },
     {
       from: 'src/assets',
       to: 'assets'
     },
-
     {
-      from: 'src/apps/serviceWorkerResources',
-      to: 'serviceWorkerResources'
+      from: 'src/apps/backgroundScripts',
+      to: 'backgroundScripts'
     }
   ]
 

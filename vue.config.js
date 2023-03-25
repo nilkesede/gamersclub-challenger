@@ -2,7 +2,7 @@
 
 const WriteFilePlugin = require('write-file-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const buildFilesToCopy = require('./webpack/buildFilesToCopy');
+const buildFilesToCopy = require('./config/webpack/buildFilesToCopy');
 
 const config = {
   configureWebpack: {
