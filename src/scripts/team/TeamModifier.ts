@@ -1,13 +1,13 @@
 // @ts-check
-import { cleanSelector } from '@/utils/StringUtils'
+import { cleanSelector } from '@/shared/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from '../lobby/domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
-import { gcSelectors } from '../../utils/gc/selectors'
+import { gcSelectors } from '../../shared/gc/selectors'
 import serializer from '../lobby/serializer'
 import LobbyPlayer from '../lobby/domain/LobbyPlayer'
-import BrowserStorage from '../../utils/storage'
+import BrowserStorage from '../../shared/storage'
 
 export default class TeamModifier {
   challenger: any

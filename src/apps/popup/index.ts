@@ -1,7 +1,7 @@
 import '../../plugins/window.setup'
 import { createApp } from 'vue'
 import PopupApp from './PopupApp.vue'
-import BrowserStorage from '../../utils/storage'
+import BrowserStorage from '../../shared/storage'
 
 (async function() {
   await BrowserStorage.setup()

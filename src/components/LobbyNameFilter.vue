@@ -12,12 +12,12 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { ref, watch } from "vue";
-import { gcSelectors } from "../utils/gc/selectors";
-import { cleanSelector } from "@/utils/StringUtils";
+import { gcSelectors } from "@/shared/gc/selectors";
+import { cleanSelector } from "@/shared/StringUtils";
 import VueSlider from "vue-slider-component";
 import lobbyFilter from "@/scripts/lobby/lobbyFilter";
-import AnalyticsManager from "@/utils/analytics";
-import { staticEvents } from "@/utils/analytics/events";
+import AnalyticsManager from "@/shared/analytics";
+import { staticEvents } from "@/shared/analytics/events";
 
 @Options({
   components: {

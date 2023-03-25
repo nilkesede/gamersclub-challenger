@@ -94,16 +94,16 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { gcLevelsMap } from '../utils/gc/levels'
-import analytics from "@/utils/analytics";
-import { userAPI } from "../utils/gc/api";
+import { gcLevelsMap } from '@/shared/gc/levels'
+import analytics from "@/shared/analytics";
+import { userAPI } from "@/shared/gc/api";
 import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
 import { getWinStreakEmoji, getLossStreakEmoji, calcStreakNumber } from '@/utils/emojis/streak'
-import { staticEvents } from "@/utils/analytics/events";
-import { gcUrls } from "@/utils/gcUrls";
-import { getCleanMapName } from "@/utils/StringUtils";
+import { staticEvents } from "@/shared/analytics/events";
+import { gcUrls } from "@/shared/gc/api/resources/urls";
+import { getCleanMapName } from "@/shared/StringUtils";
 
 const GCCPlayerProgressComponent = defineComponent({
   components: {

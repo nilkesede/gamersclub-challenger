@@ -5,10 +5,10 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { createApp } from "@vue/runtime-dom";
-import { newTippy } from "@/utils/tippy";
+import { newTippy } from "@/shared/tippy";
 import GCCPlayerStatsComparator from "./GCCPlayerStatsComparator.vue";
 import $ from "jquery";
-import { gcSelectors } from "@/utils/gc/selectors";
+import { gcSelectors } from "@/shared/gc/selectors";
 import serializer from "@/scripts/lobby/serializer";
 
 @Options({

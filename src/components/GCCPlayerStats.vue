@@ -244,21 +244,21 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { GCInitialPlayerStats } from "../utils/gc/types/GCInitialPlayerStats";
-import { gcUrls, gcAssetsUrls } from "../utils/gcUrls";
-import { GCPlayerStatsHistory } from "../utils/gc/types/GCPlayerStatsHistory";
+import { GCInitialPlayerStats } from "@/shared/gc/types/GCInitialPlayerStats";
+import { gcUrls, gcAssetsUrls } from "@/shared/gc/api/resources/urlss";
+import { GCPlayerStatsHistory } from "@/shared/gc/types/GCPlayerStatsHistory";
 import VueSlider from "vue-slider-component";
-import analytics from "@/utils/analytics";
+import analytics from "@/shared/analytics";
 import Logger from "js-logger";
 import $ from "jquery";
-import { gcSelectors } from "@/utils/gc/selectors";
+import { gcSelectors } from "@/shared/gc/selectors";
 import { socialMedia } from "../scripts/lobby/domain/socialMedia";
 import MapStat from "../scripts/lobby/domain/MapStat";
-import BrowserStorage from "@/utils/storage";
+import BrowserStorage from "@/shared/storage";
 import GCCMarks from './GCCMarks.vue'
-import { GCMonthMatch } from "../utils/gc/types/GCMonthMatch";
-import { percentage } from "@/utils/gc/api/resources/constants/magicNumbers";
-import { userAPI } from "../utils/gc/api";
+import { GCMonthMatch } from "@/shared/gc/types/GCMonthMatch";
+import { percentage } from "@/shared/gc/api/resources/constants/magicNumbers";
+import { userAPI } from "@/shared/gc/api";
 import GCCPlayerLevel from "./GCCPlayerLevel.vue";
 
 

@@ -1,15 +1,15 @@
 // @ts-check
-import { cleanSelector } from '@/utils/StringUtils'
+import { cleanSelector } from '@/shared/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
 import GCChallengerComponent from '../../components/Challenger.vue'
-import { gcSelectors } from '../../utils/gc/selectors'
+import { gcSelectors } from '../../shared/gc/selectors'
 import serializer from './serializer'
 import LobbyPlayer from './domain/LobbyPlayer'
-import { FULL_LOBBY_PLAYERS_NUMBER } from '@/utils/gc/api/resources/constants/magicNumbers'
-import BrowserStorage from '../../utils/storage'
+import { FULL_LOBBY_PLAYERS_NUMBER } from '@/shared/gc/api/resources/constants/magicNumbers'
+import BrowserStorage from '../../shared/storage'
 
 export default class MyLobbyModifier {
 

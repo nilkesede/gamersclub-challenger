@@ -22,7 +22,7 @@ import tippy, { sticky } from "tippy.js";
 import { createApp } from "@vue/runtime-dom";
 import GCCPlayerStatsComparator from "./GCCPlayerStatsComparator.vue";
 import GCCMarks from "./GCCMarks.vue";
-import { userAPI } from "../utils/gc/api";
+import { userAPI } from "@/shared/gc/api";
 import { ref } from "vue";
 import { defineComponent } from "vue";
 

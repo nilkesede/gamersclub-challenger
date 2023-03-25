@@ -1,14 +1,14 @@
   // @ts-check
-import { cleanSelector } from '@/utils/StringUtils'
+import { cleanSelector } from '@/shared/StringUtils'
 import $ from 'jquery'
 import { domEntityType } from './domain/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '../../components/KDR.vue'
-import { gcSelectors } from '../../utils/gc/selectors'
+import { gcSelectors } from '../../shared/gc/selectors'
 import serializer from './serializer'
 import lobbyFilter from './lobbyFilter'
 import Logger from 'js-logger'
-import BrowserStorage from '../../utils/storage'
+import BrowserStorage from '../../shared/storage'
 
 export default class ChallengeListModifier {
 

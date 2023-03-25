@@ -17,18 +17,11 @@
 </template>
 
 <script lang="ts">
-import { Ref, ref, watch, defineComponent } from 'vue'
-import { gcSelectors } from '../utils/gc/selectors'
-import { cleanSelector } from '@/utils/StringUtils'
-import serializer from '@/scripts/lobby/serializer'
-import $ from 'jquery'
-import Logger from 'js-logger'
-import Analytics from '@/utils/analytics'
-import { staticEvents } from '@/utils/analytics/events'
+import { defineComponent } from 'vue'
 import KDRFilter from './KDRFilter.vue'
 import LobbyNameFilter from './LobbyNameFilter.vue'
 import GCCLogo from './GCCLogo.vue'
-import BrowserStorage from '@/utils/storage'
+import BrowserStorage from '@/shared/storage'
 import lobbyFilter from '@/scripts/lobby/lobbyFilter'
 
 export default defineComponent({

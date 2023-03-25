@@ -1,7 +1,7 @@
-import { cleanSelector, getIdByAvatarUrl } from "@/utils/StringUtils"
+import { cleanSelector, getIdByAvatarUrl } from "@/shared/StringUtils"
 import Lobby from "./domain/Lobby"
 import LobbyPlayer from "./domain/LobbyPlayer"
-import { gcSelectors } from "../../utils/gc/selectors"
+import { gcSelectors } from "../../shared/gc/selectors"
 import $ from 'jquery'
 import { playerSelectors } from "./domain/playerSelectors"
 import Logger from 'js-logger'

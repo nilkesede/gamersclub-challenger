@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { gcAssetsUrls } from "@/utils/gcUrls";
-import { gcLevelsMap } from '@/utils/gc/levels';
+import { gcAssetsUrls } from "@/shared/gc/api/resources/urls";
+import { gcLevelsMap } from '@/shared/gc/levels';
 import { defineComponent } from "vue";
 
 const GCCPlayerLevelComponent = defineComponent({

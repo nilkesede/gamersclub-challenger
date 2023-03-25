@@ -1,5 +1,5 @@
 
-import GCChallengerContentRunner from '../utils/contentRunner'
+import GCChallengerContentRunner from '../shared/contentRunner'
 import GCCLobbyPinner from '../components/GCCLobbyPinner.vue'
 
 export default {

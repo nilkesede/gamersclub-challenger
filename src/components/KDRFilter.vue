@@ -22,13 +22,13 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { ref, watch } from "vue";
-import { gcSelectors } from "../utils/gc/selectors";
-import { cleanSelector } from "@/utils/StringUtils";
+import { gcSelectors } from "@/shared/gc/selectors";
+import { cleanSelector } from "@/shared/StringUtils";
 import VueSlider from "vue-slider-component";
 import lobbyFilter from "@/scripts/lobby/lobbyFilter";
-import AnalyticsManager from "@/utils/analytics";
-import { dynamicEvents } from "@/utils/analytics/events";
-import { customDimentions } from "@/utils/analytics/dimentions";
+import AnalyticsManager from "@/shared/analytics";
+import { dynamicEvents } from "@/shared/analytics/events";
+import { customDimentions } from "@/shared/analytics/dimentions";
 
 @Options({
   components: {
