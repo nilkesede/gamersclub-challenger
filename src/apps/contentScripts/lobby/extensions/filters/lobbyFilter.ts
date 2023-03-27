@@ -1,6 +1,6 @@
 
 import { GCCFilters } from '../../types/gccFilters'
-import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
+import { gcSelectors } from '@/apps/shared/extras/gc/tools/selectors'
 import Serializer from '../../serializer'
 import $ from 'jquery'
 import { cleanSelector } from '@/apps/shared/core/settings/extensions/string.setup'

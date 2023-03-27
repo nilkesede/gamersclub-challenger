@@ -4,7 +4,7 @@ import $ from 'jquery'
 import { domEntityType } from '../../types/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '@/components/KDR.vue'
-import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
+import { gcSelectors } from '@/apps/shared/extras/gc/tools/selectors'
 import serializer from '../../serializer'
 import BrowserStorage from '@/apps/shared/tools/storage'
 

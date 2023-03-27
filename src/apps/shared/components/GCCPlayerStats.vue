@@ -42,7 +42,7 @@
               <transition-group class="gcc-stats__punishment-list" tag="ul">
                 <li
                   v-for="punishment in userPunishments"
-                  :key="punishment"
+                  :key="punishment.reason"
                   class="gcc-stats__punishment-item"
                 >
                   <img
@@ -81,7 +81,7 @@
             class="gcc-stats__profile-stat"
           >
             <span class="gcc-stats__profile-stat-name">
-              <i :class="['fa', stat.icon]" /> {{ stat.name }}
+              <i :class="['fa', stat.icon]" ></i> {{ stat.name }}
             </span>
             <p class="gcc-stats__profile-stat-value">{{ stat.value }}</p>
             <span v-if="stat.average" class="gcc-stats__profile-stat-average">{{

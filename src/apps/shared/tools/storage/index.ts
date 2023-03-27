@@ -36,11 +36,11 @@ class BrowserStorage {
 
   async setup() {
     try {
-      const settings = await this.get() || {}
+      const settings = await this.get() as Partial<GCCStorageSettings> || {} as Partial<GCCStorageSettings>
       if (settings && Object.keys(settings).length) {
-        Object.assign(this.settings.filters, this.defaultSettings.filters, settings.filters || {})
-        Object.assign(this.settings.options, this.defaultSettings.options, settings.options || {})
-        Object.assign(this.settings.custom, this.defaultSettings.custom, settings.custom || {})
+        Object.assign(this.settings.filters!, this.defaultSettings.filters, settings.filters || {})
+        Object.assign(this.settings.options!, this.defaultSettings.options, settings.options || {})
+        Object.assign(this.settings.custom!, this.defaultSettings.custom, settings.custom || {})
         this.settings.betaTesters = this.defaultSettings.betaTesters
         Logger.debug('⚙️ Loaded settings', JSON.stringify(settings))
       } else {

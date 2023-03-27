@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
+import { gcSelectors } from '@/apps/shared/extras/gc/tools/selectors'
 import GCCPlayerProgress from '@/components/GCCPlayerProgress.vue'
 import KDR from '@/components/KDR.vue'
 import { createApp } from 'vue'

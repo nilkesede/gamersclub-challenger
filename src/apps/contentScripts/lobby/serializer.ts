@@ -1,7 +1,9 @@
-import { cleanSelector, getIdByAvatarUrl } from "@/apps/shared/core/settings/extensions/string.setup"
+import { cleanSelector } from "@/apps/shared/core/settings/extensions/string.setup"
+import { getIdByAvatarUrl } from "@/apps/shared/extras/gc/tools/utils/getIdByAvatarUrl"
+
 import Lobby from "./types/Lobby"
 import LobbyPlayer from "./types/LobbyPlayer"
-import { gcSelectors } from "@/apps/shared/extras/gc/selectors"
+import { gcSelectors } from "@/apps/shared/extras/gc/tools/selectors"
 import $ from 'jquery'
 import { playerSelectors } from "./types/playerSelectors"
 import Logger from 'js-logger'
