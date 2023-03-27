@@ -3,7 +3,7 @@ import { GCCFilters } from '../../types/gccFilters'
 import { gcSelectors } from '@/apps/shared/extras/gc/selectors'
 import Serializer from '../../serializer'
 import $ from 'jquery'
-import { cleanSelector } from '@/shared/plugins/string.setup'
+import { cleanSelector } from '@/apps/shared/core/settings/extensions/string.setup'
 import browserStorage from '@/apps/shared/tools/storage'
 import Logger from 'js-logger'
 

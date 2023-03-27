@@ -2,7 +2,7 @@ import 'tilt.js'
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 
-import GCChallengerContentRunner from '@/shared/tools/contentRunner'
+import GCChallengerContentRunner from '@/apps/shared/tools/contentRunner'
 
 import GlobalModifier from '@/apps/contentScripts/global/global.modifier'
 

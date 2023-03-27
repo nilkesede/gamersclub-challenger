@@ -8,7 +8,7 @@ import { gcLevelsMap } from '@/apps/shared/extras/gc/levels'
 import { userAPI } from '@/apps/shared/extras/gc/api'
 import { gcAssetsUrls, gcUrls } from '@/apps/shared/extras/gc/api/resources/urls'
 
-import checkGCSelectors from '@/shared/tools/health/checkGCSelectors'
+import checkGCSelectors from '@/apps/shared/tools/health/checkGCSelectors'
 
 window.gcChallenger = {
   gc: {

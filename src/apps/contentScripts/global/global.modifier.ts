@@ -5,9 +5,9 @@ import KDR from '@/components/KDR.vue'
 import { createApp } from 'vue'
 import BrowserStorage from '@/apps/shared/tools/storage'
 import serializer from '../lobby/serializer'
-import { userAPI } from '@/shared/gc/api'
-import { GCInitialPlayerStats } from '@/shared/gc/types/GCInitialPlayerStats'
-import { GCPlayerStatsHistory } from '@/shared/gc/types/GCPlayerStatsHistory'
+import { userAPI } from '@/apps/shared/extras/gc/api'
+import { GCInitialPlayerStats } from '@/apps/shared/extras/gc/types/GCInitialPlayerStats'
+import { GCPlayerStatsHistory } from '@/apps/shared/extras/gc/types/GCPlayerStatsHistory'
 import analytics from '@/apps/shared/tools/analytics'
 
 export default class GlobalModifier {

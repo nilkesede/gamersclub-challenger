@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { gcUrls } from '@/shared/gc/api/resources/urls'
+import { gcUrls } from '@/apps/shared/extras/gc/api/resources/urls'
 import VueSlider from 'vue-slider-component'
 import Logger from 'js-logger'
 import GCPlayerStats from './GCCPlayerStats.vue'

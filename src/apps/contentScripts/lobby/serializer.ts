@@ -1,4 +1,4 @@
-import { cleanSelector, getIdByAvatarUrl } from "@/shared/plugins/string.setup"
+import { cleanSelector, getIdByAvatarUrl } from "@/apps/shared/core/settings/extensions/string.setup"
 import Lobby from "./types/Lobby"
 import LobbyPlayer from "./types/LobbyPlayer"
 import { gcSelectors } from "@/apps/shared/extras/gc/selectors"

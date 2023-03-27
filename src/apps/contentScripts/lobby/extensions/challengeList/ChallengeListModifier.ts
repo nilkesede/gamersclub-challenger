@@ -1,5 +1,5 @@
   // @ts-check
-import { cleanSelector } from '@/shared/plugins/string.setup'
+import { cleanSelector } from '@/apps/shared/core/settings/extensions/string.setup'
 import $ from 'jquery'
 import { domEntityType } from '../../types/domEntityType'
 import { createApp } from 'vue'
