@@ -527,8 +527,6 @@ export default class GCCPlayerStats extends Vue {
 @use "sass:math";
 @import "@/apps/shared/core/styles/_variables.scss";
 
-$fa-font-path: "../assets/fonts" !default;
-
 $green: #95b300;
 $red: #eb2f2f;
 $wrapperHeight: 400px;

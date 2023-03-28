@@ -66,8 +66,6 @@ export default defineComponent({
 <style lang="scss">
 @use "sass:color";
 @import "@/apps/shared/core/styles/_variables.scss";
-//$fa-font-path: "../../../../assets/fonts" !default;
-$font-family: "Roboto Condensed", sans-serif;
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
