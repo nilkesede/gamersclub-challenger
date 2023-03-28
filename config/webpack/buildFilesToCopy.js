@@ -5,7 +5,7 @@ const transformManifestDevelopment = require("./transformManifest.development")
 module.exports = function buildFilesToCopy(){
   let filesToCopy = [
     {
-      from: 'src/shared/core/browser/languages',
+      from: 'src/apps/shared/core/browser/languages',
       to: '_locales'
     },
     {
@@ -28,7 +28,7 @@ module.exports = function buildFilesToCopy(){
         }
       },
       {
-        from: 'src/browser/firefox/background.js',
+        from: 'src/apps/backgroundScripts/browser/firefox/background.js',
         to: 'background.js'
       },
     ])
@@ -39,7 +39,7 @@ module.exports = function buildFilesToCopy(){
         transform: transformManifestDevelopment
       },
       {
-        from: 'src/browser/chromium/background.js',
+        from: 'src/apps/backgroundScripts/browser/chromium/background.js',
         to: 'background.js'
       },
     ])

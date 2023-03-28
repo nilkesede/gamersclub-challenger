@@ -1,4 +1,4 @@
-import '../shared/plugins/window.setup'
+import '@/apps/shared/core/settings/extensions/window.setup'
 import { createApp } from 'vue'
 import PopupApp from './PopupApp.vue'
 import BrowserStorage from '../shared/tools/storage'

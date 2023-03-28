@@ -94,16 +94,16 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { gcLevelsMap } from '@/apps/shared/extras/gc/levels'
+import { gcLevelsMap } from '@/apps/shared/extras/gc/tools/levels'
 import analytics from "@/apps/shared/tools/analytics";
 import { userAPI } from "@/apps/shared/extras/gc/api";
 import VueSlider from "vue-slider-component";
 import GCCPlayerLevel from './GCCPlayerLevel.vue'
 import GCCLogo from './GCCLogo.vue'
-import { getWinStreakEmoji, getLossStreakEmoji, calcStreakNumber } from '@/shared/emojis/streak'
+import { getWinStreakEmoji, getLossStreakEmoji, calcStreakNumber } from '@/apps/shared/tools/streaker'
 import { staticEvents } from "@/apps/shared/tools/analytics/events";
 import { gcUrls } from "@/apps/shared/extras/gc/api/resources/urls";
-import { getCleanMapName } from "@/shared/StringUtils";
+import { getCleanMapName } from "@/apps/shared/extras/gc/tools/utils/getCleanMapName";
 
 const GCCPlayerProgressComponent = defineComponent({
   components: {
@@ -318,7 +318,7 @@ export default GCCPlayerProgressComponent
 
 <style lang="scss">
 @use "sass:color";
-@import "../styles/_variables.scss";
+@import "@/apps/shared/core/styles/_variables.scss";
 
 .gcc-player-progress__loading-icon {
   &--big-loading {

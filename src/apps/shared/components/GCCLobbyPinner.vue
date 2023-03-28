@@ -13,7 +13,7 @@
 <script>
 import { ref, defineComponent } from "vue";
 import $ from "jquery";
-import { gcSelectors } from "@/apps/shared/extras/gc/selectors";
+import { gcSelectors } from "@/apps/shared/extras/gc/tools/selectors";
 
 const maxSlotsLenght = 3;
 const pinnedClass = gcSelectors.extension.lobbies.pinned;
@@ -65,8 +65,8 @@ export default defineComponent({
 
 <style lang="scss">
 @use "sass:color";
-@import "../styles/_variables.scss";
-$fa-font-path: "../assets/fonts" !default;
+@import "@/apps/shared/core/styles/_variables.scss";
+//$fa-font-path: "../../../../assets/fonts" !default;
 $font-family: "Roboto Condensed", sans-serif;
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";

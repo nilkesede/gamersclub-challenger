@@ -8,7 +8,7 @@ import { createApp } from "@vue/runtime-dom";
 import { newTippy } from "@/apps/shared/core/settings/tippy";
 import GCCPlayerStatsComparator from "./GCCPlayerStatsComparator.vue";
 import $ from "jquery";
-import { gcSelectors } from "@/apps/shared/extras/gc/selectors";
+import { gcSelectors } from "@/apps/shared/extras/gc/tools/selectors";
 import serializer from "@/apps/contentScripts/lobby/serializer";
 
 @Options({
@@ -47,7 +47,7 @@ export default class GCCStats extends Vue {
 </script>
 
 <style lang="scss">
-@import "../styles/_variables.scss";
+@import "@/apps/shared/core/styles/_variables.scss";
 
 .gcc-lobby-title {
   &:hover {

@@ -31,7 +31,7 @@
 import { ref } from "vue";
 import { defineComponent } from "vue";
 import BrowserStorage from '@/apps/shared/tools/storage'
-import { GCCMarkEmojiMap } from '@/shared/emojis/GCCMarkEmojiMap'
+import { GCCMarkEmojiMap } from '@/apps/shared/tools/streaker/GCCMarkEmojiMap'
 import AnalyticsManager from "@/apps/shared/tools/analytics";
 import { dynamicEvents } from "@/apps/shared/tools/analytics/events";
 
@@ -155,7 +155,7 @@ export default GCCMarkComponent
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @use "sass:color";
-@import "../styles/_variables.scss";
+@import "@/apps/shared/core/styles/_variables.scss";
 
 .gcc-marks-wrapper {
   display: inline-block;

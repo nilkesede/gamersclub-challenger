@@ -36,7 +36,7 @@ export default GCCLogoComponent
 
 <style lang="scss">
 @use "sass:color";
-@import "../styles/_variables.scss";
+@import "@/apps/shared/core/styles/_variables.scss";
 
 .gcc-logo-component {
   display: inline-block;

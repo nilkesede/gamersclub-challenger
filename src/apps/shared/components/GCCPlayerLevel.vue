@@ -11,7 +11,7 @@
 
 <script>
 import { gcAssetsUrls } from "@/apps/shared/extras/gc/api/resources/urls";
-import { gcLevelsMap } from '@/apps/shared/extras/gc/levels';
+import { gcLevelsMap } from '@/apps/shared/extras/gc/tools/levels';
 import { defineComponent } from "vue";
 
 const GCCPlayerLevelComponent = defineComponent({
@@ -57,7 +57,7 @@ export default GCCPlayerLevelComponent
 
 <style lang="scss">
 @use "sass:color";
-@import "../styles/_variables.scss";
+@import "@/apps/shared/core/styles/_variables.scss";
 
 .gcc-player-level-badge {
   display: inline-block;

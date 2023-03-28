@@ -3,14 +3,14 @@ import { cleanSelector } from '@/apps/shared/core/settings/extensions/string.set
 import $ from 'jquery'
 import { domEntityType } from '../../types/domEntityType'
 import { createApp } from 'vue'
-import KDRComponent from '@/components/KDR.vue'
-import GCCLobbyTitle from '@/components/GCCLobbyTitle.vue'
+import KDRComponent from '@/apps/shared/components/KDR.vue'
+import GCCLobbyTitle from '@/apps/shared/components/GCCLobbyTitle.vue'
 import { gcSelectors } from '@/apps/shared/extras/gc/tools/selectors'
 import serializer from '../../serializer'
 import lobbyFilter from '../filters/lobbyFilter'
 import BrowserStorage from '@/apps/shared/tools/storage'
 import Lobby from '../../types/Lobby'
-import GCCLobbyPinner from '@/components/GCCLobbyPinner.vue'
+import GCCLobbyPinner from '@/apps/shared/components/GCCLobbyPinner.vue'
 import LobbyPlayer from '../../types/LobbyPlayer'
 
 export default class LobbiesModifier {

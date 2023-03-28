@@ -51,7 +51,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../styles/_variables.scss";
+@import "@/apps/shared/core/styles/_variables.scss";
 
 $headerBorderColor: rgba(255, 255, 255, 0.24);
 

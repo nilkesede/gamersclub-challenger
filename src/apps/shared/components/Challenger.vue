@@ -25,7 +25,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { Ref, ref, watch } from "vue";
-import { gcSelectors } from "@/apps/shared/extras/gc/selectors";
+import { gcSelectors } from "@/apps/shared/extras/gc/tools/selectors";
 import { cleanSelector } from "@/apps/shared/core/settings/extensions/string.setup";
 import { FULL_LOBBY_PLAYERS_NUMBER } from "@/apps/shared/extras/gc/api/resources/constants/magicNumbers";
 import serializer from "@/apps/contentScripts/lobby/serializer";

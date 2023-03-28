@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { ref, watch } from "vue";
-import { gcSelectors } from "@/apps/shared/extras/gc/selectors";
+import { gcSelectors } from "@/apps/shared/extras/gc/tools/selectors";
 import { cleanSelector } from "@/apps/shared/core/settings/extensions/string.setup";
 import VueSlider from "vue-slider-component";
 import lobbyFilter from "@/apps/contentScripts/lobby/extensions/filters/lobbyFilter";

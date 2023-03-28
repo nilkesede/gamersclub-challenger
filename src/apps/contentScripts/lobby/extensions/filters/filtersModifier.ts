@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import { gcSelectors } from '@/apps/shared/extras/gc/tools/selectors'
 import { createApp } from 'vue'
-import GCCFiltersBar from '@/components/GCCFiltersBar.vue'
+import GCCFiltersBar from '@/apps/shared/components/GCCFiltersBar.vue'
 
 export default class FiltersModifier {
 

@@ -251,7 +251,7 @@ import VueSlider from "vue-slider-component";
 import analytics from "@/apps/shared/tools/analytics";
 import Logger from "js-logger";
 import $ from "jquery";
-import { gcSelectors } from "@/apps/shared/extras/gc/selectors";
+import { gcSelectors } from "@/apps/shared/extras/gc/tools/selectors";
 import { socialMedia } from "@/apps/contentScripts/lobby/types/socialMedia";
 import MapStat from "@/apps/contentScripts/lobby/types/MapStat";
 import BrowserStorage from "@/apps/shared/tools/storage";
@@ -525,7 +525,7 @@ export default class GCCPlayerStats extends Vue {
 <style scoped lang="scss">
 @use "sass:color";
 @use "sass:math";
-@import "../styles/_variables.scss";
+@import "@/apps/shared/core/styles/_variables.scss";
 
 $fa-font-path: "../assets/fonts" !default;
 

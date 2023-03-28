@@ -1,4 +1,4 @@
-import '../plugins/window.setup'
+import '@/apps/shared/core/settings/extensions/window.setup'
 import logger from 'js-logger'
 
 import serializer from '@/apps/contentScripts/lobby/serializer'

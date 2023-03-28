@@ -3,7 +3,7 @@ import { cleanSelector } from '@/apps/shared/core/settings/extensions/string.set
 import $ from 'jquery'
 import { domEntityType } from '../lobby/types/domEntityType'
 import { createApp } from 'vue'
-import KDRComponent from '@/components/KDR.vue'
+import KDRComponent from '@/apps/shared/components/KDR.vue'
 import { gcSelectors } from '@/apps/shared/extras/gc/tools/selectors'
 import serializer from '../lobby/serializer'
 import LobbyPlayer from '../lobby/types/LobbyPlayer'

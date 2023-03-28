@@ -131,7 +131,7 @@ export default defineComponent({
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @use "sass:color";
-@import "../styles/_variables.scss";
+@import "@/apps/shared/core/styles/_variables.scss";
 $backgroundOpacity: 0.5;
 $popperBg: #23394d;
 $darkenBlue: #1e6a9b;
