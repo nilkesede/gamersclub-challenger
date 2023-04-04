@@ -1,9 +1,4 @@
-import '@/apps/shared/core/settings/extensions/window.setup'
-import '@/apps/shared/core/settings/logger.setup'
-import '@/apps/shared/core/settings/extensions/observer.jquery'
-
-import '@/apps/shared/core/styles/main.scss'
-
+import '@/apps/shared/core/settings/main.setup'
 
 import Logger from "js-logger"
 import Analytics from '../analytics'

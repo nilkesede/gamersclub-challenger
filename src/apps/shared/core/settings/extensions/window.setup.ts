@@ -17,6 +17,11 @@ declare global {
     cleanCSSSelector(): string;
   }
 
+  interface Number {
+    percentageOf(totalValue: number, fixedDecimal?: number): string;
+    percentage(partialValue: number, fixedDecimal?: number): string;
+  }
+
   interface Array<T> {
     groupByKey(key: string): Record<string, Array<T>>
   }
@@ -24,6 +29,3 @@ declare global {
 
 // @ts-ignore
 window.chrome ? (window.browser = window.chrome) : (window.browser = browser)
-
-
-Array.prototype.groupByKey = function (key) { return this.reduce((hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }), {}) }
