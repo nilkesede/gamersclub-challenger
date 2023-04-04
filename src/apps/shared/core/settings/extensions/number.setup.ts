@@ -3,10 +3,10 @@ export const percentage = (partialValue: number, totalValue: number, fixedDecima
   return fixedDecimal ? `${partialPercentage.toFixed(fixedDecimal)}%` : `${partialPercentage}%`;
 }
 
-Number.prototype.percentageOf = function (totalValue: number, fixedDecimal?: number): string {
+Number.prototype.percentageFrom = function (totalValue: number, fixedDecimal?: number): string {
   return percentage(this.valueOf(), totalValue, fixedDecimal)
 }
 
-Number.prototype.percentage = function (partialValue: number, fixedDecimal?: number): string {
+Number.prototype.percentageOf = function (partialValue: number, fixedDecimal?: number): string {
   return percentage(partialValue, this.valueOf(), fixedDecimal)
 }

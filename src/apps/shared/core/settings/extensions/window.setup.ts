@@ -18,8 +18,8 @@ declare global {
   }
 
   interface Number {
-    percentageOf(totalValue: number, fixedDecimal?: number): string;
-    percentage(partialValue: number, fixedDecimal?: number): string;
+    percentageFrom(totalValue: number, fixedDecimal?: number): string;
+    percentageOf(partialValue: number, fixedDecimal?: number): string;
   }
 
   interface Array<T> {

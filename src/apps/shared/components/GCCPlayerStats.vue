@@ -431,11 +431,11 @@ export default class GCCPlayerStats extends Vue {
       percentage: { loss: "0", wins: "0" },
     };
     list.forEach((match) => {
-      match.win ? stats.wins++ : stats.loss++;
+      match.win ? stats.wins++ : stats.loss++
     });
 
-    stats.percentage.loss = percentage(stats.loss, stats.matches, 1);
-    stats.percentage.wins = percentage(stats.wins, stats.matches, 1);
+    stats.percentage.loss = stats.matches.percentageOf(stats.loss, 1)
+    stats.percentage.wins = stats.matches.percentageOf(stats.wins, 1)
 
     return stats;
   }
