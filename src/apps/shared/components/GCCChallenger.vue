@@ -22,9 +22,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import { Ref, ref, watch } from "vue";
+<script>
+import { ref, watch, defineComponent } from "vue";
 import { gcSelectors } from "@/apps/shared/extras/gc/tools/selectors";
 import { cleanSelector } from "@/apps/shared/core/settings/extensions/string.setup";
 import { FULL_LOBBY_PLAYERS_NUMBER } from "@/apps/shared/extras/gc/api/resources/constants/magicNumbers";
@@ -34,115 +33,41 @@ import Logger from "js-logger";
 import Analytics from "@/apps/shared/tools/analytics";
 import { staticEvents } from "@/apps/shared/tools/analytics/events";
 
-let isEnabled: Ref<boolean>;
-
-@Options({
-  components: {},
+let isEnabled;
+const CHALLENGES_INTERVAL_TIME = 500;
+export default defineComponent({
 
   props: {
-    enabled: Boolean,
+    enabled: {
+      type: Boolean,
+      default: false,
+    }
   },
-})
-export default class GCCChallenger extends Vue {
-  private _isChalleging = false;
-  challengesIntervalId: number | undefined = undefined;
 
-  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  enabled: boolean = false;
-
-  static CHALLENGES_INTERVAL_TIME = 500;
-
-  data(): any {
-    isEnabled = ref(this.enabled);
-    watch(isEnabled, this.onEnableChange.bind(this));
+  setup() {
+    let _isChalleging = ref(false)
+    let challengesIntervalId = ref(undefined)
+    isEnabled = ref(this.enabled)
+    watch(isEnabled, this.onEnableChange.bind(this))
 
     return {
       isEnabled,
       i18n: window.browser.i18n,
+      challengesIntervalId,
+      _isChalleging
     };
-  }
+  },
 
-  unmounted(): void {
+  unmounted() {
     clearInterval(this.challengesIntervalId);
-  }
+  },
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  onEnableChange(newVal: any, oldVal: any): void {
-    Logger.debug("Challenger onEnableChange", newVal, oldVal);
-  }
+  computed: {
+    isChalleging() {
+      return this._isChalleging && isEnabled.value;
+    },
 
-  get isChalleging(): boolean {
-    return this._isChalleging && isEnabled.value;
-  }
-
-  set isChalleging(value: boolean) {
-    this._isChalleging = value;
-  }
-
-  handleButtonClick(): void {
-    this.isChalleging = !this.isChalleging;
-    clearInterval(this.challengesIntervalId);
-
-    if (this.isChalleging) {
-      this.startChallengesInterval();
-      Analytics.sendEvent(staticEvents.START_AUTOMATIC_CHALLENGER);
-    } else {
-      Analytics.sendEvent(staticEvents.STOP_AUTOMATIC_CHALLENGER);
-    }
-  }
-
-  reactToChallegingState(): void {
-    const $matchModal = $(gcSelectors.preMatchModal.self);
-    if (this.isChalleging && !$matchModal?.length) {
-      this.makeChallenges();
-    } else {
-      this.isChalleging = false;
-      clearInterval(this.challengesIntervalId);
-    }
-  }
-
-  startChallengesInterval(): void {
-    this.challengesIntervalId = setInterval(
-      this.reactToChallegingState.bind(this),
-      GCCChallenger.CHALLENGES_INTERVAL_TIME
-    );
-  }
-
-  makeChallenges(): void {
-    const lobbies = $(gcSelectors.lobbies.self).get();
-    Logger.debug(`👁️ Checking challenges for ${lobbies.length} lobbies`);
-
-    lobbies.map((node) => {
-      const {
-        players,
-        $el: $lobby,
-        name: lobbyName,
-      } = serializer.serialize(node);
-      const $challengeButton = $lobby?.find(
-        gcSelectors.lobbies.bigChallengeButton
-      );
-      const isValidLobbyByFilters =
-        !$lobby?.hasClass(cleanSelector(gcSelectors.extension.hidden)) &&
-        !$lobby?.hasClass(
-          cleanSelector(gcSelectors.extension.lobbies.challenged)
-        );
-
-      if (
-        isValidLobbyByFilters &&
-        this.isChalleging &&
-        $challengeButton?.length &&
-        players?.length === FULL_LOBBY_PLAYERS_NUMBER
-      ) {
-        Logger.debug(`⚔️ Challeging ${lobbyName}`);
-        $challengeButton.trigger("click");
-        $lobby?.addClass(
-          cleanSelector(gcSelectors.extension.lobbies.challenged)
-        );
-      }
-    });
-  }
-
-  get tooltipMessage(): string {
+    tooltipMessage() {
     const { i18n } = window.browser;
     let message = i18n.getMessage("needMorePlayerToStartChallenging");
 
@@ -154,7 +79,77 @@ export default class GCCChallenger extends Vue {
 
     return message;
   }
-}
+  },
+
+  methods: {
+    onEnableChange(newVal, oldVal) {
+      Logger.debug("Challenger onEnableChange", newVal, oldVal);
+    },
+
+    handleButtonClick() {
+      this._isChalleging = !this.isChalleging;
+      clearInterval(this.challengesIntervalId);
+
+      if (this.isChalleging) {
+        this.startChallengesInterval();
+        Analytics.sendEvent(staticEvents.START_AUTOMATIC_CHALLENGER);
+      } else {
+        Analytics.sendEvent(staticEvents.STOP_AUTOMATIC_CHALLENGER);
+      }
+    },
+
+    reactToChallegingState() {
+      const $matchModal = $(gcSelectors.preMatchModal.self);
+      if (this.isChalleging && !$matchModal?.length) {
+        this.makeChallenges();
+      } else {
+        this.isChalleging = false;
+        clearInterval(this.challengesIntervalId);
+      }
+    },
+
+    startChallengesInterval() {
+      this.challengesIntervalId = setInterval(
+        this.reactToChallegingState.bind(this),
+        CHALLENGES_INTERVAL_TIME
+      );
+    },
+
+    makeChallenges() {
+      const lobbies = $(gcSelectors.lobbies.self).get();
+      Logger.debug(`👁️ Checking challenges for ${lobbies.length} lobbies`);
+
+      lobbies.map((node) => {
+        const {
+          players,
+          $el: $lobby,
+          name: lobbyName,
+        } = serializer.serialize(node);
+        const $challengeButton = $lobby?.find(
+          gcSelectors.lobbies.bigChallengeButton
+        );
+        const isValidLobbyByFilters =
+          !$lobby?.hasClass(cleanSelector(gcSelectors.extension.hidden)) &&
+          !$lobby?.hasClass(
+            cleanSelector(gcSelectors.extension.lobbies.challenged)
+          );
+
+        if (
+          isValidLobbyByFilters &&
+          this.isChalleging &&
+          $challengeButton?.length &&
+          players?.length === FULL_LOBBY_PLAYERS_NUMBER
+        ) {
+          Logger.debug(`⚔️ Challeging ${lobbyName}`);
+          $challengeButton.trigger("click");
+          $lobby?.addClass(
+            cleanSelector(gcSelectors.extension.lobbies.challenged)
+          );
+        }
+      });
+    }
+  },
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
