@@ -4,7 +4,7 @@ import $ from 'jquery'
 import { domEntityType } from '../../types/domEntityType'
 import { createApp } from 'vue'
 import KDRComponent from '@/apps/shared/components/KDR.vue'
-import GCChallengerComponent from '@/apps/shared/components/Challenger.vue'
+import GCCChallengerComponent from '@/apps/shared/components/Challenger.vue'
 import { gcSelectors } from '@/apps/shared/extras/gc/tools/selectors'
 import serializer from '../../serializer'
 import LobbyPlayer from '../../types/LobbyPlayer'
@@ -165,7 +165,7 @@ export default class MyLobbyModifier {
     if (isLobbyAdmin && !this.challenger) {
       const appContainer = `<div id='${containerName}' class='${cleanSelector(gcSelectors.extension.appContainer)} padding-top'></div>`
       $sideBarTitleContainer.append(appContainer)
-      this.challenger = createApp(GCChallengerComponent, {
+      this.challenger = createApp(GCCChallengerComponent, {
         enabled: this.lobby.players?.length === FULL_LOBBY_PLAYERS_NUMBER
       }).mount(`#${containerName}`)
     }

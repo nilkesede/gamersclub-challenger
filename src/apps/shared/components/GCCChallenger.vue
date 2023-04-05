@@ -43,7 +43,7 @@ let isEnabled: Ref<boolean>;
     enabled: Boolean,
   },
 })
-export default class Challenger extends Vue {
+export default class GCCChallenger extends Vue {
   private _isChalleging = false;
   challengesIntervalId: number | undefined = undefined;
 
@@ -104,7 +104,7 @@ export default class Challenger extends Vue {
   startChallengesInterval(): void {
     this.challengesIntervalId = setInterval(
       this.reactToChallegingState.bind(this),
-      Challenger.CHALLENGES_INTERVAL_TIME
+      GCCChallenger.CHALLENGES_INTERVAL_TIME
     );
   }
 
