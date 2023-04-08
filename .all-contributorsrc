@@ -14,7 +14,22 @@
         "bug",
         "code",
         "maintenance",
-        "mentoring"
+        "mentoring",
+        "projectManagement",
+        "doc",
+        "ideas",
+        "review",
+        "translation",
+        "test"
+      ]
+    },
+    {
+      "login": "islemos",
+      "name": "Israel Lemos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/128564220?v=4",
+      "profile": "http://www.islemos.com",
+      "contributions": [
+        "design"
       ]
     }
   ],
@@ -23,5 +38,6 @@
   "projectOwner": "carloshpds",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
