@@ -22,7 +22,7 @@ try {
   // ===
   function initAnalytics(message, sender, sendResponse) {
     self.browser.scripting.executeScript({
-      files: ['serviceWorkerResources/ga.js'],
+      files: ['backgroundScripts/resources/ga.js'],
       target: { tabId: sender.tab.id, allFrames: true }
     })
       .then(() => {

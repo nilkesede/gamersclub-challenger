@@ -6,4 +6,4 @@ export interface AnalyticsEvent {
   value?: string | number
 }
 
-export type AnalyticsCustomDimention = 'gcId' | 'gcNickname' | 'gcLevel' | 'kdrFilterNumber'
+export type AnalyticsCustomDimention = 'gcId' | 'gcNickname' | 'gcLevel' | 'kdrFilterNumber' | 'enableNameFilter' | 'enable3DGCCardEffect' | 'enableAutoReady' | 'enablePlayerProgress'

@@ -1,5 +1,6 @@
 import Logger from "js-logger";
 import analytics from "../analytics";
+import { customDimentions } from "../analytics/dimentions";
 import { GCCStorageSettings } from "./types";
 
 class BrowserStorage {
@@ -43,6 +44,11 @@ class BrowserStorage {
         Object.assign(this.settings.custom!, this.defaultSettings.custom, settings.custom || {})
         this.settings.betaTesters = this.defaultSettings.betaTesters
         Logger.debug('⚙️ Loaded settings', JSON.stringify(settings))
+
+        for(const [key, value] of Object.entries(this.settings.options!)) {
+          if(!customDimentions[key]) continue
+          analytics.set(customDimentions[key], value ? 'true' : 'false')
+        }
       } else {
         Object.assign(this.settings, this.defaultSettings)
         Logger.debug('⚙️ Setup settings as defaults', JSON.stringify(this.settings))

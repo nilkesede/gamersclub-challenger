@@ -9,6 +9,7 @@ import { userAPI } from '@/apps/shared/extras/gc/api'
 import { GCInitialPlayerStats } from '@/apps/shared/extras/gc/types/GCInitialPlayerStats'
 import { GCPlayerStatsHistory } from '@/apps/shared/extras/gc/types/GCPlayerStatsHistory'
 import analytics from '@/apps/shared/tools/analytics'
+import { customDimentions } from '@/apps/shared/tools/analytics/dimentions'
 
 export default class GlobalModifier {
   loggedPlayer
@@ -22,7 +23,7 @@ export default class GlobalModifier {
     const { id: playerId } = this.loggedPlayer
     userAPI.boxInitialMatches(playerId).then((data) => {
       this.insertPlayerProgress(data)
-      analytics.set('gcNickname', data.playerInfo.nick)
+      analytics.set(customDimentions.gcNickname, data.playerInfo.nick)
     })
 
     userAPI.boxMatchesHistory(playerId).then((data) => {
