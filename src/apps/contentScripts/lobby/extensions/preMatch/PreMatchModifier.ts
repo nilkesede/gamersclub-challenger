@@ -79,7 +79,6 @@ export default class PreMatchModifier {
         const gccLogoContainer = $(`<div id='${gccLogoContainerId}' class='${gcSelectors.extension.appContainer.cleanCSSSelector()} padding-top gcc-pre-match-player'></div>`)
         setTimeout(() => {
           $button[0]?.click()
-          $button.trigger('click')
           $button.addClass(doneClass)
           const $container = $(`#${gccLogoContainerId}`)
           if($container.length === 0){
