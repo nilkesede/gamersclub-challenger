@@ -83,6 +83,9 @@ export const gcSelectors = {
   },
 
   playerPage: {
+    profileContainer: '.gc-profile-user',
+    userName: '.gc-profile-user-name',
+    userId: '.gc-profile-user-id',
     punishments: '.gc-profile-user-punishments img',
     socialButtons: {
       instagram: '.Button--instagram',

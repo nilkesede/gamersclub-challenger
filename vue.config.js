@@ -43,6 +43,11 @@ const config = {
       chunks: ['chunk-vendors', 'chunk-common', 'matchContentScripts'],
     },
 
+    playerContentScripts: {
+      entry: 'src/apps/contentScripts/player/player.runner.js',
+      chunks: ['chunk-vendors', 'chunk-common', 'playerContentScripts'],
+    },
+
     teamContentScripts: {
       entry: 'src/apps/contentScripts/team/team.runner.js',
       chunks: ['chunk-vendors', 'teamContentScripts'],

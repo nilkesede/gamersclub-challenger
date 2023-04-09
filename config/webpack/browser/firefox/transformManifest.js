@@ -22,7 +22,7 @@ module.exports = function transformManifestToFirefox(content){
       }
     },
     background: {
-      scripts: ["background.js", "serviceWorkerResources/messages.js", "serviceWorkerResources/onMessage.js"]
+      scripts: ["background.js", "backgroundScripts/resources/messages.js", "backgroundScripts/resources/onMessage.js"]
     },
   })
 
