@@ -43,6 +43,10 @@
         "*://gamersclub.com.br/lobby*",
         "*://csgo.gamersclub.gg/lobby*"
       ],
+      "exclude_matches": [
+        "*://gamersclub.com.br/lobby/match*",
+        "*://csgo.gamersclub.gg/lobby/match*"
+      ],
       "js": [
         "js/chunk-vendors.js",
         "js/chunk-common.js",
@@ -52,6 +56,23 @@
         "css/chunk-vendors.css",
         "css/chunk-common.css",
         "css/lobbyContentScripts.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://gamersclub.com.br/lobby/match*",
+        "*://csgo.gamersclub.gg/lobby/match*"
+      ],
+      "js": [
+        "js/chunk-vendors.js",
+        "js/chunk-common.js",
+        "js/MatchContentScripts.js"
+      ],
+      "css": [
+        "css/chunk-vendors.css",
+        "css/chunk-common.css",
+        "css/MatchContentScripts.css"
       ],
       "run_at": "document_end"
     },

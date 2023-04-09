@@ -46,6 +46,21 @@ export const gcSelectors = {
     }
   },
 
+  match: {
+    tableMatchContainer: {
+      self: '.tableMatch__container',
+      player: {
+        self: '.tableMatch__container tr',
+        annotationButton: '.tableMatch__ban',
+        nickColumn: '.tableMatch__nickColumn',
+        leftColumn: '.tableMatch__leftColumn',
+        avatarLink: '.gc-avatar-image',
+        name: '.tableMatch__playerLink'
+      }
+
+    },
+  },
+
   lobbies: {
     filters: {
       container: '#lobby-filters-container',

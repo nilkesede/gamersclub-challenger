@@ -38,6 +38,11 @@ const config = {
       chunks: ['chunk-vendors', 'chunk-common', 'liveMatchContentScripts'],
     },
 
+    matchContentScripts: {
+      entry: 'src/apps/contentScripts/match/match.runner.js',
+      chunks: ['chunk-vendors', 'chunk-common', 'matchContentScripts'],
+    },
+
     teamContentScripts: {
       entry: 'src/apps/contentScripts/team/team.runner.js',
       chunks: ['chunk-vendors', 'teamContentScripts'],
