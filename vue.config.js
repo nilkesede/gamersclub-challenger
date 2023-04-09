@@ -2,7 +2,7 @@
 
 const WriteFilePlugin = require('write-file-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const buildFilesToCopy = require('./webpack/buildFilesToCopy');
+const buildFilesToCopy = require('./config/webpack/buildFilesToCopy');
 
 const config = {
   configureWebpack: {
@@ -24,17 +24,17 @@ const config = {
     },
 
     globalContentScripts: {
-      entry: 'src/apps/content/global.js',
+      entry: 'src/apps/contentScripts/global/global.runner.js',
       chunks: ['chunk-vendors', 'chunk-common', 'globalContentScripts'],
     },
 
     lobbyContentScripts: {
-      entry: 'src/apps/content/lobby.js',
+      entry: 'src/apps/contentScripts/lobby/lobby.runner.js',
       chunks: ['chunk-vendors', 'chunk-common', 'lobbyContentScripts'],
     },
 
     teamContentScripts: {
-      entry: 'src/apps/content/team.js',
+      entry: 'src/apps/contentScripts/team/team.runner.js',
       chunks: ['chunk-vendors', 'teamContentScripts'],
     },
   },
@@ -50,14 +50,14 @@ const config = {
 if(process.env.NODE_ENV === 'development'){
   config.pages.devPreMatch = {
     title: 'devPreMatch',
-    entry: 'src/development/apps/content/preMatch.js',
+    entry: 'src/apps/server/apps/content/preMatch.js',
     chunks: ['chunk-vendors', 'chunk-common'],
     template: 'src/development/mocks/pre-match.html',
   }
 
   config.pages.devPicksAndBans = {
     title: 'devPicksAndBans',
-    entry: 'src/development/apps/content/picksAndBans.js',
+    entry: 'src/apps/server/apps/content/picksAndBans.js',
     chunks: ['chunk-vendors', 'chunk-common'],
     template: 'src/development/mocks/picks-and-bans.mock.html',
   }

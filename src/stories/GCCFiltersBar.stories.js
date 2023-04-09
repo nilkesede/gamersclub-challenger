@@ -1,7 +1,5 @@
 
-import GCChallengerContentRunner from '../utils/contentRunner'
-
-import kdr from '../components/KDR.vue';
+import GCChallengerContentRunner from '../shared/contentRunner'
 import GCCFiltersBar from '../components/GCCFiltersBar.vue';
 
 export default {

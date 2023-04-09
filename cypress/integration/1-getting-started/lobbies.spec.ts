@@ -1,5 +1,5 @@
 import { first } from 'cypress/types/lodash'
-import { gcPages, gcSiteUrl } from '../../../src/utils/gcUrls'
+import { gcPages, gcSiteUrl } from '../../../src/shared/gc/api/resources/urls'
 
 describe('lobbies', () => {
   beforeEach(() => {
