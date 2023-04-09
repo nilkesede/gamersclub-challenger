@@ -7,11 +7,11 @@ import BrowserStorage from '../storage'
 import '@/apps/shared/extras/gcChallenger'
 
 import serializer from '@/apps/contentScripts/lobby/serializer'
-
+type GAInitializeResponse = 'GA_INITIALIZED' | 'GA_FAILED'
 class GCChallengerContentRunner {
   pageName = ''
 
-  async preRun(response: string, resolve: any, reject: any) {
+  async preRun(response: GAInitializeResponse, resolve: any, reject: any) {
     try {
       const isGlobalRun = this.pageName === 'GLOBAL_SCRIPTS'
       if(!response || response === 'GA_FAILED') {
@@ -47,7 +47,7 @@ class GCChallengerContentRunner {
           Logger.debug(`🟢 GA IS ALREARY LIVE -> INITIALIZED ON ${this.pageName}`)
           this.preRun('GA_INITIALIZED', resolve, reject)
         } else {
-          window.browser.runtime.sendMessage({ type: 'INIT_GOOGLE_ANALYTICS' }, (response: string) => {
+          window.browser.runtime.sendMessage({ type: 'INIT_GOOGLE_ANALYTICS' }, (response: GAInitializeResponse) => {
             this.preRun(response, resolve, reject)
           })
         }

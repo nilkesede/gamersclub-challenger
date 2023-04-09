@@ -57,6 +57,23 @@
     },
     {
       "matches": [
+        "*://gamersclub.com.br/match",
+        "*://csgo.gamersclub.gg/match"
+      ],
+      "js": [
+        "js/chunk-vendors.js",
+        "js/chunk-common.js",
+        "js/liveMatchContentScripts.js"
+      ],
+      "css": [
+        "css/chunk-vendors.css",
+        "css/chunk-common.css",
+        "css/liveMatchContentScripts.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
         "*://gamersclub.com.br/team*",
         "*://csgo.gamersclub.gg/team*"
       ],
