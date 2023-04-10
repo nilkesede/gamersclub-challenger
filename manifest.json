@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "minimum_chrome_version": "90",
   "name": "GamersClub Challenger",
-  "version": "1.9.0",
+  "version": "1.10.1",
   "description": "__MSG_appDescription__",
   "author": "Carlos Henrique (C8) <contatogcchallenger@gmail.com>",
   "content_security_policy": {
@@ -67,12 +67,11 @@
       "js": [
         "js/chunk-vendors.js",
         "js/chunk-common.js",
-        "js/MatchContentScripts.js"
+        "js/matchContentScripts.js"
       ],
       "css": [
         "css/chunk-vendors.css",
-        "css/chunk-common.css",
-        "css/MatchContentScripts.css"
+        "css/chunk-common.css"
       ],
       "run_at": "document_end"
     },
@@ -88,8 +87,7 @@
       ],
       "css": [
         "css/chunk-vendors.css",
-        "css/chunk-common.css",
-        "css/playerContentScripts.css"
+        "css/chunk-common.css"
       ],
       "run_at": "document_end"
     },
@@ -105,8 +103,7 @@
       ],
       "css": [
         "css/chunk-vendors.css",
-        "css/chunk-common.css",
-        "css/liveMatchContentScripts.css"
+        "css/chunk-common.css"
       ],
       "run_at": "document_end"
     },
