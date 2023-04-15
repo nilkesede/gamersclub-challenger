@@ -1,0 +1,47 @@
+
+.gcc-kdr-filter-container {
+  justify-content: flex-start !important;
+  max-width: 160px;
+  min-width: 130px;
+}
+
+.gcc-my-lobby-player {
+  padding-right: 5px;
+}
+
+.gcc-marks-container {
+  display: inline-block;
+}
+
+.gcc-kdr-wrapper {
+  .gcc-mark {
+    font-size: 10px !important;
+    margin-right: 2px;
+  }
+}
+
+.gcc-team-player {
+  width: 100%;
+}
+
+.gcc-pre-match-player {
+  display: block;
+  min-width: 45px;
+}
+
+#gcc-global-logged-kdr-container {
+  width: 50px;
+  position: fixed !important;
+  top: 136px;
+  right: 105px;
+
+  &.has-subscription-top-bar {
+    top: 184px
+  }
+}
+
+.gcc-mark-post-match-container {
+  .gcc-mark {
+    font-size: 1rem !important;
+  }
+}

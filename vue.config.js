@@ -2,7 +2,7 @@
 
 const WriteFilePlugin = require('write-file-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const buildFilesToCopy = require('./webpack/buildFilesToCopy');
+const buildFilesToCopy = require('./config/webpack/buildFilesToCopy');
 
 const config = {
   configureWebpack: {
@@ -24,17 +24,32 @@ const config = {
     },
 
     globalContentScripts: {
-      entry: 'src/apps/content/global.js',
+      entry: 'src/apps/contentScripts/global/global.runner.js',
       chunks: ['chunk-vendors', 'chunk-common', 'globalContentScripts'],
     },
 
     lobbyContentScripts: {
-      entry: 'src/apps/content/lobby.js',
+      entry: 'src/apps/contentScripts/lobby/lobby.runner.js',
       chunks: ['chunk-vendors', 'chunk-common', 'lobbyContentScripts'],
     },
 
+    liveMatchContentScripts: {
+      entry: 'src/apps/contentScripts/liveMatch/liveMatch.runner.js',
+      chunks: ['chunk-vendors', 'chunk-common', 'liveMatchContentScripts'],
+    },
+
+    matchContentScripts: {
+      entry: 'src/apps/contentScripts/match/match.runner.js',
+      chunks: ['chunk-vendors', 'chunk-common', 'matchContentScripts'],
+    },
+
+    playerContentScripts: {
+      entry: 'src/apps/contentScripts/player/player.runner.js',
+      chunks: ['chunk-vendors', 'chunk-common', 'playerContentScripts'],
+    },
+
     teamContentScripts: {
-      entry: 'src/apps/content/team.js',
+      entry: 'src/apps/contentScripts/team/team.runner.js',
       chunks: ['chunk-vendors', 'teamContentScripts'],
     },
   },
@@ -48,18 +63,26 @@ const config = {
 };
 
 if(process.env.NODE_ENV === 'development'){
+  const serverBasePath = 'src/apps/server';
   config.pages.devPreMatch = {
     title: 'devPreMatch',
-    entry: 'src/development/apps/content/preMatch.js',
+    entry: `${serverBasePath}/apps/contentScripts/preMatch.runner.js`,
     chunks: ['chunk-vendors', 'chunk-common'],
-    template: 'src/development/mocks/pre-match.html',
+    template: `${serverBasePath}/mocks/pre-match.mock.html`,
+  }
+
+  config.pages.devLiveMatch = {
+    title: 'liveMatch',
+    entry: `${serverBasePath}/apps/contentScripts/liveMatch.runner.js`,
+    chunks: ['chunk-vendors', 'chunk-common'],
+    template: `${serverBasePath}/mocks/pre-match.mock.html`,
   }
 
   config.pages.devPicksAndBans = {
     title: 'devPicksAndBans',
-    entry: 'src/development/apps/content/picksAndBans.js',
+    entry: `${serverBasePath}/apps/contentScripts/picksAndBans.runner.js`,
     chunks: ['chunk-vendors', 'chunk-common'],
-    template: 'src/development/mocks/picks-and-bans.mock.html',
+    template: `${serverBasePath}/mocks/picks-and-bans.mock.html`,
   }
 }
 
