@@ -8,13 +8,13 @@
       :class="{
         'gcc-mark--selected': value
       }"
-      @click="onClickAtMark(key)"
+      @click.stop="onClickAtMark(key)"
       :title="i18n.getMessage(`playerMark__${key}`)">
       {{GCCMarkEmojiMap[key]}}
     </span>
       <i
         v-if="enableAddButton"
-        @click="toggleConfiguring"
+        @click.stop="toggleConfiguring"
         :title="tagsTitle"
         class="fas gcc-marks__configure-button" :class="{
         'fa-tags': !isConfiguring && !isSaving,

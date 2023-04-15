@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "minimum_chrome_version": "90",
   "name": "GamersClub Challenger",
-  "version": "1.9.0",
+  "version": "1.10.1",
   "description": "__MSG_appDescription__",
   "author": "Carlos Henrique (C8) <contatogcchallenger@gmail.com>",
   "content_security_policy": {
@@ -43,6 +43,10 @@
         "*://gamersclub.com.br/lobby*",
         "*://csgo.gamersclub.gg/lobby*"
       ],
+      "exclude_matches": [
+        "*://gamersclub.com.br/lobby/match*",
+        "*://csgo.gamersclub.gg/lobby/match*"
+      ],
       "js": [
         "js/chunk-vendors.js",
         "js/chunk-common.js",
@@ -52,6 +56,54 @@
         "css/chunk-vendors.css",
         "css/chunk-common.css",
         "css/lobbyContentScripts.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://gamersclub.com.br/lobby/match*",
+        "*://csgo.gamersclub.gg/lobby/match*"
+      ],
+      "js": [
+        "js/chunk-vendors.js",
+        "js/chunk-common.js",
+        "js/matchContentScripts.js"
+      ],
+      "css": [
+        "css/chunk-vendors.css",
+        "css/chunk-common.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://gamersclub.com.br/player*",
+        "*://csgo.gamersclub.gg/player*"
+      ],
+      "js": [
+        "js/chunk-vendors.js",
+        "js/chunk-common.js",
+        "js/playerContentScripts.js"
+      ],
+      "css": [
+        "css/chunk-vendors.css",
+        "css/chunk-common.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://gamersclub.com.br/match",
+        "*://csgo.gamersclub.gg/match"
+      ],
+      "js": [
+        "js/chunk-vendors.js",
+        "js/chunk-common.js",
+        "js/liveMatchContentScripts.js"
+      ],
+      "css": [
+        "css/chunk-vendors.css",
+        "css/chunk-common.css"
       ],
       "run_at": "document_end"
     },

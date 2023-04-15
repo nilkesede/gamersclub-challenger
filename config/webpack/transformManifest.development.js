@@ -20,6 +20,18 @@ module.exports = function transformManifestToDevelopment(content){
       "run_at": "document_end"
     })
 
+    manifest.content_scripts.push({
+      "matches": [
+        "*://localhost/devLiveMatch*",
+      ],
+      "js": [
+        "js/chunk-vendors.js",
+        "js/chunk-common.js",
+        "js/devLiveMatch.js"
+      ],
+      "run_at": "document_end"
+    })
+
     manifest.web_accessible_resources.forEach((webResource) => {
       webResource.matches.push("*://localhost/*")
     })

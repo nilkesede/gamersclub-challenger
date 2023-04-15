@@ -46,6 +46,21 @@ export const gcSelectors = {
     }
   },
 
+  match: {
+    tableMatchContainer: {
+      self: '.tableMatch__container',
+      player: {
+        self: '.tableMatch__container tr',
+        annotationButton: '.tableMatch__ban',
+        nickColumn: '.tableMatch__nickColumn',
+        leftColumn: '.tableMatch__leftColumn',
+        avatarLink: '.gc-avatar-image',
+        name: '.tableMatch__playerLink'
+      }
+
+    },
+  },
+
   lobbies: {
     filters: {
       container: '#lobby-filters-container',
@@ -68,6 +83,9 @@ export const gcSelectors = {
   },
 
   playerPage: {
+    profileContainer: '.gc-profile-user',
+    userName: '.gc-profile-user-name',
+    userId: '.gc-profile-user-id',
     punishments: '.gc-profile-user-punishments img',
     socialButtons: {
       instagram: '.Button--instagram',
